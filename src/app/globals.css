@@ -10,6 +10,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-roboto-mono);
+  --color-food-900: #93971F;
+  --color-slime-600: #B2B33A;
+
+  --color-special-900: #d58c7e;
+  --color-special-600: #f5b8b0;
+
+  --color-guild-900: #506e89;
+  --color-guild-600: #7a9db2;
+
+  --color-sauna-900: #cc3301;
+  --color-sauna-600: #e65c1a;
+
+  --color-normal-900: #f3c702;
+  --color-normal-600: #f5d02c;
 }
 
 @media (prefers-color-scheme: dark) {

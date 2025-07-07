@@ -1,3 +1,4 @@
+export type PlaceType = 'normal' | 'food' | 'sauna' | 'special' | 'guild';
 
 export interface GameInfo {
   id: number,
@@ -33,17 +34,23 @@ export interface BoardPlaces {
 }
 
 export interface Place {
-  id: number,
-  name: String,
-  refill: boolean
-  special_rule: String,
-  drink: Drink,
+  place_id: number,
+  place_name: string,
+  rule: string,
+  place_type: PlaceType,
+}
+export interface Places {
+  places: Place[],
 }
 
 export interface BoardPlace {
-  board: Board,
+  board_id: number,
   place: Place,
-  number: number
+  place_number: number
+  start: boolean,
+  end: boolean,
+  x: number,
+  y: number,
 }
 
 export interface Boards {

@@ -1061,6 +1061,26 @@ var config = {
           300: "var(--color-warning-300)",
           200: "var(--color-warning-200)",
           100: "var(--color-warning-100)"
+        },
+        special: {
+          900: "var(--color-special-900)",
+          600: "var(--color-special-600)"
+        },
+        normal: {
+          900: "var(--color-normal-900)",
+          600: "var(--color-normal-600)"
+        },
+        guild_room: {
+          900: "var(--color-guild-room-900)",
+          600: "var(--color-guild-room-600)"
+        },
+        sauna: {
+          900: "var(--color-sauna-900)",
+          600: "var(--color-sauna-600)"
+        },
+        food: {
+          900: "var(--color-food-900)",
+          600: "var(--color-food-600)"
         }
       },
       boxShadow: {

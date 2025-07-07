@@ -1,7 +1,16 @@
 // app/ingredients/actions.ts
 "use server";
 
-import {Board, BoardPlaces, Boards, DrinkIngredients, DrinksIngredients, Ingredient, Ingredients} from "@/utils/types";
+import {
+  Board,
+  BoardPlaces,
+  Boards,
+  DrinkIngredients,
+  DrinksIngredients,
+  Ingredient,
+  Ingredients,
+  Place
+} from "@/utils/types";
 
 export async function addIngredient(formData: FormData) {
   await fetch(`${process.env.API_URL}/ingredients`, {
@@ -79,4 +88,24 @@ export async function getBoard(id: number): Promise<Board> {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
   return await res.json();
+}
+export async function postPlace(place: Place): Promise<number> {
+  const res = await fetch(`${process.env.API_URL}/boards/places`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(place),
+  });
+  if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  return res.status;
+}
+export async function postBoardPlace(boardPlace: BoardPlaces): Promise<number> {
+  const res = await fetch(`${process.env.API_URL}/boards/places/${boardPlace.board.id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(boardPlace),
+  });
+  if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  return res.status;
 }

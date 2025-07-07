@@ -54,6 +54,16 @@
   --color-warning-300: #f5eda6;
   --color-warning-200: #f9f4c9;
   --color-warning-100: #fbf7e6;
+  --color-slime-900: #93971F;
+  --color-slime-600: #B2B33A;
+  --color-special-900: #d58c7e;
+  --color-special-600: #f5b8b0;
+  --color-guild-room-900: #506e89;
+  --color-guild-room-600: #7a9db2;
+  --color-sauna-900: #cc3301;
+  --color-sauna-600: #e65c1a;
+  --color-normal-900: #f3c702;
+  --color-normal-600: #f5d02c;
   --box-shadow-solid: 2px 2px 0px 0px var(--color-gray-900);
   --box-shadow-solid-lg: 4px 4px 0px 0px var(--color-gray-900);
   --box-shadow-solid-xl: 6px 6px 0px 0px var(--color-gray-900);

@@ -14,7 +14,9 @@ export default async function BoardList() {
         <ul className="grid gap-2 w-full px-4 py-2">
           {boards.boards.length > 0 ?
             boards.boards.map((board) => (
-              <BoardCard key={board.id} board={board} />
+              <li key={board.id}>
+                <BoardCard key={board.id} board={board} />
+              </li>
             )) : <p className="text-center text-gray-900">Ei lautoja</p>}
         </ul>
       </div>

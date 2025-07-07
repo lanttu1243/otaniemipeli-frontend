@@ -28,7 +28,7 @@ export default function DrinkList() {
       <div className="w-full">
         <ul className="grid gap-2 w-full px-4 py-2">
           {drinks ?
-            drinks.sort((a, b) =>  b.quantity*b.abv - a.quantity*a.abv).map((drink: DrinkIngredients) => (
+            drinks.sort((a, b) =>  b.drink.id - a.drink.id).map((drink: DrinkIngredients) => (
               <DrinkCard key={drink.drink.id} drink={drink} functional={true} refreshListAction={fetchDrinks}/>
             )) : <p>No drinks!</p>}
         </ul>
