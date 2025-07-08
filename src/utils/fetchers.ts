@@ -2,14 +2,14 @@
 "use server";
 
 import {
-  Board,
+  Board, BoardPlace,
   BoardPlaces,
   Boards,
   DrinkIngredients,
   DrinksIngredients,
   Ingredient,
   Ingredients,
-  Place
+  Place, Places
 } from "@/utils/types";
 
 export async function addIngredient(formData: FormData) {
@@ -99,8 +99,8 @@ export async function postPlace(place: Place): Promise<number> {
 
   return res.status;
 }
-export async function postBoardPlace(boardPlace: BoardPlaces): Promise<number> {
-  const res = await fetch(`${process.env.API_URL}/boards/places/${boardPlace.board.id}`, {
+export async function postBoardPlace(boardPlace: BoardPlace): Promise<number> {
+  const res = await fetch(`${process.env.API_URL}/boards/places/${boardPlace.board_id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(boardPlace),
@@ -108,4 +108,48 @@ export async function postBoardPlace(boardPlace: BoardPlaces): Promise<number> {
   if (!res.ok) console.error(`HTTP ${res.status}`);
 
   return res.status;
+}
+export async function getPlacesNotInBoard(boardId: number): Promise<{p: Places, bp: BoardPlaces}> {
+  console.log(`${process.env.API_URL}/boards/places/${boardId}`)
+  const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  const data: BoardPlaces = await res.json();
+  console.log(`${process.env.API_URL}/boards/places`)
+  const resp = await fetch(`${process.env.API_URL}/boards/places`, {
+    headers: { "Content-Type": "application/json" },
+  })
+  if (!resp.ok) console.error(`HTTP ${resp.status}`);
+
+  const allPlaces: Places = await resp.json();
+
+  return {p: {
+    places: allPlaces.places.filter((place: Place) =>
+      !data.places.some(boardPlace => boardPlace.place.place_id === place.place_id) || place.place_type === "normal")
+  }, bp: data}
+}
+
+export async function getBoardPlaces(boardId: number): Promise<BoardPlaces> {
+  const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  return await res.json();
+}
+export async function updateCoordinates(boardId: number, place: BoardPlace): Promise<number> {
+  console.log("Updating coordinates for boardId:", boardId, "place:", place);
+  const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}/coordinate`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(place),
+  });
+
+  if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  return await res.json();
 }

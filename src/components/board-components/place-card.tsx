@@ -1,53 +1,42 @@
-"use client"
-import {Ingredient} from "@/utils/types";
+import {Ingredient, Place} from "@/utils/types";
 import {deleteIngredient} from "@/utils/fetchers";
 import {useRouter} from "next/navigation";
-import {MouseEventHandler} from "react";
+import React, {MouseEventHandler} from "react";
+import {getPlaceColor} from "@/utils/colors";
 
-export default function PlaceCard(
-  {
-    ingredient,
-    quantity,
-    drink_id,
-    deleteFromDrink,
-    onDelete
-  }: {
-    ingredient: Ingredient,
-    quantity?: number,
-    drink_id?: number,
-    deleteFromDrink?: boolean,
-    onDelete?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  }): JSX.Element {
-
-  const router = useRouter();
-  const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    if (drink_id) {
-      const deleted = await deleteIngredient(drink_id, ingredient.id);
-      if (deleted) {
-        console.log(`Ingredient ${deleted.name} deleted successfully`);
-      } else {
-        console.error("Failed to delete ingredient");
-      }
-    }
-    onDelete?.(e);
-    router.refresh();
+export default function PlaceCard({place, placeNumber}: {place: Place | undefined, placeNumber?: number}): JSX.Element {
+  if (!place) {
+    return <div className="text-red-500">Place not found</div>;
   }
-
-  const className = quantity ?
-    "text-base px-1 text-right border-amber-700 border-" :
-    "text-base px-1 text-left";
-
   return (
-    <li className="shadow-md box items-center justify-center w-full">
-      <div className="flex border-amber-800 items-center">
-        <p className={className + "r w-[35%] font-bold"}>{ingredient.name}</p>
-        <p className={className + "r text-right w-3/12"}>{ingredient.abv}%</p>
-        {quantity ? <p className="text-left px-2 border-amber-700 border-r text-base w-[12%]">{Math.round(quantity)}cl</p> : null}
-        <p className="text-base text-center pl-1 w-3/12">{ingredient.carbonated ? "🫧🫧" : ""}</p>
-        {deleteFromDrink && drink_id ? <button className="rounded text-sm ml-auto bg-amber-800 hover:bg-amber-600 px-4 py-1 text-white items-center justify-center"
-        onClick={handleDelete}>Poista</button> : null}
+    <div
+      className="flex flex-col items-start justify-start"
+      style={
+              {
+                '--place-color': getPlaceColor(place.place_type, false),
+                '--place-color-hover': getPlaceColor(place.place_type, true),
+              } as React.CSSProperties
+            }>
+      <div className="flex flex-col gap-1 border-[var(--place-color)] hover:border-[var(--place-color-hover)] border-4 rounded-lg p-2 w-full h-full">
+        <div className="flex gap-1 items-center justify-center w-full">
+          <p className="text-left ml-auto">
+            {place.place_id}
+          </p>
+          <p className="font-bold text-center w-full">
+            {place.place_name}
+          </p>
+          {placeNumber &&
+          <p className="text-right mr-auto">
+          {placeNumber}
+          </p>
+          }
+        </div>
+        <div className="w-full items-center justify-center p-1">
+          <p className="text-justify w-full">
+            {place.rule}
+          </p>
+        </div>
       </div>
-    </li>
-  );
+    </div>
+  )
 }
