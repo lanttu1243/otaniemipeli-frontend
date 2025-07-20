@@ -23,6 +23,10 @@ export default function () {
            className="text-gray-700 hover:text-gray-900 hover:underline">
           Laudat
         </p>
+        <p onClick={() => {router.push("/board")}}
+           className="text-gray-700 hover:text-gray-900 hover:underline">
+          Pelilauta
+        </p>
       </nav>
     </div>
   );

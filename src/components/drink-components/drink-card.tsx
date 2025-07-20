@@ -90,7 +90,7 @@ export function DrinkCardNoIngredients({drink, className}: {drink: Drink, classN
     <div className={className}>
       <li className="bg-white shadow-md rounded-2xl border-2 border-amber-800 px-6 py-2 items-center">
         <div className="flex items-center justify-items-start w-100">
-          <h3 className="text-2xl font-bold text-left px-2 w-3/7">{drink.name}</h3>
+          <h3 className="text-lg font-bold text-left px-1 w-3/7">{drink.name}</h3>
         </div>
       </li>
     </div>

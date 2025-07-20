@@ -10,7 +10,7 @@ export default function PlaceCard({place, placeNumber}: {place: Place | undefine
   }
   return (
     <div
-      className="flex flex-col items-start justify-start"
+      className="flex flex-col items-start justify-start w-min-full"
       style={
               {
                 '--place-color': getPlaceColor(place.place_type, false),
@@ -31,7 +31,7 @@ export default function PlaceCard({place, placeNumber}: {place: Place | undefine
           </p>
           }
         </div>
-        <div className="w-full items-center justify-center p-1">
+        <div className="w-full items-center justify-center p-1 overflow-hidden overflow-y-scroll">
           <p className="text-justify w-full">
             {place.rule}
           </p>

@@ -9,7 +9,7 @@ import {
   DrinksIngredients,
   Ingredient,
   Ingredients,
-  Place, Places
+  Place, PlaceDrinks, Places
 } from "@/utils/types";
 
 export async function addIngredient(formData: FormData) {
@@ -67,7 +67,7 @@ export async function getDrinks(): Promise<DrinksIngredients> {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status} drinks`);
 
   return await res.json();
 }
@@ -76,7 +76,7 @@ export async function getBoards(id?: number): Promise<Boards> {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status} boards`);
 
   return await res.json();
 }
@@ -115,7 +115,7 @@ export async function getPlacesNotInBoard(boardId: number): Promise<{p: Places, 
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!res.ok) console.error(`HTTP ${res.status}`);
+  if (!res.ok) console.error(`HTTP ${res.status} not in board`);
 
   const data: BoardPlaces = await res.json();
   console.log(`${process.env.API_URL}/boards/places`)
@@ -137,7 +137,7 @@ export async function getBoardPlaces(boardId: number): Promise<BoardPlaces> {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!res.ok) console.error(`HTTP ${res.status}`);
+  if (!res.ok) console.error(`HTTP ${res.status} board places`);
 
   return await res.json();
 }
@@ -150,6 +150,17 @@ export async function updateCoordinates(boardId: number, place: BoardPlace): Pro
   });
 
   if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  return await res.json();
+}
+export async function addDrinksToPlace(drinks: PlaceDrinks): Promise<number> {
+  const res = await fetch(`${process.env.API_URL}/boards/places/drinks`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(drinks),
+  });
+
+  if (!res.ok) console.error(`HTTP ${res.status} adding drinks to place`);
 
   return await res.json();
 }

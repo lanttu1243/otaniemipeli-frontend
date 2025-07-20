@@ -22,7 +22,7 @@
   --color-sauna-900: #cc3301;
   --color-sauna-600: #e65c1a;
 
-  --color-normal-900: #f3c702;
+  --color-normal-900: #EEC156;
   --color-normal-600: #f5d02c;
 }
 
@@ -35,6 +35,13 @@
 @layer components {
   .box {
     border: 2px solid var(--color-amber-800);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 2);
+    border-radius: var(--radius-2xl);
+    --shadow: var(--shadow-md);
+  }
+  .box-hover {
+    border: 2px solid var(--color-amber-600);
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 2);
     border-radius: var(--radius-2xl);

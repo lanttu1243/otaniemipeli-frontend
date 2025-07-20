@@ -51,6 +51,27 @@ export interface BoardPlace {
   end: boolean,
   x: number,
   y: number,
+  connections: Connection[],
+  drinks: PlaceDrinks,
+}
+export interface PlaceDrinks {
+  drinks: PlaceDrink[]
+}
+export interface PlaceDrink {
+  place_id: number,
+  drink: Drink,
+  refill: boolean,
+  optional: boolean,
+  n: number,
+  n_update: string
+}
+export interface Connection {
+  board_id: number,
+  origin: number,
+  target: number,
+  on_land: boolean,
+  backwards: boolean,
+  dashed: boolean,
 }
 
 export interface Boards {
