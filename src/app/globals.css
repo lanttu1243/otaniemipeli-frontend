@@ -8,8 +8,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --font-sans: var(--font-inter);
   --font-mono: var(--font-roboto-mono);
+
   --color-food-900: #93971F;
   --color-slime-600: #B2B33A;
 
@@ -41,6 +43,13 @@
     --shadow: var(--shadow-md);
   }
   .box-hover {
+    border: 2px solid var(--color-amber-800);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 2);
+    border-radius: var(--radius-2xl);
+    --shadow: var(--shadow-md);
+  }
+  .box-hover:hover {
     border: 2px solid var(--color-amber-600);
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 2);
@@ -48,12 +57,17 @@
     --shadow: var(--shadow-md);
   }
   .button {
+    border: 2px solid var(--color-amber-800);
     background-color: var(--color-amber-800);
-    color: var(--color-white);
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-xl);
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 2);
+    border-radius: var(--radius-md);
+    --shadow: var(--shadow-md);
+    color: white;
+  }
+  .button:hover {
+    border: 2px solid var(--color-amber-600);
+    background-color: var(--color-amber-600);
   }
 }
 

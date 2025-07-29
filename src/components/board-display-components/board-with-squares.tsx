@@ -3,16 +3,16 @@ import mapImage from "@/public/board.png";
 import LineLayer from "@/components/board-display-components/line-layer";
 import SquareLayer from "@/components/board-display-components/square-layer";
 import React from "react";
-import {BoardPlaces} from "@/utils/types";
+import {BoardPlace, BoardPlaces} from "@/utils/types";
 
 export default function BoardWithSquares( {
   places,
-  focusedIndex,
-  setFocusedIndex
+  focusedPlace,
+  setFocusedPlace
   }: {
   places: BoardPlaces,
-  focusedIndex: number,
-  setFocusedIndex: React.Dispatch<React.SetStateAction<number>>
+  focusedPlace: BoardPlace,
+  setFocusedPlace: React.Dispatch<React.SetStateAction<BoardPlace>>
 } ): JSX.Element {
   return (
     <div className="flex flex-col relative w-full mx-auto">
@@ -25,7 +25,7 @@ export default function BoardWithSquares( {
 
       <div className="absolute top-0 left-0 w-full h-full">
         {places && <LineLayer places={places} />}
-        {places && <SquareLayer placesIn={places} focusedIndex={focusedIndex} setFocusedIndex={setFocusedIndex} />}
+        {places && <SquareLayer placesIn={places} focusedPlace={focusedPlace} setFocusedPlace={setFocusedPlace} />}
       </div>
     </div>
   );

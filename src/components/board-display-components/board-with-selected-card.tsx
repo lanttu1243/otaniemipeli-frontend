@@ -1,17 +1,17 @@
 "use client";
 import React, {useEffect, useState} from "react";
-import {BoardPlaces} from "@/utils/types";
+import {BoardPlace, BoardPlaces} from "@/utils/types";
 import {getBoardPlaces} from "@/utils/fetchers";
 import BoardWithSquares from "@/components/board-display-components/board-with-squares";
 import PlaceCard from "@/components/board-components/place-card";
 import AddDrinkToPlace from "@/components/board-display-components/add-drink-to-place";
 
 export default function BoardWithSelectedCard({
-                                                focusedIndex,
-                                                setFocusedIndex
+                                                focusedPlace,
+                                                setFocusedPlace
 }: {
-  focusedIndex: number,
-  setFocusedIndex: React.Dispatch<React.SetStateAction<number>>
+  focusedPlace: BoardPlace,
+  setFocusedPlace: React.Dispatch<React.SetStateAction<BoardPlace>>,
 }): JSX.Element {
   const [places, setPlaces] = useState<BoardPlaces | undefined>();
 
@@ -21,7 +21,7 @@ export default function BoardWithSelectedCard({
       (data: BoardPlaces) => {
         setPlaces(data);
         if (data.places.length > 0) {
-          setFocusedIndex(data.places[0].place_number);
+          setFocusedPlace(data.places[0]);
         }
       }
     ).catch((error) => {
@@ -33,8 +33,8 @@ export default function BoardWithSelectedCard({
       { places &&
         <BoardWithSquares
             places={places}
-            focusedIndex={focusedIndex}
-            setFocusedIndex={setFocusedIndex}/>
+            focusedPlace={focusedPlace}
+            setFocusedPlace={setFocusedPlace}/>
       }
       {
         places &&
@@ -42,8 +42,8 @@ export default function BoardWithSelectedCard({
             <div className="flex items-start justify-center w-full gap-4">
               <div className="w-2/3">
                 <PlaceCard
-                  place={places.places.find((p) => p.place_number === focusedIndex)?.place}
-                  placeNumber={focusedIndex}/>
+                  place={places.places.find((p) => p.place_number === focusedPlace.place_number)}
+                  placeNumber={focusedPlace.place_number}/>
               </div>
             </div>
           )

@@ -58,7 +58,8 @@ export interface PlaceDrinks {
   drinks: PlaceDrink[]
 }
 export interface PlaceDrink {
-  place_id: number,
+  place_number: number,
+  board_id: number,
   drink: Drink,
   refill: boolean,
   optional: boolean,

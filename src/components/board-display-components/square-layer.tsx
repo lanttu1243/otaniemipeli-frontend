@@ -6,12 +6,12 @@ import {updateCoordinates} from "@/utils/fetchers";
 
 export default function SquareLayer({
                                       placesIn,
-                                      focusedIndex,
-                                      setFocusedIndex
+                                      focusedPlace,
+                                      setFocusedPlace
 }: {
   placesIn: BoardPlaces,
-  focusedIndex: number,
-  setFocusedIndex: React.Dispatch<React.SetStateAction<number>>
+  focusedPlace: BoardPlace,
+  setFocusedPlace: React.Dispatch<React.SetStateAction<BoardPlace>>
 }) {
   const [places, setPlaces] = React.useState<BoardPlaces>(placesIn);
   const keyDownHandler = (e: React.KeyboardEvent, place: BoardPlace) => {
@@ -33,11 +33,11 @@ export default function SquareLayer({
   }
 
   const moveFocused = (dx: number, dy: number) => {
-    if (focusedIndex === null || !places) return;
+    if (focusedPlace === null || !places) return;
 
     const updated = { ...places };
     updated.places = updated.places.map((p, idx) => {
-      if (idx !== focusedIndex) return p;
+      if (idx !== focusedPlace.place_number) return p;
 
       return {
         ...p,
@@ -60,7 +60,7 @@ export default function SquareLayer({
         }
              tabIndex={0}
              key={place.place_number}
-             onFocus={() => setFocusedIndex(idx)}
+             onFocus={() => setFocusedPlace(place)}
              onKeyDown={(e) => {
                keyDownHandler(e, place);
              }}
@@ -82,7 +82,7 @@ export default function SquareLayer({
             }}>
             <div className="w-full h-full items-center justify-center flex"
             >
-              {place.place_number === focusedIndex && <div
+              {place.place_number === focusedPlace.place_number && <div
                   className="w-[15px] h-[15px] bg-[var(--color-square-hover)] border-[var(--color-square)] border-4 rounded-full transition-colors duration-200"/>
               }
             </div>

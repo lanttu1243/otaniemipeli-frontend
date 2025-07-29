@@ -1,5 +1,5 @@
 "use client";
-import {Drink, DrinkIngredients, IngredientQty} from "@/utils/types";
+import {Drink, DrinkIngredients, IngredientQty, PlaceDrink} from "@/utils/types";
 import {useState} from "react";
 import AddDrinkIngredientForm from "@/components/drink-components/add-drink-ingredient-form";
 import IngredientCard from "@/components/drink-components/ingredient-card";
@@ -94,5 +94,20 @@ export function DrinkCardNoIngredients({drink, className}: {drink: Drink, classN
         </div>
       </li>
     </div>
+  );
+}
+export function PlaceDrinkCard(
+  {
+    drink,
+  }: {
+    drink: PlaceDrink,
+  }): JSX.Element {
+  return (
+      <div className="flex items-center justify-items-start w-100">
+        <h3 className="text-lg font-bold text-left px-1 w-3/7">{drink.drink.name}</h3>
+        <p>{drink.refill ? "t" : "f"}</p>
+        <p>{drink.optional ? "t" : "f"}</p>
+        <p>{drink.n}</p>
+      </div>
   );
 }
