@@ -38,11 +38,23 @@
     .debug {
         border: 2px solid black;
     }
+    .center {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
     .box {
         border: 2px solid var(--color-amber-800);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-2xl);
+        --shadow: var(--shadow-md);
+    }
+    .no-border-box {
+        border: 2px solid transparent;
+        padding-inline: calc(var(--spacing) * 3);
+        padding-block: calc(var(--spacing) * 2);
+        border-radius: var(--radius-md);
         --shadow: var(--shadow-md);
     }
     .box-hover {
@@ -65,8 +77,15 @@
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-md);
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        -webkit-user-select: none;
+        user-select: none;
         --shadow: var(--shadow-md);
         color: white;
+        font-weight: 600;
+        cursor: pointer;
     }
     .button:hover {
         border: 2px solid var(--color-amber-600);

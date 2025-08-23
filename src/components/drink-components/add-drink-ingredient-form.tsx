@@ -6,6 +6,7 @@ import {Drink, DrinkIngredientsPost, Ingredient, IngredientQty} from "@/utils/ty
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import {getIngredients} from "@/utils/fetchers";
 import {DrinkCardNoIngredients} from "@/components/drink-components/drink-card";
+import DropdownMenu from "@/components/dropdown-menu";
 
 export default function AddDrinkIngredientForm(
   {
@@ -22,6 +23,7 @@ export default function AddDrinkIngredientForm(
   const [pendingRefresh, setPendingRefresh] = useState(false);
   const [open, setOpen] = useState(false);
   const [, setIngr] = useState<Ingredient | null>(null);
+  const [ingredient, setIngredient] = useState<Ingredient | undefined>(undefined);
 
   const [ingredientsTo, setIngredientsTo] = useState<Ingredient[]>(ingredientsIn);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
@@ -74,7 +76,11 @@ export default function AddDrinkIngredientForm(
     await fetchAllIngredients();
     setOpen(true);
   }
-
+  useEffect(() => {
+    if (ingredient){
+      updateIngredient(ingredient, 'insert');
+    }
+  }, [ingredient]);
   useEffect(() => {
     ingredientFetch();
   }, [ingredientFetch]);
@@ -175,25 +181,13 @@ export default function AddDrinkIngredientForm(
             <h2 className="mb-1 text-xl font-semibold">Lisää ainesosa juomaan</h2>
             <DrinkCardNoIngredients drink={drink} className="mb-2"/>
             <div className="flex w-full mb-4 border-2 border-amber-800 rounded-3xl p-2 h-60">
-              <Menu>
-                <MenuButton
-                  className="rounded text-base bg-amber-800 p-1 text-white h-10 mx-1 items-center justify-center w-2/5 hover:bg-amber-600">Ainesosat</MenuButton>
-                <MenuItems anchor="right" className="text-sm text-gray-900 font-bold rounded-2xl z-50 h-3/4">
-                  {ingredients
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((ingredient) => (
-                      <MenuItem key={ingredient.id}>
-                        <div className="w-full bg-amber-800 data-focus:bg-amber-700 hover:bg-amber-600 p-3"
-                             onClick={() => updateIngredient(ingredient, 'insert')}>
-                          <p>
-                            {ingredient.name}
-                          </p>
-                        </div>
-                      </MenuItem>
-                    ))
-                  }
-                </MenuItems>
-              </Menu>
+
+              <DropdownMenu
+                buttonText="Ainesosat"
+                options={ingredients}
+                selectedOption={ingredient}
+                setSelectedOption={setIngredient} />
+
               <div className="flex flex-col items-center w-full h-full overflow-scroll mb-4">
                 {ingredientsTo.length > 0 ?
                   ingredientsTo.map((ingredient_) => (

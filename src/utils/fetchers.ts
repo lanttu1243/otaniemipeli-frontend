@@ -6,7 +6,7 @@ import {
   BoardPlaces,
   Boards,
   DrinkIngredients,
-  DrinksIngredients,
+  DrinksIngredients, Games,
   Ingredient,
   Ingredients, LoginInfo,
   Place, PlaceDrinks, Places, SessionInfo, UserInfo, UserSessionInfo
@@ -66,6 +66,15 @@ export async function getBoards(): Promise<Boards> {
   });
 
   if (!res.ok) throw new Error(`HTTP ${res.status} boards`);
+
+  return await res.json();
+}
+export async function getGames(): Promise<Games> {
+  const res = await fetch(`${process.env.API_URL}/games`, {
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) throw new Error(`HTTP ${res.status} games`);
 
   return await res.json();
 }

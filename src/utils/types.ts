@@ -1,6 +1,14 @@
 export type PlaceType = 'normal' | 'food' | 'sauna' | 'special' | 'guild';
 export type UserType = 'admin' | 'ie' | 'referee' | 'secretary' | 'team';
 
+export enum UserTypeEnum {
+  'admin' = 'Admin',
+  'ie' = 'IE',
+  'referee' = 'Tuomari',
+  'secretary' = 'Sihteeri',
+  'team' = 'Joukkue',
+}
+
 
 export interface HeaderItem {
   text: string,
@@ -36,6 +44,8 @@ export interface GameInfo {
   id: number,
   name: string,
   board: string,
+  finished: boolean,
+  start_time: string,
 }
 
 export interface PostGame {

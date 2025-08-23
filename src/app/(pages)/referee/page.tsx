@@ -1,6 +1,8 @@
 "use client";
 import {useContext, useEffect, useState} from "react";
 import {useSocket} from "@/app/(pages)/referee/template";
+import CreateGameForm from "@/components/game-components/create-game-form";
+import GameList from "@/components/game-components/game-list";
 
 export default function Home() {
   const socket = useSocket();
@@ -48,7 +50,10 @@ export default function Home() {
       <p className="text-gray-700">
         {text}
       </p>
-
+      <div className="flex gap-4 w-full h-full">
+        <CreateGameForm />
+        <GameList />
+      </div>
     </div>
   );
 }
