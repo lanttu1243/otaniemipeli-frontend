@@ -3,7 +3,7 @@ import {Boards} from "@/utils/types";
 import BoardCard from "@/components/board-components/board-card";
 
 export default async function BoardList() {
-  let boards: Boards = await getBoards()
+  const boards: Boards = await getBoards()
 
   return (
     <div className="items-center justify-center w-2/3 max-h-2/5 py-6 overflow-y-scroll box mb-auto">

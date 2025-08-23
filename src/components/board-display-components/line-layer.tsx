@@ -1,16 +1,15 @@
 import {BoardPlaces} from "@/utils/types";
 import React, {useLayoutEffect, useRef, useState} from "react";
 
-const RADIUS_PX     = 15          // outer ring radius
-const BAR_THICK_PX  = 4           // line thickness
+const RADIUS_PX = 6.2
+const BAR_THICK_PX  = 5           // line thickness
 const BAR_COLOR     = '#EEC156'
 
 function edgeKey(a: number, b: number) {
   return a < b ? `${a}-${b}` : `${b}-${a}`
 }
 
-export default function LineLayer({ places }: { places: BoardPlaces }) {
-  /*── get real pixel size of board container ──*/
+export default function LineLayer({ places, photo }: { places: BoardPlaces, photo: boolean }): JSX.Element {
   const boxRef = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
 
@@ -60,9 +59,12 @@ export default function LineLayer({ places }: { places: BoardPlaces }) {
         const len = Math.hypot(dx, dy) + 2
 
         /* cut away the ring on both ends */
-        const barLen = Math.max(0, len - 2 * RADIUS_PX)
-        if (barLen === 0) return null   // nodes overlap
-
+        let radius = 15
+        if (boxRef.current) {
+          radius = (RADIUS_PX / 2) / 100 * boxRef.current.clientHeight;
+        }
+        const barLen = Math.max(0, len - radius - BAR_THICK_PX * 3)
+        if (barLen === 0) return null   // nodes overla
         /* angle in rad then deg */
         const angle = Math.atan2(dy, dx) * 180 / Math.PI
 
@@ -83,7 +85,7 @@ export default function LineLayer({ places }: { places: BoardPlaces }) {
               left: midX,
               top: midY,
               width: barLen,
-              height: BAR_THICK_PX,
+              height: '0.35em',
               background,
               transform: `translate(-50%, -50%) rotate(${angle}deg)`,
               transformOrigin: 'center',

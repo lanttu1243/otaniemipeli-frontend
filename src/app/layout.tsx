@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "@tietokilta/ui/global.css";
 import "./globals.css";
-import Header from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const robotoMono = Roboto_Mono({
@@ -25,8 +24,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${robotoMono.variable} antialiased font-[family-name:var(--font-geist-sans)]`}
       >
-        <Header />
-        {children}
+        <div className="flec flex-col p-2 h-screen overflow-hidden">
+          {children}
+        </div>
       </body>
     </html>
   );

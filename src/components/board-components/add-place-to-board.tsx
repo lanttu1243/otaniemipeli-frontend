@@ -13,8 +13,8 @@ export default function AddPlaceToBoard({boardId}: {boardId: number}): JSX.Eleme
   const [placeNumber, setPlaceNumber] = useState<number>(0);
   const [start, setStart] = useState<boolean>(false);
   const [end, setEnd] = useState<boolean>(false);
-  const [x, setX] = useState<number>(0);
-  const [y, setY] = useState<number>(0);
+  const x = 0;
+  const y = 0;
   const [submitted, setSubmitted] = useState<boolean>(false);
   const router = useRouter()
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function AddPlaceToBoard({boardId}: {boardId: number}): JSX.Eleme
     ).catch(
       (err) => console.error('Error fetching places:', err)
     )
-  }, [submitted]);
+  }, [submitted, boardId]);
   const [value, setValue] = useState<"" | number>("");
   const [error, setError] = useState<string | null>(null);
 
@@ -67,6 +67,8 @@ export default function AddPlaceToBoard({boardId}: {boardId: number}): JSX.Eleme
       end,
       x,
       y,
+      connections: [],
+      drinks: { drinks: [] },
     };
     setSubmitted(!submitted)
     if (value === "") {
@@ -77,7 +79,6 @@ export default function AddPlaceToBoard({boardId}: {boardId: number}): JSX.Eleme
     setPlaceNumber(placeNumber+1)
     try {
       const res = await postBoardPlace(boardPlace);
-      console.log('BoardPlace posted:', res);
     } catch (err) {
       console.error('Post error:', err);
     }

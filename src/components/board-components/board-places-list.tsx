@@ -1,8 +1,5 @@
-import {BoardPlace, BoardPlaces, Ingredient, Ingredients, PlaceType} from "@/utils/types";
-import IngredientCard from "@/components/drink-components/ingredient-card";
-import AddIngredientDialog from "@/components/drink-components/add-ingredient-form";
+import {BoardPlace, BoardPlaces} from "@/utils/types";
 import React from "react";
-import {getPlaceColor} from "@/utils/colors";
 import PlaceCard from "@/components/board-components/place-card";
 
 export default async function BoardPlacesList({boardId}: {boardId?: number}) {
@@ -29,7 +26,7 @@ export default async function BoardPlacesList({boardId}: {boardId?: number}) {
           }).map((boardPlace: BoardPlace) => (
 
           <li key={boardPlace.place_number}>
-            <PlaceCard place={boardPlace.place} placeNumber={boardPlace.place_number} />
+            <PlaceCard place={boardPlace} />
           </li>
         )) : <p>No ingredients!</p>}
       </ul>

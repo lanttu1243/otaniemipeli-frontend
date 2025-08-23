@@ -2,13 +2,13 @@
 import React, {useEffect, useState} from "react";
 import {
   BoardPlace,
-  Drink,
   DrinksIngredients,
   PlaceDrink,
   PlaceDrinks
 } from "@/utils/types";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
 import {addDrinksToPlace, getDrinks} from "@/utils/fetchers";
+import {useRouter} from "next/navigation";
 
 export default function AddDrinkToPlace(
   {
@@ -19,13 +19,14 @@ export default function AddDrinkToPlace(
 ) {
 
   const [drinks, setDrinks] = useState<DrinksIngredients>( {drink_ingredients: []} );
-  const [placeDrinks, setPlaceDrinks] = useState<PlaceDrinks>({drinks: []});
+  const [placeDrinks, setPlaceDrinks] = useState<PlaceDrinks>(place.drinks);
+  const router = useRouter();
   const deleteDrink = (id: number) => {
     const list = [...placeDrinks.drinks];
 
     const idx = list.findIndex(drink => drink.drink.id === id); // first match
     if (idx !== -1) {
-      list.splice(idx, 1);          // remove exactly 1 element at that place
+      list.splice(idx, 1);
     }
     setPlaceDrinks({
       drinks: list
@@ -48,7 +49,7 @@ export default function AddDrinkToPlace(
   }
 
   return (
-    <div className="flex flex-col gap-2 w-full h-full max-h-[56vh] mx-auto box">
+    <div className="flex flex-col gap-2 w-full h-full max-h-[54vh] mx-auto box">
       <h3 className="text-2xl font-bold">Lisää juomia valittuun ruutuun</h3>
       <div className="flex gap-2 h-full overflow-y-scroll">
         <div className="flex flex-col gap-1 w-2/5">
@@ -103,6 +104,7 @@ export default function AddDrinkToPlace(
           <div className="flex button"
           onClick={() => {
             addDrinksToPlace(placeDrinks).then()
+            router.refresh()
           }}>
             <h1>Lisää juomat ruutuihin</h1>
           </div>
@@ -147,7 +149,15 @@ function DrinkSelectionCard({
         ]
       }
     });
-  }, [refill, optional, n, rule]);
+  }, [refill,
+    optional,
+    n,
+    rule,
+    placeDrink.place_number,
+    placeDrink.board_id,
+    placeDrink.drink.id,
+    placeDrink.drink,
+    updateDrinks]);
 
   return (
     <div

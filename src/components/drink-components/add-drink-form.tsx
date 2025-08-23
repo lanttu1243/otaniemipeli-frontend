@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {Drink, Ingredient, Ingredients, PostGame} from "@/utils/types";
+import {Drink} from "@/utils/types";
 
 export default function AddDrinkForm( {refresh}: {refresh: () => void}) {
   const router = useRouter();

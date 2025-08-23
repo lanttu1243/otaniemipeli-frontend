@@ -1,6 +1,6 @@
 "use client";
 import {Board} from "@/utils/types";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 
 export default function BoardCard(
   {
@@ -8,10 +8,11 @@ export default function BoardCard(
   }: {
     board: Board,
   }): JSX.Element {
-  let router = useRouter();
+  const router = useRouter();
+  const path = usePathname()
   return (
     <div className="shadow-md box list-none hover:border-amber-600 hover:border-4 items-center justify-center w-full"
-    onClick={() => router.push(`/boards/${board.id}`)}>
+    onClick={() => router.push(`${path}/${board.id}`)}>
       <div className="text-center items-center w-full">
         <p className="text-lg font-semibold text-gray-900">
           {board.name}

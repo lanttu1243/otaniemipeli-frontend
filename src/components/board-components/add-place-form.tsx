@@ -19,11 +19,7 @@ export default function AddPlaceForm() {
   const [selected, setSelected] = useState<PlaceType>('normal');
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postPlace(place).then(
-      (res) => {
-        console.log(res)
-      }
-    )
+    postPlace(place).then()
     updatePlace(defaultPlace)
     setSelected('normal')
     e.currentTarget.reset(); // Reset the form fields

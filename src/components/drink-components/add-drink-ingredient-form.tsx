@@ -1,30 +1,27 @@
 "use client";
 
-import {Dispatch, SetStateAction, useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Drink, DrinkIngredientsPost, Ingredient, IngredientQty} from "@/utils/types";
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
-import {getDrinkIngredients, getIngredients} from "@/utils/fetchers";
+import {getIngredients} from "@/utils/fetchers";
 import {DrinkCardNoIngredients} from "@/components/drink-components/drink-card";
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export default function AddDrinkIngredientForm(
   {
     drink,
     ingredientsStart,
-    active,
     onUpdateAction,
   }: {
     drink: Drink,
     ingredientsStart: IngredientQty[],
-    active: boolean,
     onUpdateAction: () => void
   }) {
   const ingredientsIn: Ingredient[] = ingredientsStart.map((ing: IngredientQty) => ing.ingredient);
   const router = useRouter();
   const [pendingRefresh, setPendingRefresh] = useState(false);
   const [open, setOpen] = useState(false);
-  const [_, setIngr] = useState<Ingredient | null>(null);
+  const [, setIngr] = useState<Ingredient | null>(null);
 
   const [ingredientsTo, setIngredientsTo] = useState<Ingredient[]>(ingredientsIn);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
@@ -50,7 +47,6 @@ export default function AddDrinkIngredientForm(
         quantity: Number(data.get(`quantity-${ing.id}`)) || 0,
       }))
     };
-    console.log(data);
 
     await fetch("api/drinks/ingredients", {
       method: "POST",
@@ -62,7 +58,7 @@ export default function AddDrinkIngredientForm(
     setPendingRefresh(true);
   }
 
-  const ingredientFetch = () => {
+  const ingredientFetch = useCallback(() => {
     getIngredients().then((data) =>
       setIngredients(data.ingredients
         .filter((ing) =>
@@ -72,7 +68,7 @@ export default function AddDrinkIngredientForm(
         )
       )
     )
-  }
+  }, [ingredientsTo]);
   const clickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     await fetchAllIngredients();
@@ -81,7 +77,7 @@ export default function AddDrinkIngredientForm(
 
   useEffect(() => {
     ingredientFetch();
-  }, []);
+  }, [ingredientFetch]);
 
   useEffect(() => {
     setIngredientsTo(ingredientsStart.map(iq => iq.ingredient));
@@ -95,9 +91,6 @@ export default function AddDrinkIngredientForm(
   }, [pendingRefresh, router]);
 
   const updateIngredient = (ingredient: Ingredient, mode: 'insert' | 'delete') => {
-    console.log(ingredient);
-    console.log(ingredientsTo);
-    console.log(ingredients);
     applyIngredientChange()
 
     function applyIngredientChange() {
@@ -138,7 +131,7 @@ export default function AddDrinkIngredientForm(
           if (!inToIds.has(ingredient.id)) {
             newToIds.add(ingredient.id);
             // remove any items that just moved “to” from the main list
-            for (let id of [...newToIds]) {
+            for (const id of [...newToIds]) {
               newIngIds.delete(id);
             }
           }
@@ -160,8 +153,6 @@ export default function AddDrinkIngredientForm(
     }
 
   }
-  // @ts-ignore
-  // @ts-ignore
   return (
     <>
       <button

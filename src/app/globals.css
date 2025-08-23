@@ -35,40 +35,47 @@
   }
 }
 @layer components {
-  .box {
-    border: 2px solid var(--color-amber-800);
-    padding-inline: calc(var(--spacing) * 3);
-    padding-block: calc(var(--spacing) * 2);
-    border-radius: var(--radius-2xl);
-    --shadow: var(--shadow-md);
-  }
-  .box-hover {
-    border: 2px solid var(--color-amber-800);
-    padding-inline: calc(var(--spacing) * 3);
-    padding-block: calc(var(--spacing) * 2);
-    border-radius: var(--radius-2xl);
-    --shadow: var(--shadow-md);
-  }
-  .box-hover:hover {
-    border: 2px solid var(--color-amber-600);
-    padding-inline: calc(var(--spacing) * 3);
-    padding-block: calc(var(--spacing) * 2);
-    border-radius: var(--radius-2xl);
-    --shadow: var(--shadow-md);
-  }
-  .button {
-    border: 2px solid var(--color-amber-800);
-    background-color: var(--color-amber-800);
-    padding-inline: calc(var(--spacing) * 3);
-    padding-block: calc(var(--spacing) * 2);
-    border-radius: var(--radius-md);
-    --shadow: var(--shadow-md);
-    color: white;
-  }
-  .button:hover {
-    border: 2px solid var(--color-amber-600);
-    background-color: var(--color-amber-600);
-  }
+    .debug {
+        border: 2px solid black;
+    }
+    .box {
+        border: 2px solid var(--color-amber-800);
+        padding-inline: calc(var(--spacing) * 3);
+        padding-block: calc(var(--spacing) * 2);
+        border-radius: var(--radius-2xl);
+        --shadow: var(--shadow-md);
+    }
+    .box-hover {
+        border: 2px solid var(--color-amber-800);
+        padding-inline: calc(var(--spacing) * 3);
+        padding-block: calc(var(--spacing) * 2);
+        border-radius: var(--radius-2xl);
+        --shadow: var(--shadow-md);
+    }
+    .box-hover:hover {
+        border: 2px solid var(--color-amber-600);
+        padding-inline: calc(var(--spacing) * 3);
+        padding-block: calc(var(--spacing) * 2);
+        border-radius: var(--radius-2xl);
+        --shadow: var(--shadow-md);
+    }
+    .button {
+        border: 2px solid var(--color-amber-800);
+        background-color: var(--color-amber-800);
+        padding-inline: calc(var(--spacing) * 3);
+        padding-block: calc(var(--spacing) * 2);
+        border-radius: var(--radius-md);
+        --shadow: var(--shadow-md);
+        color: white;
+    }
+    .button:hover {
+        border: 2px solid var(--color-amber-600);
+        background-color: var(--color-amber-600);
+    }
+    .button:active {
+        border: 2px solid var(--color-amber-900);
+        background-color: var(--color-amber-950);
+    }
 }
 
 body {

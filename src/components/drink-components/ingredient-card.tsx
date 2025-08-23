@@ -2,7 +2,6 @@
 import {Ingredient} from "@/utils/types";
 import {deleteIngredient} from "@/utils/fetchers";
 import {useRouter} from "next/navigation";
-import {MouseEventHandler} from "react";
 
 export default function IngredientCard(
   {
@@ -24,9 +23,7 @@ export default function IngredientCard(
     e.stopPropagation();
     if (drink_id) {
       const deleted = await deleteIngredient(drink_id, ingredient.id);
-      if (deleted) {
-        console.log(`Ingredient ${deleted.name} deleted successfully`);
-      } else {
+      if (!deleted) {
         console.error("Failed to delete ingredient");
       }
     }

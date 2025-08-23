@@ -1,27 +1,23 @@
 "use client"
-import {DrinkIngredients, Drinks, DrinksIngredients} from "@/utils/types";
+import {DrinkIngredients} from "@/utils/types";
 import DrinkCard from "@/components/drink-components/drink-card";
 import AddDrinkForm from "@/components/drink-components/add-drink-form";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {getDrinks} from "@/utils/fetchers";
 
-export default function DrinkList( {
-  className = "",
-                                   }: {
-  className?: string;
-}) {
+export default function DrinkList() {
   const [drinks, setDrinks] = useState<DrinkIngredients[] | null>([]);
 
   const router = useRouter();
-  const fetchDrinks = async () => {
-    let data = await getDrinks();
+  const fetchDrinks = useCallback(async () => {
+    const data = await getDrinks();
     setDrinks(data.drink_ingredients);
     router.refresh()
-  }
+  }, [router])
   useEffect(() => {
     fetchDrinks().then();
-  }, []);
+  }, [fetchDrinks]);
 
   return (
     <div className="items-center justify-center w-full max-h-full py-6 overflow-y-scroll box mb-auto">

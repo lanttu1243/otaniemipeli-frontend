@@ -1,4 +1,36 @@
 export type PlaceType = 'normal' | 'food' | 'sauna' | 'special' | 'guild';
+export type UserType = 'admin' | 'ie' | 'referee' | 'secretary' | 'team';
+
+
+export interface HeaderItem {
+  text: string,
+  href: string,
+}
+export interface LoginInfo {
+  username: string,
+  password: string,
+}
+export interface UserInfo {
+  uid: number,
+  username: string,
+  email: string,
+  user_types: UserType[]
+}
+
+export interface SessionInfo {
+  uid: number,
+  session_hash: string,
+  user_types: UserTypes,
+}
+
+export interface UserSessionInfo {
+  user: UserInfo,
+  session: SessionInfo,
+}
+
+export interface UserTypes {
+  user_types: UserType[],
+}
 
 export interface GameInfo {
   id: number,

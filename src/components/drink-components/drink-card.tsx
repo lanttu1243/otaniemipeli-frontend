@@ -1,10 +1,11 @@
 "use client";
-import {Drink, DrinkIngredients, IngredientQty, PlaceDrink} from "@/utils/types";
+import {Drink, DrinkIngredients, PlaceDrink} from "@/utils/types";
 import {useState} from "react";
 import AddDrinkIngredientForm from "@/components/drink-components/add-drink-ingredient-form";
 import IngredientCard from "@/components/drink-components/ingredient-card";
 import {deleteDrink, getDrinkIngredients} from "@/utils/fetchers";
 import {useRouter} from "next/navigation";
+import RefillSVG from "@/public/refill";
 
 export default function DrinkCard(
   {
@@ -19,7 +20,7 @@ export default function DrinkCard(
   const [state, setState] = useState(false);
   const [drink_ingredients, setDrinkIngredients] = useState(drink.ingredients);
   const [drinkIngrLen, setDrinkIngrLen] = useState(drink_ingredients.length);
-  let router = useRouter();
+  const router = useRouter();
 
   const onClickHandle = async () => {
     await updateIngredients(); // ensure ingredients are fetched
@@ -66,7 +67,6 @@ export default function DrinkCard(
       {functional && state && drink_ingredients.length >= drinkIngrLen ?
         <AddDrinkIngredientForm
           drink={drink.drink}
-          active={state}
           ingredientsStart={drink_ingredients}
           onUpdateAction={updateIngredients}
         /> : null}
@@ -103,11 +103,19 @@ export function PlaceDrinkCard(
     drink: PlaceDrink,
   }): JSX.Element {
   return (
-      <div className="flex items-center justify-items-start w-100">
-        <h3 className="text-lg font-bold text-left px-1 w-3/7">{drink.drink.name}</h3>
-        <p>{drink.refill ? "t" : "f"}</p>
-        <p>{drink.optional ? "t" : "f"}</p>
-        <p>{drink.n}</p>
+      <div className="flex flex-col justify-items-start w-full border-b-1 border-amber-800">
+        <h3 className="text-lg font-bold text-left px-1 w-full">{drink.drink.name}</h3>
+        <div className="flex items-center justify-items-start w-full">
+          <div className="w-7 h-7 my-1">
+            <p className="text-xl w-full text-center font-bold">{drink.n}</p>
+          </div>
+          <div className="w-7 h-7 my-1">
+            {drink.refill && <RefillSVG className="w-full h-full" />}
+          </div>
+          <div className="w-7 h-7 my-1">
+            <p className="text-xl w-full text-center font-bold">{drink.optional && "?"}</p>
+          </div>
+        </div>
       </div>
   );
 }

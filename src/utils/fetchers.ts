@@ -8,29 +8,18 @@ import {
   DrinkIngredients,
   DrinksIngredients,
   Ingredient,
-  Ingredients,
-  Place, PlaceDrinks, Places
+  Ingredients, LoginInfo,
+  Place, PlaceDrinks, Places, SessionInfo, UserInfo, UserSessionInfo
 } from "@/utils/types";
 
-export async function addIngredient(formData: FormData) {
-  await fetch(`${process.env.API_URL}/ingredients`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: formData.get("name"),
-      abv: Number(formData.get("abv")),
-      carbonated: Boolean(formData.get("carbonated")),
-    }),
-  });
-}
 export async function getIngredients():Promise<Ingredients> {
   const res = await fetch(process.env.API_URL + "/ingredients", {
     headers: { "Content-Type": "application/json" },
   });
 
   if (!res.ok) {
-    console.log(res.statusText);
-  };
+    console.error(res.statusText);
+  }
 
   return await res.json();
 }
@@ -71,7 +60,7 @@ export async function getDrinks(): Promise<DrinksIngredients> {
 
   return await res.json();
 }
-export async function getBoards(id?: number): Promise<Boards> {
+export async function getBoards(): Promise<Boards> {
   const res = await fetch(`${process.env.API_URL}/boards`, {
     headers: { "Content-Type": "application/json" },
   });
@@ -110,7 +99,6 @@ export async function postBoardPlace(boardPlace: BoardPlace): Promise<number> {
   return res.status;
 }
 export async function getPlacesNotInBoard(boardId: number): Promise<{p: Places, bp: BoardPlaces}> {
-  console.log(`${process.env.API_URL}/boards/places/${boardId}`)
   const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}`, {
     headers: { "Content-Type": "application/json" },
   });
@@ -118,7 +106,6 @@ export async function getPlacesNotInBoard(boardId: number): Promise<{p: Places, 
   if (!res.ok) console.error(`HTTP ${res.status} not in board`);
 
   const data: BoardPlaces = await res.json();
-  console.log(`${process.env.API_URL}/boards/places`)
   const resp = await fetch(`${process.env.API_URL}/boards/places`, {
     headers: { "Content-Type": "application/json" },
   })
@@ -132,7 +119,7 @@ export async function getPlacesNotInBoard(boardId: number): Promise<{p: Places, 
   }, bp: data}
 }
 
-export async function getBoardPlaces(boardId: number): Promise<BoardPlaces> {
+export async function getBoardPlaces(boardId: string): Promise<BoardPlaces> {
   const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}`, {
     headers: { "Content-Type": "application/json" },
   });
@@ -142,7 +129,6 @@ export async function getBoardPlaces(boardId: number): Promise<BoardPlaces> {
   return await res.json();
 }
 export async function updateCoordinates(boardId: number, place: BoardPlace): Promise<number> {
-  console.log("Updating coordinates for boardId:", boardId, "place:", place);
   const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}/coordinate`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
@@ -163,4 +149,35 @@ export async function addDrinksToPlace(drinks: PlaceDrinks): Promise<number> {
   if (!res.ok) console.error(`HTTP ${res.status} adding drinks to place`);
 
   return await res.json();
+}
+export async function postToLogin(login: LoginInfo): Promise<UserSessionInfo | undefined> {
+  const res = await fetch(`${process.env.API_URL_BASE}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(login),
+  });
+
+  if (!res.ok) {
+    console.error(`HTTP ${res.status} login`);
+    return;
+  }
+  return await res.json();
+}
+export async function verifyUserTypes(sessionToken: String): Promise<SessionInfo | undefined> {
+  const res = await fetch(`${process.env.API_URL_BASE}/login`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `${sessionToken}`
+  }});
+  let body = await res.json();
+
+  console.log(res.status)
+  console.log(body);
+
+  if (body.uid < 0 || body.session_hash == "" || body.user_types.user_types.length === 0) {
+    return undefined;
+  }
+
+  return body;
 }

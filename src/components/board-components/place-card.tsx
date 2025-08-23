@@ -1,7 +1,5 @@
-import {BoardPlace, Ingredient, Place} from "@/utils/types";
-import {deleteIngredient} from "@/utils/fetchers";
-import {useRouter} from "next/navigation";
-import React, {MouseEventHandler} from "react";
+import {BoardPlace} from "@/utils/types";
+import React from "react";
 import {getPlaceColor} from "@/utils/colors";
 import {PlaceDrinkCard} from "@/components/drink-components/drink-card";
 
@@ -32,16 +30,18 @@ export default function PlaceCard({place, placeNumber}: {place: BoardPlace | und
           </p>
           }
         </div>
-        <div className="w-full items-center justify-center p-1 overflow-hidden overflow-y-scroll">
-          <p className="text-justify w-full">
-            {place.place.rule}
-          </p>
-        </div>
-        <div>
-          {place.drinks.drinks.length > 0 &&
-          place.drinks.drinks.map((drink, i) => (
-            <PlaceDrinkCard drink={drink} key={drink.drink.id}/>
-          ))}
+        <div className="flex gap-1 w-full h-full">
+          <div className="w-full items-center justify-center p-2 border-r-1 border-amber-800 overflow-y-scroll">
+            <p className="text-justify text-sm pr-1 ">
+              {place.place.rule}
+            </p>
+          </div>
+          <div className="flex flex-col gap-1 items-center p-2 justify  -center min-w-2/5 h-full overflow-y-scroll">
+            {place.drinks.drinks.length > 0 &&
+            place.drinks.drinks.map((drink) => (
+              <PlaceDrinkCard drink={drink} key={drink.drink.id}/>
+            ))}
+          </div>
         </div>
       </div>
     </div>

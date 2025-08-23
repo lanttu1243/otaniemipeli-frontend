@@ -1,21 +1,23 @@
-export default async function Home() {
-  if (!process.env.API_URL_BASE) {
-    throw new Error('No API URL_BASE environment variable');
-  }
-  const res = await fetch(process.env.API_URL_BASE);
+"use client";
+import LoginComponent from "@/components/login-component";
+import {useEffect, useState} from "react";
+import SelectMode from "@/components/select-mode";
 
-  if (!res.ok) console.error("Failed to fetch API URL_BASE:", res.status);
+export default function Home() {
+  const [loggedIn, setLogin] = useState<boolean>(false)
 
-  let text = await res.text()
+  useEffect(() => {
+    const userString = localStorage.getItem('auth_token') || '';
+    setLogin(!!userString);
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-3.5 max-h-[90dvh] sm:px-10 sm:py-4 font-[family-name:var(--font-geist-sans)]">
       <h1 className="text-gray-900 text-2xl font-bold">
-        Tervetuloa Otaniemipeli-Adminiin!
+        Tervetuloa Otaniemipelin hallintapaneeliin!
       </h1>
-      <p className="text-gray-700">
-        {text}
-      </p>
+      {loggedIn ? <SelectMode setLogin={setLogin} />
+      : <LoginComponent setLogin={setLogin}/>}
     </div>
   );
 }

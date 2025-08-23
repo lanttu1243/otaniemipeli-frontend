@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {Ingredient, Ingredients, PostGame} from "@/utils/types";
+import {Ingredient} from "@/utils/types";
 
 export default function AddIngredientForm() {
   const router = useRouter();
