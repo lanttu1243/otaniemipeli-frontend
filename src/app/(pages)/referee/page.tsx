@@ -1,26 +1,11 @@
 "use client";
-import {useContext, useEffect, useState} from "react";
-import {useSocket} from "@/app/(pages)/referee/template";
+import {useEffect, useState} from "react";
 import CreateGameForm from "@/components/game-components/create-game-form";
 import GameList from "@/components/game-components/game-list";
 
 export default function Home() {
-  const socket = useSocket();
-  const [ip, setIp] = useState<string>('unknown');
   const [text, setText] = useState<string>('');
 
-  const handleSend = () => {
-    if (socket) {
-      let message = {
-        message_type: "message",
-        content: `Hello, this is a test message from ${ip}!`,
-        value: -100,
-        timestamp: new Date().toISOString(),
-      }
-      console.log(message);
-      socket.emit('message', message);
-    }
-  }
 
   // move previous top-level fetch here
   useEffect(() => {
@@ -33,13 +18,6 @@ export default function Home() {
       .then(res => res.text())
       .then(setText)
       .catch(err => console.error('Failed to fetch base:', err));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/ip")
-      .then(res => res.json())
-      .then(data => setIp(data.ip ?? 'unknown'))
-      .catch(() => setIp('unknown'));
   }, []);
 
   return (

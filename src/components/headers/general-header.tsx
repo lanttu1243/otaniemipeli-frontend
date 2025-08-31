@@ -1,6 +1,6 @@
 "use client";
 import {useRouter} from "next/navigation";
-import {HeaderItem} from "@/utils/types";
+import {HeaderItem, UserTypeEnum} from "@/utils/types";
 
 export default function GeneralHeader({base_path, items}: {base_path: string, items: HeaderItem[]}) {
   const router = useRouter();
@@ -21,10 +21,11 @@ export default function GeneralHeader({base_path, items}: {base_path: string, it
     })
     router.push("/");
   }
+  let role = UserTypeEnum[base_path.replace("/", "") as keyof typeof UserTypeEnum]
   let className = "flex items-end justify-center pb-4 border-l-1 border-gray-300 h-full w-32 font-bold hover:bg-gray-200"
   return (
     <div className="flex items-end justify-between w-full h-[10dvh] px-4 mb-4 bg-white border-b border-gray-200">
-      <h1 className="text-4xl font-bold pb-4 text-gray-900">Otaniemipeli Admin</h1>
+      <h1 className="text-4xl font-bold pb-4 text-gray-900 select-none" onClick={() => router.push("/")}>Otaniemipeli {role}</h1>
       <div className="flex h-full items-center pt-6">
         <nav className="flex cursor-default h-full rounded-md bottom">
           <div className={className}>
@@ -34,7 +35,7 @@ export default function GeneralHeader({base_path, items}: {base_path: string, it
           </div>
           <div className={className}>
             <p onClick={() => {router.push(base_path)}}>
-              {base_path === '/' ? 'Etusivu' : base_path.replace('/', '').charAt(0).toUpperCase() + base_path.slice(2)}
+              {role}
             </p>
           </div>
           {items.map((item) => (
@@ -44,11 +45,9 @@ export default function GeneralHeader({base_path, items}: {base_path: string, it
               </p>
             </div>
           ))}
-          <div className="flex items-center justify-center h-full w-32 font-bold bg-amber-800 hover:bg-amber-600 hover:text-gray-300 rounded-md">
-            <p onClick={() => {handleLogout()}}
-            className="text-white">
+          <div className="flex button m-2"
+               onClick={() => {handleLogout()}}>
               Kirjaudu ulos
-            </p>
           </div>
         </nav>
       </div>

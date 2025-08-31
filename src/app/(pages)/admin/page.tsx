@@ -1,3 +1,5 @@
+import CreateUserForm from "@/components/create-user-form";
+
 export default async function Home() {
   if (!process.env.API_URL_BASE) {
     throw new Error('No API URL_BASE environment variable');
@@ -16,6 +18,7 @@ export default async function Home() {
       <p className="text-gray-700">
         {text}
       </p>
+      <CreateUserForm />
     </div>
   );
 }

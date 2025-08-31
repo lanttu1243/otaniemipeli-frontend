@@ -14,6 +14,23 @@ export default function GameList() {
       setGames(data);
     })
   }
+  useEffect(() => {
+    if (!socket) return;
+
+    console.log("Setting up game data interval");
+    socket.on('reply-games', (data: Games) => {
+      setGames(data);
+    });
+    const interval = setInterval(() => {
+      console.log("getGameData");
+      socket.emit('get-games');
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      socket.off('reply-games');
+    };
+  },[socket]);
 
   useEffect(() => {
     if (socket) {

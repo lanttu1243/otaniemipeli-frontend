@@ -61,7 +61,7 @@ export default function CreateGameForm() {
                   options={boards.boards}
                   selectedOption={selectedBoard}
                   setSelectedOption={setSelectedBoard} />
-              <p className="h-6 w-full font-bold center text-lg">{selectedBoard?.name}</p>
+              <p className="h-6 w-full font-bold center text-lg">{selectedBoard && selectedBoard.name}</p>
             <div className="button w-full text-lg" onClick={handleSend}>
               Create Game
             </div>

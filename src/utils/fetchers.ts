@@ -9,7 +9,7 @@ import {
   DrinksIngredients, Games,
   Ingredient,
   Ingredients, LoginInfo,
-  Place, PlaceDrinks, Places, SessionInfo, UserInfo, UserSessionInfo
+  Place, PlaceDrinks, Places, SessionInfo, UserCreateInfo, UserInfo, UserSessionInfo
 } from "@/utils/types";
 
 export async function getIngredients():Promise<Ingredients> {
@@ -173,6 +173,7 @@ export async function postToLogin(login: LoginInfo): Promise<UserSessionInfo | u
   return await res.json();
 }
 export async function verifyUserTypes(sessionToken: String): Promise<SessionInfo | undefined> {
+  console.log(sessionToken);
   const res = await fetch(`${process.env.API_URL_BASE}/login`, {
     method: "PUT",
     headers: {
@@ -182,6 +183,7 @@ export async function verifyUserTypes(sessionToken: String): Promise<SessionInfo
   let body = await res.json();
 
   console.log(res.status)
+  console.log(res.statusText)
   console.log(body);
 
   if (body.uid < 0 || body.session_hash == "" || body.user_types.user_types.length === 0) {
@@ -189,4 +191,33 @@ export async function verifyUserTypes(sessionToken: String): Promise<SessionInfo
   }
 
   return body;
+}
+export async function create_user(user: UserCreateInfo, auth_token: string = ""): Promise<UserSessionInfo> {
+  const res = await fetch(`${process.env.API_URL_BASE}/login/create_user`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `${auth_token}`
+    },
+    body: JSON.stringify(user),
+  });
+
+  if (!res.ok) {
+    console.log(res.statusText)
+    console.log(res.body)
+    throw new Error(`HTTP ${res.status} creating user`);
+  }
+
+  return await res.json();
+}
+export async function users_exist(): Promise<boolean> {
+  const res = await fetch(`${process.env.API_URL_BASE}/login`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) throw new Error(`HTTP ${res.status} users exist`);
+
+  return await res.json();
 }

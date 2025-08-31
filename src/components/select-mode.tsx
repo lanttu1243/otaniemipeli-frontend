@@ -1,5 +1,5 @@
 "use client";
-import {SessionInfo} from "@/utils/types";
+import {SessionInfo, UserTypeEnum} from "@/utils/types";
 import {useRouter} from "next/navigation";
 import {verifyUserTypes} from "@/utils/fetchers";
 import React, {MouseEventHandler, useEffect} from "react";
@@ -7,23 +7,27 @@ import React, {MouseEventHandler, useEffect} from "react";
 export default function SelectMode({setLogin}: { setLogin: React.Dispatch<React.SetStateAction<boolean>> }) {
   const router = useRouter();
   const [session, setSession] = React.useState<SessionInfo | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [_, setLoading] = React.useState(true);
 
   useEffect(() => {
     setLoading(true);
     const token = localStorage.getItem("auth_token");
+    console.log(token)
     if (token) {
       verifyUserTypes(token).then((response) => {
+        console.log("Response: ", response)
         if (response) {
           setSession(response);
         } else {
           console.error("User verification failed, redirecting to login.");
           setLogin(false)
+          localStorage.removeItem("auth_token");
           router.refresh();
         }
       }).catch((error) => {
         console.error("Error verifying user types:", error);
         setLogin(false)
+        localStorage.removeItem("auth_token");
         router.refresh();
       }).finally(() => {
         setLoading(false);
@@ -60,7 +64,7 @@ export default function SelectMode({setLogin}: { setLogin: React.Dispatch<React.
           <a className="button w-full items-center justify-center select-none"
              key={user_type}
              href={`/${user_type}`}>
-            <p className="select-none text-center w-full">{user_type}</p>
+            <p className="select-none text-center w-full">{UserTypeEnum[user_type]}</p>
           </a>)}
         <h1 className="text-gray-900 text-2xl font-bold">
           ...tai...

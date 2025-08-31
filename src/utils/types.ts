@@ -1,14 +1,15 @@
 export type PlaceType = 'normal' | 'food' | 'sauna' | 'special' | 'guild';
 export type UserType = 'admin' | 'ie' | 'referee' | 'secretary' | 'team';
 
-export enum UserTypeEnum {
-  'admin' = 'Admin',
-  'ie' = 'IE',
-  'referee' = 'Tuomari',
-  'secretary' = 'Sihteeri',
-  'team' = 'Joukkue',
-}
 
+export const UserTypes: UserType[] = ['admin', 'ie', 'referee', 'secretary', 'team']
+export const UserTypeEnum = {
+  'admin': 'Admin',
+  'ie': 'IE',
+  'referee': 'Tuomari',
+  'secretary': 'Sihteeri',
+  'team': 'Joukkue',
+}
 
 export interface HeaderItem {
   text: string,
@@ -24,7 +25,12 @@ export interface UserInfo {
   email: string,
   user_types: UserType[]
 }
-
+export interface UserCreateInfo {
+  username: string,
+  email: string,
+  password: string,
+  user_type: UserType
+}
 export interface SessionInfo {
   uid: number,
   session_hash: string,

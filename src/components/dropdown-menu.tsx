@@ -26,10 +26,11 @@ export default function DropdownMenu<T extends WithNameAndId>(
           .map((option) => (
             <MenuItem key={option.id}>
               <div className="w-full bg-amber-800 data-focus:bg-amber-700 hover:bg-amber-600 p-3"
-                   onClick={() => setSelectedOption(
-                     (prev) =>
-                       selectedOption && prev?.id === selectedOption.id ? undefined : selectedOption
-                   )}>
+                   onClick={() =>
+                     setSelectedOption(
+                       (prev) =>
+                         (selectedOption && prev?.id === option.id) ? undefined : option
+                     )}>
                 <p>
                   {option.name}
                 </p>
