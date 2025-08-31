@@ -2,7 +2,7 @@
 import {SessionInfo, UserTypeEnum} from "@/utils/types";
 import {useRouter} from "next/navigation";
 import {verifyUserTypes} from "@/utils/fetchers";
-import React, {MouseEventHandler, useEffect} from "react";
+import React, {useEffect} from "react";
 
 export default function SelectMode({setLogin}: { setLogin: React.Dispatch<React.SetStateAction<boolean>> }) {
   const router = useRouter();

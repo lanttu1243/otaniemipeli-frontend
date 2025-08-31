@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "@tietokilta/ui/global.css";
 import "../../globals.css";
-import Header from "@/components/headers/general-header";
 import {HeaderItem} from "@/utils/types";
 import GeneralHeader from "@/components/headers/general-header";
 

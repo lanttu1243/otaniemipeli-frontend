@@ -1,4 +1,3 @@
-/* components/AddPlaceForm.tsx */
 "use client";
 
 import { useState } from "react";

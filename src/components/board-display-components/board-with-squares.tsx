@@ -16,12 +16,12 @@ export default function BoardWithSquares( {
   focusedPlace: BoardPlace,
   setFocusedPlace: React.Dispatch<React.SetStateAction<BoardPlace>>,
 } ): JSX.Element {
-  const [photo, setPhoto] = React.useState<boolean>(false);
+  const [photo, setPhoto] = React.useState<boolean>(true);
   const [showLines, setShowLines] = React.useState<boolean>(true);
   const path = usePathname()
   const isAdmin = path.includes('admin');
   return (
-    <div className="flex flex-col relative w-[90%] overflow-hidden mx-auto">
+    <div className="flex flex-col relative w-full overflow-hidden mx-auto">
       <Image
         src={photo ? image : graphic}
         alt="Game Board"
@@ -31,13 +31,13 @@ export default function BoardWithSquares( {
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="flex flex-col gap-1 absolute top-1 right-2 w-28">
           <div className="flex flex-col items-center gap-3.5 w-full button"
-          onClick={() => setPhoto(!photo)}>
+               onClick={() => setPhoto(!photo)}>
             <p className="select-none text-sm font-bold">{photo ? "Kuva" : "Grafiikka"}</p>
           </div>
           <div className="flex flex-col items-center gap-3.5 w-full button"
                onClick={() => setShowLines(!showLines)}>
-            <p className="select-none text-sm font-bold">{showLines ? "Ruudut" : "Ei ruutuja"}</p>
-          </div>
+          <p className="select-none text-sm font-bold">{showLines ? "Ruudut" : "Ei ruutuja"}</p>
+        </div>
         </div>
         {places && showLines && !photo && <LineLayer places={places} photo={photo} />}
         {places && showLines && <SquareLayer placesIn={places} focusedPlace={focusedPlace} setFocusedPlace={setFocusedPlace} photo={photo} functional={isAdmin}/>}

@@ -1,6 +1,5 @@
 "use client";
 import React, {useEffect, useState} from "react";
-import AddDrinkToPlace from "@/components/board-display-components/add-drink-to-place";
 import {BoardPlace, BoardPlaces} from "@/utils/types";
 import PlaceCard from "@/components/board-components/place-card";
 import BoardWithSquares from "@/components/board-display-components/board-with-squares";
@@ -42,17 +41,17 @@ export default function BoardOverlay(): JSX.Element {
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 w-full h-[86vh] h-max-[86vh] justify-center">
+    <div className="flex gap-1 w-full h-[86vh] h-max-[86vh] justify-center">
       {
         places &&
-          <div className="w-7/9 mr-auto">
+          <div className="w-2/3">
               <BoardWithSquares
                   places={places}
                   focusedPlace={focusedPlace}
                   setFocusedPlace={setFocusedPlace}/>
           </div>
       }
-      <div>
+      <div className="w-1/3">
         <PlaceCard place={focusedPlace} />
       </div>
     </div>

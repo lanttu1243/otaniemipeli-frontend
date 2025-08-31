@@ -113,15 +113,14 @@ input {
 input:focus,
 textarea:focus,
 select:focus {
-    outline: none;        /* remove outline */
-    box-shadow: none;     /* remove inner blue glow Safari uses */
+    outline: none;
+    box-shadow: none;
 }
 
-/* often helpful on iOS/macOS Safari */
 input,
 textarea,
 select {
-    -webkit-appearance: none; /* skip native styling */
+    -webkit-appearance: none;
 }
 div {
     -webkit-appearance: none;

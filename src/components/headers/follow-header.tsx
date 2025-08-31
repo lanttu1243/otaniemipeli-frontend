@@ -19,7 +19,7 @@ export default function FollowHeader() {
            className="text-gray-700 hover:text-gray-900 hover:underline">
           Ainesosat
         </p>
-        <p onClick={() => {router.push("/follow")}}
+        <p onClick={() => {router.push("/follow/board")}}
            className="text-gray-700 hover:text-gray-900 hover:underline">
           Pelit
         </p>

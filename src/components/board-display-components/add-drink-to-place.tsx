@@ -9,7 +9,6 @@ import {
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
 import {addDrinksToPlace, getDrinks} from "@/utils/fetchers";
 import {useRouter} from "next/navigation";
-import DropdownMenu from "@/components/dropdown-menu";
 
 export default function AddDrinkToPlace(
   {

@@ -74,8 +74,8 @@ export default function createUserForm({
     }
   }, [handleSend]);
   return (
-    <div>
-      <h1 className="font-bold text-xl">Luo ensimmäinen käyttäjä</h1>
+    <div className="flex flex-col gap-4">
+      <h1 className="font-bold text-2xl text-center w-full border-b-1 border-amber-800">Luo {firstUser && 'ensimmäinen'} käyttäjä</h1>
       <form className="flex flex-col gap-3.5" ref={formRef}>
         <input type="text" placeholder="Käyttäjänimi" onChange={(e) => {
           setUser({...user, username: e.target.value});

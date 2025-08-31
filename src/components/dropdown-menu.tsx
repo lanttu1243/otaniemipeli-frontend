@@ -1,5 +1,4 @@
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
-import { Dispatch, SetStateAction } from "react";
 
 type WithNameAndId = { id: string | number; name: string };
 

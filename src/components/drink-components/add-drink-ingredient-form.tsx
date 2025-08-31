@@ -3,7 +3,6 @@
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Drink, DrinkIngredientsPost, Ingredient, IngredientQty} from "@/utils/types";
-import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import {getIngredients} from "@/utils/fetchers";
 import {DrinkCardNoIngredients} from "@/components/drink-components/drink-card";
 import DropdownMenu from "@/components/dropdown-menu";
