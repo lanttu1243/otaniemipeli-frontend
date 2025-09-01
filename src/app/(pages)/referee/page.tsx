@@ -1,3 +1,4 @@
+"use client";
 import CreateGameForm from "@/components/game-components/create-game-form";
 import GameList from "@/components/game-components/game-list";
 import CreateUserForm from "@/components/create-user-form";

@@ -82,7 +82,10 @@ export default function AddPlaceToBoard({
     }
     setPlaceNumber(placeNumber + 1);
     try {
-      await postBoardPlace(boardPlace);
+      await postBoardPlace(
+        boardPlace,
+        localStorage.getItem("auth_token") ?? "",
+      );
     } catch (err) {
       console.error("Post error:", err);
     }
