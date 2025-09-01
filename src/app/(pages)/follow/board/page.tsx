@@ -4,6 +4,7 @@ import { BoardPlace, BoardPlaces } from "@/utils/types";
 import PlaceCard from "@/components/board-components/place-card";
 import BoardWithSquares from "@/components/board-display-components/board-with-squares";
 import { getBoardPlaces } from "@/utils/fetchers";
+import DrinkList from "@/components/drink-components/drinks-list";
 
 export default function BoardOverlay(): JSX.Element {
   const [focusedPlace, setFocusedPlace] = useState<BoardPlace>({
@@ -50,8 +51,9 @@ export default function BoardOverlay(): JSX.Element {
           />
         </div>
       )}
-      <div className="flex flex-col-reverse w-1/3 pb-28 items-end">
-        <PlaceCard place={focusedPlace} className="w-full" />
+      <div className="flex flex-col w-1/3 max-h-[74.5dvh]">
+        <DrinkList className="w-full max-h-1/2" drinksList={focusedPlace.drinks.drinks} />
+        <PlaceCard className="w-full max-h-1/2" place={focusedPlace} />
       </div>
     </div>
   );

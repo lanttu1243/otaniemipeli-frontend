@@ -34,18 +34,18 @@ export default function IngredientCard({
   };
 
   const className = quantity
-    ? "text-base px-1 text-right border-juvu-sini-800 border-"
-    : "text-base px-1 text-left";
+    ? "text-xl font-mono px-1 text-right border-juvu-sini-800 border-"
+    : "text-xl font-mono px-1 text-left";
 
   return (
-    <li className="shadow-md box items-center justify-center w-full">
+    <li className="shadow-md shadow-juvu-sini-600 box items-center justify-center w-full">
       <div className="flex border-juvu-sini-800 items-center">
         <p className={className + "r w-[35%] font-bold text-right"}>
           {ingredient.name}
         </p>
         <p className={className + "r text-right w-3/12"}>{ingredient.abv}%</p>
         {quantity ? (
-          <p className="text-left px-2 border-juvu-sini-800 border-r text-base w-[12%]">
+          <p className="text-left px-2 border-juvu-sini-800 border-r text-xl font-mono w-[12%]">
             {Math.round(quantity)}cl
           </p>
         ) : null}

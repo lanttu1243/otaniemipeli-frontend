@@ -39,31 +39,31 @@ export default function DrinkCard({
 
   return (
     <li
-      className="shadow-md box hover:border-juvu-sini-600 hover:py-3 items-center justify-center w-full"
+      className="shadow-md hover:shadow-xl shadow-juvu-kulta box hover:border-juvu-sini-600 items-center justify-center w-full"
       onClick={onClickHandle}
     >
       <div className="flex items-center justify-items-start w-full">
-        <p className="text-base font-bold text-left px-2 w-1/7">
+        <p className="text-2xl font-mono text-left px-2 w-1/7">
           {drink.drink.id}
         </p>
-        <p className="text-base font-bold text-left px-2 w-5/7 select-none">
+        <p className="text-2xl font-mono text-left px-2 w-5/7 select-none">
           {drink.drink.name}
         </p>
         {drink.abv > 0 ? (
-          <p className="text-base w-1/4 px-1 text-right border-juvu-sini-800 border-l">
+          <p className="text-2xl font-mono w-1/4 px-1 text-right border-juvu-sini-800 border-l">
             {drink.abv}%
           </p>
         ) : (
-          <p className="text-base w-1/4 px-1 text-right border-juvu-sini-800 border-l">
+          <p className="text-2xl font-mono w-1/4 px-1 text-right border-juvu-sini-800 border-l">
             0.0%
           </p>
         )}
         {drink.quantity > 0 ? (
-          <p className="text-base w-2/12 px-2 text-right border-juvu-sini-800 border-l">
+          <p className="text-2xl font-mono w-2/12 px-2 text-right border-juvu-sini-800 border-l">
             {Math.round(drink.quantity)}cl
           </p>
         ) : (
-          <p className="text-base w-2/12 px-2 text-right border-juvu-sini-800 border-l">
+          <p className="text-2xl font-mono w-2/12 px-2 text-right border-juvu-sini-800 border-l">
             0cl
           </p>
         )}
@@ -75,7 +75,7 @@ export default function DrinkCard({
             router.refresh();
           }}
         >
-          {state ? (
+          {state && functional ? (
             <button
               className="button w-full my-1 text-sm"
               onClick={(e) => {
@@ -100,18 +100,21 @@ export default function DrinkCard({
         />
       ) : null}
       {state ? (
-        <ul className="grid gap-2 mt-3 w-full">
+        <>
+        <p className="w-full text-center text-2xl font-redaction-50">Ainesosat</p>
+        <ul className="flex flex-col gap-2 w-full">
           {drink_ingredients.map((ingredient) => (
             <IngredientCard
               key={ingredient.ingredient.id}
               ingredient={ingredient.ingredient}
               quantity={ingredient.quantity}
               drink_id={drink.drink.id}
-              deleteFromDrink={true}
+              deleteFromDrink={functional}
               onDelete={onDeleteClick}
             />
           ))}
         </ul>
+        </>
       ) : null}
     </li>
   );
@@ -138,12 +141,12 @@ export function DrinkCardNoIngredients({
 export function PlaceDrinkCard({ drink }: { drink: PlaceDrink }): JSX.Element {
   return (
     <div className="flex flex-col justify-items-start w-full border-b-1 border-juvu-sini-800">
-      <h3 className="text-lg font-bold text-left px-1 w-full">
+      <h2 className="font-redaction-i-50 text-2xl text-left px-1 w-full">
         {drink.drink.name}
-      </h3>
+      </h2>
       <div className="flex items-center justify-items-start w-full">
         <div className="w-7 h-7 my-1">
-          <p className="text-xl w-full text-center font-bold">{drink.n}</p>
+          <p className="font-redaction-i-70 text-xl w-full text-center">{drink.n}</p>
         </div>
         <div className="w-7 h-7 my-1">
           {drink.refill && <RefillSVG className="w-full h-full" />}

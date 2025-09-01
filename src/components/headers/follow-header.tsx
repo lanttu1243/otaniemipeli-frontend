@@ -7,21 +7,27 @@ import React from "react";
 export default function FollowHeader() {
   const router = useRouter();
   const className =
-    "flex items-end justify-center pb-4 border-l-1 border-juvu-kulta text-juvu-sini-600 h-full w-32 font-bold hover:bg-juvu-sini-600 hover:text-juvu-sini-800";
+    "flex items-end justify-center pb-4 border-l-1 font-mono text-4xl border-juvu-kulta text-juvu-sini-600 h-full w-32 hover:bg-juvu-sini-600 hover:text-juvu-sini-800";
   return (
     <div className="flex items-end justify-right w-full h-[10dvh] px-4 mb-4 bg-juvu-sini-800 border-juvu-kulta border-b-1">
-      <div className="flex h-[10dvh] items-center mr-auto m-1">
+      <div className="flex h-[11dvh] items-center mr-auto">
         <Image
           src={TiKLogo}
           alt="Header Logo"
-          className="w-auto h-full rounded-full"
+          className="h-full w-auto rounded-full"
           priority
         />
         <h2
-          className="font-bold pl-6 text-juvu-sini-600 select-none ml-auto text-[3rem]"
+          className="font-redaction-i-50 hover:font-redaction-i-35 pl-6 text-juvu-sini-600 select-none ml-auto text-6xl"
           onClick={() => router.push("/")}
         >
-          Museobileet: Otaniemipeli
+          Museobileet?
+        </h2>
+        <h2
+          className="font-redaction-50 hover:font-redaction-35 pl-7 text-juvu-sini-600 select-none ml-auto text-6xl"
+          onClick={() => router.push("/")}
+        >
+          Otaniemipeli!
         </h2>
       </div>
       <div className="flex h-full items-center pt-6">
@@ -29,7 +35,7 @@ export default function FollowHeader() {
           <div
             className={className}
             onClick={() => {
-              router.push("/follow/board");
+              router.push("/follow");
             }}
           >
             <h3>Etusivu</h3>
