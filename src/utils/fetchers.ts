@@ -102,7 +102,7 @@ export async function getGames(): Promise<Games> {
 
   return await res.json();
 }
-export async function getBoard(id: number): Promise<Board> {
+export async function getBoard(id: string): Promise<Board> {
   const res = await fetch(`${process.env.API_URL}/boards/${id}`, {
     headers: { "Content-Type": "application/json" },
   });
@@ -188,12 +188,34 @@ export async function getBoardPlaces(boardId: string): Promise<BoardPlaces> {
 export async function updateCoordinates(
   boardId: number,
   place: BoardPlace,
+  token: string
 ): Promise<number> {
   const res = await fetch(
     `${process.env.API_URL}/boards/places/${boardId}/coordinate`,
     {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      Authorization: `${token}` },
+      body: JSON.stringify(place),
+    },
+  );
+
+  if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  return await res.json();
+}
+export async function updatePlace(
+  place: Place,
+  token: string | undefined,
+): Promise<number> {
+  const res = await fetch(
+    `${process.env.API_URL}/boards/places/update/${place.place_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token ?? ""}`,
+      },
       body: JSON.stringify(place),
     },
   );

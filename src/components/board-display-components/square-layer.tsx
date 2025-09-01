@@ -20,18 +20,19 @@ export default function SquareLayer({
   const [places, setPlaces] = React.useState<BoardPlaces>(placesIn);
   const keyDownHandler = (e: React.KeyboardEvent, place: BoardPlace) => {
     const l = 0.05;
+    const m = 100
     if (!functional) return;
-    if (e.key === "ArrowUp") moveFocused(0, -l);
-    else if (e.key === "ArrowDown") moveFocused(0, l);
-    else if (e.key === "ArrowLeft") moveFocused(-l, 0);
-    else if (e.key === "ArrowRight") moveFocused(l, 0);
+    if (e.key === "ArrowUp") moveFocused(0, -m*l);
+    else if (e.key === "ArrowDown") moveFocused(0, m*l);
+    else if (e.key === "ArrowLeft") moveFocused(-m*l, 0);
+    else if (e.key === "ArrowRight") moveFocused(m*l, 0);
     else if (e.key === "w") moveFocused(0, -l);
     else if (e.key === "s") moveFocused(0, l);
     else if (e.key === "a") moveFocused(-l, 0);
     else if (e.key === "d") moveFocused(l, 0);
     else if (e.key === "Enter") {
       // Handle Enter key if needed
-      updateCoordinates(place.board_id, place).then();
+      updateCoordinates(place.board_id, place, localStorage.getItem("auth_token") ?? "").then();
     }
   };
 

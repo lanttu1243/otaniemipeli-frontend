@@ -1,6 +1,7 @@
 import Image from "next/image";
-import graphic from "@/public/niemipelilauta.jpg";
-import image from "@/public/otaniemipeli-photo.png";
+import graphic_1 from "@/public/niemipelilauta.jpg";
+import image_1 from "@/public/otaniemipeli-photo.png";
+import image_2 from "@/public/1985-kuva.png";
 import LineLayer from "@/components/board-display-components/line-layer";
 import SquareLayer from "@/components/board-display-components/square-layer";
 import React from "react";
@@ -25,7 +26,7 @@ export default function BoardWithSquares({
   return (
     <div className="flex flex-col relative w-full overflow-hidden mx-auto">
       <Image
-        src={photo ? image : graphic}
+        src={places.board.id == 1 ? (photo ? image_1 : graphic_1) : image_2}
         alt="Game Board"
         className="w-full h-auto"
         priority
@@ -51,7 +52,7 @@ export default function BoardWithSquares({
             </div>
           </div>
         )}
-        {places && showLines && !photo && <LineLayer places={places} />}
+        {places && showLines && photo && <LineLayer places={places} />}
         {places && showLines && (
           <SquareLayer
             placesIn={places}

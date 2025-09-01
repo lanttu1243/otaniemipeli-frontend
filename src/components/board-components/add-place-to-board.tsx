@@ -102,7 +102,7 @@ export default function AddPlaceToBoard({
       <label>Paikka:</label>
 
       <select
-        value={selectedPlace ? selectedPlace.place_id : ""}
+        defaultValue={2}
         onChange={(e) => {
           const id = Number(e.target.value);
           const found = places.places.find((p) => p.place_id === id);
@@ -110,7 +110,7 @@ export default function AddPlaceToBoard({
         }}
         className="border rounded p-2"
       >
-        {places.places.map((place) => (
+        {places.places.sort((a, b) => a.place_name.localeCompare(b.place_name)).map((place) => (
           <option key={place.place_id} value={place.place_id}>
             {place.place_name}
           </option>
@@ -131,6 +131,7 @@ export default function AddPlaceToBoard({
           <input
             type="checkbox"
             checked={start}
+            className="!focus:bg-juvu-sini-800"
             onChange={() => (!end ? setStart(!start) : {})}
           />
           Start

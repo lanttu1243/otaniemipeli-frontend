@@ -150,6 +150,67 @@ input {
     --shadow: var(--shadow-md);
     text-align: center;
 }
+input[type="checkbox"]{
+    /* kill native look */
+    -webkit-appearance: none;
+    appearance: none;
+
+    /* box */
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 2);
+    border: 1px solid var(--color-juvu-sini-800);
+    border-radius: var(--radius-2xl);
+    background-color: var(--color-juvu-sini-600);
+    --shadow: var(--shadow-md);
+    display: inline-grid;
+    place-content: center;
+    cursor: pointer;
+    /* nice transitions */
+    transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+input[type="checkbox"]::before{
+    content: "";
+    inline-size: .70rem;
+    block-size: .70rem;
+    transform: scale(0);
+    transition: transform .12s ease-in-out;
+
+    /* white tick on colored background */
+    background: #fff;
+    /* simple tick shape */
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0, 43% 62%);
+}
+
+/* checked state uses your color */
+input[type="checkbox"]:checked{
+    background-color: var(--color-juvu-kulta);
+    border-color: var(--color-juvu-kulta);
+}
+input[type="checkbox"]:checked::before{
+    transform: scale(1);
+}
+
+/* focus visible (accessibility, pls keep) */
+input[type="checkbox"]:focus-visible{
+    outline: 2px solid var(--color-juvu-kulta);
+    outline-offset: 2px;
+}
+
+/* disabled look */
+input[type="checkbox"]:disabled{
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+/* optional: indeterminate (for "select all" states) */
+input[type="checkbox"]:indeterminate{
+    background-color: var(--color-juvu-kulta);
+    border-color: var(--color-juvu-kulta);
+}
+input[type="checkbox"]:indeterminate::before{
+    transform: scale(1);
+    clip-path: inset(45% 10% 45% 10%); /* a small bar */
+}
 input:focus,
 textarea:focus,
 select:focus {

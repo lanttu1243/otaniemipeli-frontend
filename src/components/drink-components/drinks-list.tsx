@@ -26,8 +26,8 @@ export default function DrinkList({
   }, [fetchDrinks, drinksList]);
 
   useEffect(() => {
-    setDrinks([]);
     const fetchPlaceDrinks = async () => {
+      let newDrinks: DrinkIngredients[] = [];
       if (drinksList) {
         function onlyUnique(value: number, index: number, array: number[]) {
           return array.indexOf(value) === index;
@@ -35,11 +35,12 @@ export default function DrinkList({
         for (const drink of drinksList.map((a) => a.drink.id).filter(onlyUnique)) {
           try {
             const data = await getDrinkIngredients(drink);
-            setDrinks((prevDrinks) => (prevDrinks ? [...prevDrinks, data] : [data]));
+            newDrinks.push(data);
           } catch (error) {
             console.error("Error fetching drink ingredients:", error);
           }
         }
+        setDrinks(newDrinks);
       }
     };
     void fetchPlaceDrinks();

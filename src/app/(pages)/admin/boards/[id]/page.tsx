@@ -12,7 +12,7 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const board: Board = await getBoard(id as unknown as number);
+  const board: Board = await getBoard(id);
   return (
     <div className="flex flex-col items-end w-full">
       <div className="justify-center items-center w-full">

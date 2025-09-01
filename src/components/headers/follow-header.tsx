@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import TiKLogo from "@/public/TiKprofiilikuva.png";
 import React from "react";
+import {FlickerText} from "@/components/flicker-text";
 
 export default function FollowHeader() {
   const router = useRouter();
@@ -17,18 +18,22 @@ export default function FollowHeader() {
           className="h-full w-auto rounded-full"
           priority
         />
-        <h2
-          className="font-redaction-i-50 hover:font-redaction-i-35 pl-6 text-juvu-sini-600 select-none ml-auto text-6xl"
-          onClick={() => router.push("/")}
-        >
-          Museobileet?
-        </h2>
-        <h2
-          className="font-redaction-50 hover:font-redaction-35 pl-7 text-juvu-sini-600 select-none ml-auto text-6xl"
-          onClick={() => router.push("/")}
-        >
-          Otaniemipeli!
-        </h2>
+        <FlickerText>
+          <h2
+            className=" pl-6 text-juvu-sini-600 select-none ml-auto text-6xl"
+            onClick={() => router.push("/")}
+          >
+            Museobileet?
+          </h2>
+        </FlickerText>
+        <FlickerText>
+          <h2
+            className="pl-7 text-juvu-sini-600 select-none ml-auto text-6xl"
+            onClick={() => router.push("/")}
+          >
+            Otaniemipeli!
+          </h2>
+        </FlickerText>
       </div>
       <div className="flex h-full items-center pt-6">
         <nav className="flex cursor-default h-full rounded-md bottom">

@@ -27,10 +27,11 @@ export default function PlaceCard({
     >
       <div className="flex flex-col gap-1 border-[var(--place-color)] bg-juvu-sini-400 shadow-lg shadow-juvu-kulta border-4 rounded-lg p-2 w-full h-full">
         <div className="flex gap-1 items-center justify-center w-full">
-          <p className="text-left ml-auto">{place.place.place_id}</p>
+          <p className="font-mono text-left ml-auto">{place.place.place_id}</p>
           <p className="font-redaction-b-70 text-2xl text-center w-full">
             {place.place.place_name}
           </p>
+          <p className="font-mono text-right mr-auto">{place.place_number}</p>
           {placeNumber && <p className="text-right mr-auto">{placeNumber}</p>}
         </div>
         <div className="flex gap-1 w-full h-full">
