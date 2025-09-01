@@ -1,3 +1,3 @@
 export default function Page() {
-  return <div>Referee Games Page</div>
+  return <div>Referee Games Page</div>;
 }

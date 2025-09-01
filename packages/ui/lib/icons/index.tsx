@@ -149,7 +149,6 @@ type RenderIconProps = {
 } & (LucideProps | React.ComponentProps<IconType>);
 
 export function RenderIcon({ name, ...props }: RenderIconProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- false positive
   const IconComponent = icons[name] ?? icons.HelpCircle;
   return <IconComponent {...props} />;
 }

@@ -3,20 +3,32 @@ export function getPlaceColor(placeType: string, hover: boolean): string {
   switch (hover) {
     case true:
       switch (type) {
-        case "normal": return "#efc232"
-        case "food": return "#babf55"
-        case "guild": return "#5598da"
-        case "sauna": return "#d14629"
-        case "special": return "#bc5e5f"
-      } break
+        case "normal":
+          return "#FEF612";
+        case "food":
+          return "#def37e";
+        case "guild":
+          return "#BED3EC";
+        case "sauna":
+          return "#F95D03";
+        case "special":
+          return "#FAB7A1";
+      }
+      break;
     case false:
       switch (type) {
-        case "normal": return "#eed056"
-        case "food": return "#aebd79"
-        case "guild": return "#80b4d9"
-        case "sauna": return "#d45949"
-        case "special": return "#bd8f90"
-      } break
+        case "normal":
+          return "#FEF612";
+        case "food":
+          return "#DEF37E";
+        case "guild":
+          return "#BED3EC";
+        case "sauna":
+          return "#F95D03";
+        case "special":
+          return "#FAB7A1";
+      }
+      break;
   }
-  return "#EEC156"
+  return "#EEC156";
 }

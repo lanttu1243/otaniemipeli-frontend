@@ -76,7 +76,6 @@ export const config: Partial<Config> = {
           200: "var(--color-warning-200)",
           100: "var(--color-warning-100)",
         },
-
       },
       boxShadow: {
         solid: "var(--box-shadow-solid)",

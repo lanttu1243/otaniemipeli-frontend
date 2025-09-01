@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
+import {
+  RedactionRegular,
+  RedactionBold,
+  RedactionItalic,
+  W95,
+} from "@/utils/get_fonts";
 import "@tietokilta/ui/global.css";
 import "../../globals.css";
 import FollowHeader from "@/components/headers/follow-header";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const robotoMono = Roboto_Mono({
-  subsets: ["latin"],
-  variable: "--font-roboto-mono",
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,14 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased font-[family-name:var(--font-geist-sans)]`}
-      >
+    <html
+      lang="fi"
+      className={`${W95.variable} ${RedactionRegular.variable} ${RedactionBold.variable} ${RedactionItalic.variable}`}
+    >
+      <body>
         <FollowHeader />
-        <div className="p-2">
-          {children}
-        </div>
+        <div className="px-2">{children}</div>
       </body>
     </html>
   );

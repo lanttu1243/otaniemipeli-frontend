@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import {useEffect} from 'react';
-import {verifyUserTypes} from "@/utils/fetchers";
-import {usePathname, useRouter} from "next/navigation";
-import {SessionInfo, UserType} from "@/utils/types";
+import { useEffect } from "react";
+import { verifyUserTypes } from "@/utils/fetchers";
+import { usePathname, useRouter } from "next/navigation";
+import { SessionInfo, UserTypes } from "@/utils/types";
 
 function authorisationCheck(session: SessionInfo, pathname: string): boolean {
-  let user_types: UserType[] = ['admin', 'ie', 'referee', 'secretary', 'team']
-  for (let type of user_types) {
+  for (const type of UserTypes) {
     if (pathname.startsWith("/" + type)) {
       if (session.user_types.user_types.includes(type)) {
         return true;
@@ -20,36 +19,46 @@ function authorisationCheck(session: SessionInfo, pathname: string): boolean {
   return false;
 }
 function ignoredPaths(pathname: string): boolean {
-  const ignored = ['/follow', '/websocket', '/api', '/favicon.ico', '/_next', '/_vercel'];
+  const ignored = [
+    "/follow",
+    "/websocket",
+    "/api",
+    "/favicon.ico",
+    "/_next",
+    "/_vercel",
+  ];
   return ignored.some((path) => pathname.startsWith(path));
 }
 
-
-export default function AdminTemplate({ children }: { children: React.ReactNode }) {
+export default function AdminTemplate({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   useEffect(() => {
-    const sessionToken = localStorage.getItem('auth_token');
     if (ignoredPaths(pathname)) {
       return;
     } else {
+      const sessionToken = localStorage.getItem("auth_token");
       if (!sessionToken) {
-        router.push('/');
+        router.push("/");
         return;
       }
-      verifyUserTypes(sessionToken).then((data: SessionInfo | undefined) => {
-        if (data) {
-          if (!authorisationCheck(data, pathname)) {
-            router.push('/');
+      verifyUserTypes(sessionToken)
+        .then((data: SessionInfo | undefined) => {
+          if (data) {
+            if (!authorisationCheck(data, pathname)) {
+              router.push("/");
+            }
           }
-        } else {
-          router.push('/');
-        }
-      }).catch((error) => {
-        console.error('Error verifying user types:', error);
-        router.push('/');
-      });
+        })
+        .catch((error) => {
+          console.error("Error verifying user types:", error);
+          router.push("/");
+        });
     }
-    }, [pathname]);
-  return <>{children}</>
+  }, [pathname, router]);
+  return <>{children}</>;
 }

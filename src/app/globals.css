@@ -6,37 +6,75 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
 
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-roboto-mono);
+    --font-mono: var(--font-w95);
+    --font-redaction: var(--font-redaction-regular);
+    --font-redaction-i: var(--font-redaction-italic);
+    --font-redaction-b: var(--font-redaction-bold);
 
-  --color-food-900: #93971F;
-  --color-slime-600: #B2B33A;
+    --color-food-900: #93971F;
+    --color-slime-600: #B2B33A;
 
-  --color-special-900: #d58c7e;
-  --color-special-600: #f5b8b0;
+    --color-special-900: #d58c7e;
+    --color-special-600: #f5b8b0;
 
-  --color-guild-900: #506e89;
-  --color-guild-600: #7a9db2;
+    --color-guild-900: #506e89;
+    --color-guild-600: #7a9db2;
 
-  --color-sauna-900: #cc3301;
-  --color-sauna-600: #e65c1a;
+    --color-sauna-900: #cc3301;
+    --color-sauna-600: #e65c1a;
 
-  --color-normal-900: #EEC156;
-  --color-normal-600: #f5d02c;
+    --color-normal-900: #FEF612;
+    --color-normal-600: #FEF612;
+
+    --color-juvu-sini-900: #000F33;
+    --color-juvu-sini-800: #091F43;
+    --color-juvu-sini-600: #C4CFE1;
+    --color-juvu-sini-400: #D4DFF1;
+    --color-juvu-valko: #FCF7F1;
+    --color-juvu-kulta: #D4AE63;
+    --color-juvu-puna: #FF675E
 }
+
+/* ---- Redaction normal ---- */
+@utility font-redaction   { font-family: var(--font-redaction); font-style: normal; font-weight: 0;}
+@utility font-redaction-10  { font-family: var(--font-redaction); font-style: normal; font-weight: 100;}
+@utility font-redaction-20  { font-family: var(--font-redaction); font-style: normal; font-weight: 200;}
+@utility font-redaction-35  { font-family: var(--font-redaction); font-style: normal; font-weight: 350;}
+@utility font-redaction-50  { font-family: var(--font-redaction); font-style: normal; font-weight: 500;}
+@utility font-redaction-70  { font-family: var(--font-redaction); font-style: normal; font-weight: 700;}
+@utility font-redaction-100 { font-family: var(--font-redaction); font-style: normal; font-weight: 1000;}
+
+/* ---- Redaction italic ---- */
+@utility font-redaction-i   { font-family: var(--font-redaction-i); font-style: italic; font-weight: 0;}
+@utility font-redaction-i-10  { font-family: var(--font-redaction-i); font-style: italic; font-weight: 100;}
+@utility font-redaction-i-20  { font-family: var(--font-redaction-i); font-style: italic; font-weight: 200;}
+@utility font-redaction-i-35  { font-family: var(--font-redaction-i); font-style: italic; font-weight: 350;}
+@utility font-redaction-i-50  { font-family: var(--font-redaction-i); font-style: italic; font-weight: 500;}
+@utility font-redaction-i-70  { font-family: var(--font-redaction-i); font-style: italic; font-weight: 700;}
+@utility font-redaction-i-100 { font-family: var(--font-redaction-i); font-style: italic; font-weight: 1000;}
+
+/* ---- “bold” naming (same as normal but you might prefer these names) ---- */
+@utility font-redaction-b   { font-family: var(--font-redaction-b); font-style: normal; font-weight: 0;}
+@utility font-redaction-b-10  { font-family: var(--font-redaction-b); font-style: normal; font-weight: 100;}
+@utility font-redaction-b-20  { font-family: var(--font-redaction-b); font-style: normal; font-weight: 200;}
+@utility font-redaction-b-35  { font-family: var(--font-redaction-b); font-style: normal; font-weight: 350;}
+@utility font-redaction-b-50  { font-family: var(--font-redaction-b); font-style: normal; font-weight: 500;}
+@utility font-redaction-b-70  { font-family: var(--font-redaction-b); font-style: normal; font-weight: 700;}
+@utility font-redaction-b-100 { font-family: var(--font-redaction-b); font-style: normal; font-weight: 1000;}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #FaFaFa;
-    --foreground: #171717;
+    --background: var(--color-juvu-valko);
+    --foreground: var(--color-juvu-sini-800);
   }
 }
 @layer components {
     .debug {
-        border: 2px solid black;
+        border: 2px solid var(--color-juvu-puna);
     }
     .center {
         align-items: center;
@@ -44,7 +82,7 @@
         text-align: center;
     }
     .box {
-        border: 2px solid var(--color-amber-800);
+        border: 2px solid var(--color-juvu-sini-800);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-2xl);
@@ -58,22 +96,22 @@
         --shadow: var(--shadow-md);
     }
     .box-hover {
-        border: 2px solid var(--color-amber-800);
+        border: 2px solid var(--color-juvu-sini-800);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-2xl);
         --shadow: var(--shadow-md);
     }
     .box-hover:hover {
-        border: 2px solid var(--color-amber-600);
+        border: 2px solid var(--color-juvu-sini-600);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-2xl);
         --shadow: var(--shadow-md);
     }
     .button {
-        border: 2px solid var(--color-amber-800);
-        background-color: var(--color-amber-800);
+        border: 2px solid var(--color-juvu-sini-800);
+        background-color: var(--color-juvu-sini-800);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-md);
@@ -83,27 +121,29 @@
         -webkit-user-select: none;
         user-select: none;
         --shadow: var(--shadow-md);
-        color: white;
+        color: var(--color-juvu-kulta);
         font-weight: 600;
         cursor: pointer;
     }
     .button:hover {
-        border: 2px solid var(--color-amber-600);
-        background-color: var(--color-amber-600);
+        border: 2px solid var(--color-juvu-sini-600);
+        background-color: var(--color-juvu-sini-600);
+        color: var(--color-juvu-sini-800);
     }
     .button:active {
-        border: 2px solid var(--color-amber-900);
-        background-color: var(--color-amber-950);
+        border: 2px solid var(--color-juvu-sini-900);
+        background-color: var(--color-juvu-sini-900);
     }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font: var(--font-mono);
 }
 input {
-    border: 1px solid var(--color-amber-800);
+    border: 1px solid var(--color-juvu-sini-800);
+    background-color: var(--color-juvu-sini-600);
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 2);
     border-radius: var(--radius-2xl);
@@ -128,4 +168,45 @@ div {
 div:focus {
     outline: none;
     box-shadow: none;
+}
+button {
+    border: 2px solid var(--color-juvu-sini-800);
+    background-color: var(--color-juvu-sini-800);
+    padding-inline: calc(var(--spacing) * 3);
+    padding-block: calc(var(--spacing) * 2);
+    border-radius: var(--radius-md);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    -webkit-user-select: none;
+    user-select: none;
+    --shadow: var(--shadow-md);
+    color: var(--color-juvu-kulta);
+    font-weight: 600;
+    cursor: pointer;
+}
+button:hover {
+    border: 2px solid var(--color-juvu-sini-600);
+    background-color: var(--color-juvu-sini-600);
+    color: var(--color-juvu-sini-800);
+}
+button:active {
+    border: 2px solid var(--color-juvu-sini-900);
+    background-color: var(--color-juvu-sini-900);
+}
+h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-juvu-sini-800);
+}
+h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 0.2rem;
 }

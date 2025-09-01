@@ -1,248 +1,266 @@
 "use client";
 
-import {useCallback, useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
-import {Drink, DrinkIngredientsPost, Ingredient, IngredientQty} from "@/utils/types";
-import {getIngredients} from "@/utils/fetchers";
-import {DrinkCardNoIngredients} from "@/components/drink-components/drink-card";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Drink,
+  DrinkIngredientsPost,
+  Ingredient,
+  IngredientQty,
+} from "@/utils/types";
+import { getIngredients } from "@/utils/fetchers";
+import { DrinkCardNoIngredients } from "@/components/drink-components/drink-card";
 import DropdownMenu from "@/components/dropdown-menu";
 
-export default function AddDrinkIngredientForm(
-  {
-    drink,
-    ingredientsStart,
-    onUpdateAction,
-  }: {
-    drink: Drink,
-    ingredientsStart: IngredientQty[],
-    onUpdateAction: () => void
-  }) {
-  const ingredientsIn: Ingredient[] = ingredientsStart.map((ing: IngredientQty) => ing.ingredient);
-  const router = useRouter();
-  const [pendingRefresh, setPendingRefresh] = useState(false);
+type Props = {
+  drink: Drink;
+  ingredientsStart: IngredientQty[];
+  onUpdateAction: () => void;
+};
+
+export default function AddDrinkIngredientForm({
+  drink,
+  ingredientsStart,
+  onUpdateAction,
+}: Props) {
+  const originalIds = useMemo<Set<number>>(
+    () => new Set(ingredientsStart.map((iq) => iq.ingredient.id)),
+    [ingredientsStart],
+  );
+
   const [open, setOpen] = useState(false);
-  const [, setIngr] = useState<Ingredient | null>(null);
-  const [ingredient, setIngredient] = useState<Ingredient | undefined>(undefined);
+  const [allIngredients, setAllIngredients] = useState<Ingredient[]>([]);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const [picked, setPicked] = useState<Ingredient | undefined>(undefined);
 
-  const [ingredientsTo, setIngredientsTo] = useState<Ingredient[]>(ingredientsIn);
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const justOpened = useRef(true);
 
-  const fetchAllIngredients = async () => {
+  const openModal = () => {
+    setOpen(true);
+    justOpened.current = true;
+    // clear guard on next frame (after the opening click fully finishes)
+    requestAnimationFrame(() => {
+      justOpened.current = false;
+    });
+  };
+
+  useEffect(() => {
+    setSelectedIds(new Set(ingredientsStart.map((iq) => iq.ingredient.id)));
+  }, [ingredientsStart]);
+
+  const loadIngredients = useCallback(async () => {
     const data = await getIngredients();
-    const filtered = data.ingredients.filter(
-      ing => !ingredientsTo.some(i => i.id === ing.id)
-    );
-    setIngredients(filtered);
-  }
+    setAllIngredients(data.ingredients);
+  }, []);
+
+  // fetch when dialog opens
+  useEffect(() => {
+    if (open) void loadIngredients();
+  }, [open, loadIngredients]);
+
+  // when user picks from dropdown, add to selection then clear pick
+  useEffect(() => {
+    if (!picked) return;
+    setSelectedIds((prev) => new Set(prev).add(picked.id));
+    setPicked(undefined);
+  }, [picked]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const available = useMemo(
+    () => allIngredients.filter((ing) => !selectedIds.has(ing.id)),
+    [allIngredients, selectedIds],
+  );
+
+  const selected = useMemo(
+    () =>
+      allIngredients
+        .filter((ing) => selectedIds.has(ing.id))
+        // optional sort, you can remove if you want keep insertion order
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    [allIngredients, selectedIds],
+  );
+
+  const remove = useCallback(
+    (id: number) => {
+      // block removing originals, or allow if you want
+      if (originalIds.has(id)) return;
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    },
+    [originalIds],
+  );
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    // Check that none of the ingredients are in ingredientsIn
-    const ingredientData: DrinkIngredientsPost = {
-      drink: drink,
-      ingredients: ingredientsTo.filter(
-        (ing) => !ingredientsIn.some((ingr) => ingr.id === ing.id)
-      ).map((ing) => ({
-        ingredient: ing,
-        quantity: Number(data.get(`quantity-${ing.id}`)) || 0,
-      }))
+    const fd = new FormData(e.currentTarget);
+
+    const newIds = [...selectedIds].filter((id) => !originalIds.has(id));
+    const toPost: DrinkIngredientsPost = {
+      drink,
+      ingredients: newIds.map((id) => {
+        const ing = allIngredients.find((i) => i.id === id)!;
+        const qty = Number(fd.get(`quantity-${id}`)) || 0;
+        return { ingredient: ing, quantity: qty };
+      }),
     };
 
-    await fetch("api/drinks/ingredients", {
+    if (toPost.ingredients.length === 0) {
+      setOpen(false);
+      return;
+    }
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/drinks/ingredients`, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(ingredientData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("auth_token")}`,
+      },
+      body: JSON.stringify(toPost),
     });
-    onUpdateAction()
+
+    onUpdateAction?.();
     setOpen(false);
-    setPendingRefresh(true);
   }
 
-  const ingredientFetch = useCallback(() => {
-    getIngredients().then((data) =>
-      setIngredients(data.ingredients
-        .filter((ing) =>
-          !ingredientsTo.some((ingr) =>
-            ingr.id === ing.id
-          )
-        )
-      )
-    )
-  }, [ingredientsTo]);
-  const clickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    await fetchAllIngredients();
-    setOpen(true);
-  }
-  useEffect(() => {
-    if (ingredient){
-      updateIngredient(ingredient, 'insert');
-    }
-  }, [ingredient]);
-  useEffect(() => {
-    ingredientFetch();
-  }, [ingredientFetch]);
-
-  useEffect(() => {
-    setIngredientsTo(ingredientsStart.map(iq => iq.ingredient));
-  }, [ingredientsStart]);
-
-  useEffect(() => {
-    if (pendingRefresh) {
-      router.refresh();
-      setPendingRefresh(false);
-    }
-  }, [pendingRefresh, router]);
-
-  const updateIngredient = (ingredient: Ingredient, mode: 'insert' | 'delete') => {
-    applyIngredientChange()
-
-    function applyIngredientChange() {
-      if (!ingredient) {
-        setIngr(null);
-        return;
-      }
-
-      // 1. build quick-lookup sets
-      const inToIds = new Set(ingredientsTo.map(i => i.id));
-      const inInIds = new Set(ingredientsIn.map(i => i.id));
-      const currentIds = new Set(ingredients.map(i => i.id));
-
-      // 2. start new sets as clones of the old
-      const newToIds = new Set(inToIds);
-      const newIngIds = new Set(currentIds);
-
-      // 3. apply your three rules in one switch
-      switch (mode) {
-        case 'insert':
-          // only insert if it’s not already in “to”
-          if (!inToIds.has(ingredient.id)) {
-            newToIds.add(ingredient.id);
-            newIngIds.delete(ingredient.id);
-          }
-          break;
-
-        case 'delete':
-          // only delete if it’s in “to” but not in “in”
-          if (inToIds.has(ingredient.id) && !inInIds.has(ingredient.id)) {
-            newToIds.delete(ingredient.id);
-            newIngIds.add(ingredient.id);
-          }
-          break;
-
-        default:
-          // fallback: treat like insert + prune out any “to” items from the main list
-          if (!inToIds.has(ingredient.id)) {
-            newToIds.add(ingredient.id);
-            // remove any items that just moved “to” from the main list
-            for (const id of [...newToIds]) {
-              newIngIds.delete(id);
-            }
-          }
-      }
-
-      const pool = [...ingredientsIn, ...ingredientsTo, ...(ingredient ? [ingredient] : [])];
-      const newIngredientsTo = Array.from(newToIds)
-        .map(id => pool.find(i => i.id === id)!)
-        .filter(Boolean);
-
-      const backPool = [...ingredients, ingredient!];
-      const newIngredients = Array.from(newIngIds)
-        .map(id => backPool.find(i => i.id === id)!)
-        .filter(Boolean);
-
-      setIngredientsTo(newIngredientsTo);
-      setIngredients(newIngredients);
-      setIngr(null);
-    }
-
-  }
   return (
     <>
-      <button
-        className="rounded-2xl text-base ml-auto bg-amber-800 hover:bg-amber-600 px-4 py-1 text-white items-center justify-center w-full"
-        onClick={clickHandler}
+      <div
+        className="button"
+        onClick={(e) => {
+          e.stopPropagation(); // extra safety if inside another clickable
+          openModal();
+        }}
       >
         Lisää ainesosa
-      </button>
+      </div>
 
       {open && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-          onClick={() => setOpen(false)}
+          onClick={(e) => {
+            if (justOpened.current) return;
+            if (e.target !== e.currentTarget) return;
+            setOpen(false);
+          }}
+          role="dialog"
+          aria-modal="true"
         >
           <form
             onSubmit={handleSubmit}
+            onMouseDown={(e) => e.stopPropagation()}
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-sm rounded-lg bg-white p-6 shadow"
           >
-            <h2 className="mb-1 text-xl font-semibold">Lisää ainesosa juomaan</h2>
-            <DrinkCardNoIngredients drink={drink} className="mb-2"/>
-            <div className="flex w-full mb-4 border-2 border-amber-800 rounded-3xl p-2 h-60">
-
+            <h2 className="mb-1 text-xl font-semibold">
+              Lisää ainesosa juomaan
+            </h2>
+            <DrinkCardNoIngredients drink={drink} className="mb-2" />
+            <div className="flex w-full mb-4 border-2 border-juvu-sini-800 rounded-3xl p-2 h-60">
               <DropdownMenu
                 buttonText="Ainesosat"
-                options={ingredients}
-                selectedOption={ingredient}
-                setSelectedOption={setIngredient} />
+                options={available}
+                selectedOption={picked}
+                setSelectedOption={setPicked}
+              />
 
               <div className="flex flex-col items-center w-full h-full overflow-scroll mb-4">
-                {ingredientsTo.length > 0 ?
-                  ingredientsTo.map((ingredient_) => (
-                    <div
-                      className="flex border-amber-800 border-2 w-full rounded-2xl items-center mx-2 py-1 my-1 hover:border-amber-600"
-                      key={ingredient_.id}
-                      onClick={() => updateIngredient(ingredient_, 'delete')}>
-                      <p
-                        className={"text-base px-2 text-right border-amber-700 border-r font-bold w-full"}>{ingredient_.name}</p>
-                      <p className={"text-base px-2 text-left border-amber-700 w-3/12"}>{ingredient_.abv}%</p>
-                    </div>
+                {selected.length > 0 ? (
+                  selected.map((ing) => (
+                    <button
+                      type="button"
+                      key={ing.id}
+                      className="flex border-juvu-sini-800 border-2 w-full rounded-2xl items-center mx-2 py-1 my-1 hover:border-juvu-sini-600"
+                      onClick={() => remove(ing.id)}
+                      title={
+                        originalIds.has(ing.id)
+                          ? "Jo lisätty (lukittu)"
+                          : "Poista valinnasta"
+                      }
+                    >
+                      <p className="text-base px-2 text-right border-juvu-sini-600 border-r font-bold w-full">
+                        {ing.name}
+                      </p>
+                      <p className="text-base px-2 text-left border-juvu-sini-800 w-3/12">
+                        {ing.abv}%
+                      </p>
+                    </button>
                   ))
-                  : <p className="text-base pl-2 my-2 text-gray-900">Select an ingredient</p>}
+                ) : (
+                  <p className="text-base pl-2 my-2 text-gray-900">
+                    Valitse ainesosa
+                  </p>
+                )}
               </div>
             </div>
-            <div className="flex w-full mb-4 border-2 border-amber-800 rounded-3xl p-2 h-80">
+
+            <div className="flex w-full mb-4 border-2 border-juvu-sini-800 rounded-3xl p-2 h-80">
               <div className="flex flex-col items-center w-full h-full overflow-scroll mb-4">
-                {ingredientsTo.length > 0 ?
-                  ingredientsTo.map((ingredient_) => (
-                    <div
-                      className="flex border-amber-800 border-2 w-full rounded-2xl items-center px-3 py-1 my-1 hover:border-amber-600"
-                      key={ingredient_.id}>
-                      <p className={"text-base p-2 text-left font-bold w-11/12"}>{ingredient_.name}</p>
-                      <input
-                        name={`quantity-${ingredient_.id}`}
-                        type="number"
-                        key={ingredient_.id}
-                        min="0"
-                        step="0.1"
-                        required
-                        placeholder="Quantity in cl"
-                        defaultValue={ingredientsStart
-                            .find(ing => ing.ingredient.name === ingredient_.name)
-                            ?.quantity
-                          ?? undefined}
-                        className="w-full text-left text-sm rounded border px-3 py-2"
-                      />
-                    </div>
-                  ))
-                  : <p className="text-base pl-2 my-2 text-gray-900">Select an ingredient</p>}
+                {selected.length > 0 ? (
+                  selected.map((ing) => {
+                    const isOriginal = originalIds.has(ing.id);
+                    const existingQty = ingredientsStart.find(
+                      (iq) => iq.ingredient.id === ing.id,
+                    )?.quantity;
+
+                    return (
+                      <div
+                        key={ing.id}
+                        className="flex border-juvu-sini-800 border-2 w-full rounded-2xl items-center px-3 py-1 my-1 hover:border-juvu-sini-600"
+                      >
+                        <p className="text-base p-2 text-left font-bold w-9/12">
+                          {ing.name}
+                        </p>
+                        {isOriginal ? (
+                          <span className="ml-auto text-sm opacity-70">
+                            {existingQty ?? 0} cl (jo lisätty)
+                          </span>
+                        ) : (
+                          <input
+                            name={`quantity-${ing.id}`}
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            required
+                            placeholder="Quantity in cl"
+                            className="w-full text-left text-sm rounded border px-3 py-2"
+                          />
+                        )}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p className="text-base pl-2 my-2 text-gray-900">
+                    Valitse ainesosa
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                }}
                 className="rounded bg-gray-100 px-3 py-1"
               >
-                Cancel
+                Eiku
               </button>
               <button
                 type="submit"
-                className="rounded bg-amber-800 px-3 py-1 text-white"
+                className="rounded bg-juvu-sini-800 px-3 py-1 text-white"
               >
-                Save
+                Tallenna
               </button>
             </div>
           </form>

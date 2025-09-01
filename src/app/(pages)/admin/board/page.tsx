@@ -1,6 +1,6 @@
 "use client";
-import React, {useEffect} from "react";
-import {useRouter, usePathname} from "next/navigation";
+import React, { useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function BoardOverlay(): JSX.Element {
   const router = useRouter();
@@ -8,7 +8,5 @@ export default function BoardOverlay(): JSX.Element {
   useEffect(() => {
     router.push(path + "/1");
   }, [router, path]);
-  return (
-    <div></div>
-  )
+  return <div></div>;
 }

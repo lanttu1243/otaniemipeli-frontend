@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import {Drink} from "@/utils/types";
+import { Drink } from "@/utils/types";
 
-export default function AddDrinkForm( {refresh}: {refresh: () => void}) {
-  const router = useRouter();
+export default function AddDrinkForm({ refresh }: { refresh: () => void }) {
   const [open, setOpen] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -14,22 +12,24 @@ export default function AddDrinkForm( {refresh}: {refresh: () => void}) {
     const drink: Drink = {
       id: -1,
       name: data.get("name") as string,
-    }
+    };
 
     await fetch("/api/drinks", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("auth_token")}`,
+      },
       body: JSON.stringify(drink),
     });
     refresh();
     setOpen(false);
-    router.refresh();
   }
 
   return (
     <>
       <button
-        className="rounded text-lg bg-amber-800 px-2 py-1 text-white items-center justify-center ml-auto"
+        className="rounded text-lg bg-juvu-sini-800 px-2 py-1 text-white items-center justify-center ml-auto"
         onClick={() => setOpen(true)}
       >
         Lisää juoma
@@ -63,7 +63,7 @@ export default function AddDrinkForm( {refresh}: {refresh: () => void}) {
               </button>
               <button
                 type="submit"
-                className="rounded bg-amber-800 hover:bg-amber-700 px-3 py-1 text-white"
+                className="rounded bg-juvu-sini-800 hover:bg-juvu-sini-600 px-3 py-1 text-white"
               >
                 Tallenna
               </button>

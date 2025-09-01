@@ -1,18 +1,25 @@
-// app/ingredients/actions.ts
 "use server";
 
 import {
-  Board, BoardPlace,
+  Board,
+  BoardPlace,
   BoardPlaces,
   Boards,
   DrinkIngredients,
-  DrinksIngredients, Games,
+  DrinksIngredients,
+  Games,
   Ingredient,
-  Ingredients, LoginInfo,
-  Place, PlaceDrinks, Places, SessionInfo, UserCreateInfo, UserInfo, UserSessionInfo
+  Ingredients,
+  LoginInfo,
+  Place,
+  PlaceDrinks,
+  Places,
+  SessionInfo,
+  UserCreateInfo,
+  UserSessionInfo,
 } from "@/utils/types";
 
-export async function getIngredients():Promise<Ingredients> {
+export async function getIngredients(): Promise<Ingredients> {
   const res = await fetch(process.env.API_URL + "/ingredients", {
     headers: { "Content-Type": "application/json" },
   });
@@ -23,32 +30,49 @@ export async function getIngredients():Promise<Ingredients> {
 
   return await res.json();
 }
-export async function deleteIngredient(drink_id: number, ingredient_id: number): Promise<Ingredient | null> {
-  const res: Response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/drinks/ingredients/${drink_id}?ingredient_id=${ingredient_id}`, {
+export async function deleteIngredient(
+  drink_id: number,
+  ingredient_id: number,
+  token: string | undefined,
+): Promise<Ingredient | null> {
+  const res: Response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/drinks/ingredients/${drink_id}?ingredient_id=${ingredient_id}`,
+    {
       method: "DELETE",
-      headers: {"Content-Type": "application/json"}
-    }
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token ?? ""}`,
+      },
+    },
   );
-  return await res.json()
+  return await res.json();
 }
-export async function getDrinkIngredients(drink_id: number): Promise<DrinkIngredients> {
-  const res = await fetch(`${process.env.API_URL}/drinks/ingredients/${drink_id}`, {
-    headers: { "Content-Type": "application/json" },
-  });
+export async function getDrinkIngredients(
+  drink_id: number,
+): Promise<DrinkIngredients> {
+  const res = await fetch(
+    `${process.env.API_URL}/drinks/ingredients/${drink_id}`,
+    {
+      headers: { "Content-Type": "application/json" },
+    },
+  );
 
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
   return await res.json();
 }
-export async function deleteDrink(drink_id: number) : Promise<{number: number} | undefined> {
+export async function deleteDrink(
+  drink_id: number,
+  token: string,
+): Promise<{ number: number } | undefined> {
   const res = await fetch(`${process.env.API_URL}/drinks/${drink_id}`, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", Authorization: `${token}` },
   });
 
   if (res.ok) {
-    const data =  await res.json();
-    return await data.number
+    const data = await res.json();
+    return await data.number;
   }
 }
 export async function getDrinks(): Promise<DrinksIngredients> {
@@ -87,27 +111,44 @@ export async function getBoard(id: number): Promise<Board> {
 
   return await res.json();
 }
-export async function postPlace(place: Place): Promise<number> {
+export async function postPlace(
+  place: Place,
+  token: string | undefined,
+): Promise<number> {
   const res = await fetch(`${process.env.API_URL}/boards/places`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token ?? ""}`,
+    },
     body: JSON.stringify(place),
   });
   if (!res.ok) console.error(`HTTP ${res.status}`);
 
   return res.status;
 }
-export async function postBoardPlace(boardPlace: BoardPlace): Promise<number> {
-  const res = await fetch(`${process.env.API_URL}/boards/places/${boardPlace.board_id}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(boardPlace),
-  });
+export async function postBoardPlace(
+  boardPlace: BoardPlace,
+  token: string | undefined,
+): Promise<number> {
+  const res = await fetch(
+    `${process.env.API_URL}/boards/places/${boardPlace.board_id}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token ?? ""}`,
+      },
+      body: JSON.stringify(boardPlace),
+    },
+  );
   if (!res.ok) console.error(`HTTP ${res.status}`);
 
   return res.status;
 }
-export async function getPlacesNotInBoard(boardId: number): Promise<{p: Places, bp: BoardPlaces}> {
+export async function getPlacesNotInBoard(
+  boardId: number,
+): Promise<{ p: Places; bp: BoardPlaces }> {
   const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}`, {
     headers: { "Content-Type": "application/json" },
   });
@@ -117,15 +158,22 @@ export async function getPlacesNotInBoard(boardId: number): Promise<{p: Places, 
   const data: BoardPlaces = await res.json();
   const resp = await fetch(`${process.env.API_URL}/boards/places`, {
     headers: { "Content-Type": "application/json" },
-  })
+  });
   if (!resp.ok) console.error(`HTTP ${resp.status}`);
 
   const allPlaces: Places = await resp.json();
 
-  return {p: {
-    places: allPlaces.places.filter((place: Place) =>
-      !data.places.some(boardPlace => boardPlace.place.place_id === place.place_id) || place.place_type === "normal")
-  }, bp: data}
+  return {
+    p: {
+      places: allPlaces.places.filter(
+        (place: Place) =>
+          !data.places.some(
+            (boardPlace) => boardPlace.place.place_id === place.place_id,
+          ) || place.place_type === "normal",
+      ),
+    },
+    bp: data,
+  };
 }
 
 export async function getBoardPlaces(boardId: string): Promise<BoardPlaces> {
@@ -137,21 +185,33 @@ export async function getBoardPlaces(boardId: string): Promise<BoardPlaces> {
 
   return await res.json();
 }
-export async function updateCoordinates(boardId: number, place: BoardPlace): Promise<number> {
-  const res = await fetch(`${process.env.API_URL}/boards/places/${boardId}/coordinate`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(place),
-  });
+export async function updateCoordinates(
+  boardId: number,
+  place: BoardPlace,
+): Promise<number> {
+  const res = await fetch(
+    `${process.env.API_URL}/boards/places/${boardId}/coordinate`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(place),
+    },
+  );
 
   if (!res.ok) console.error(`HTTP ${res.status}`);
 
   return await res.json();
 }
-export async function addDrinksToPlace(drinks: PlaceDrinks): Promise<number> {
+export async function addDrinksToPlace(
+  drinks: PlaceDrinks,
+  token: string | undefined,
+): Promise<number> {
   const res = await fetch(`${process.env.API_URL}/boards/places/drinks`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token ?? ""}`,
+    },
     body: JSON.stringify(drinks),
   });
 
@@ -159,7 +219,9 @@ export async function addDrinksToPlace(drinks: PlaceDrinks): Promise<number> {
 
   return await res.json();
 }
-export async function postToLogin(login: LoginInfo): Promise<UserSessionInfo | undefined> {
+export async function postToLogin(
+  login: LoginInfo,
+): Promise<UserSessionInfo | undefined> {
   const res = await fetch(`${process.env.API_URL_BASE}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -172,39 +234,44 @@ export async function postToLogin(login: LoginInfo): Promise<UserSessionInfo | u
   }
   return await res.json();
 }
-export async function verifyUserTypes(sessionToken: String): Promise<SessionInfo | undefined> {
-  console.log(sessionToken);
+export async function verifyUserTypes(
+  sessionToken: string,
+): Promise<SessionInfo | undefined> {
   const res = await fetch(`${process.env.API_URL_BASE}/login`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `${sessionToken}`
-  }});
-  let body = await res.json();
+      Authorization: `${sessionToken}`,
+    },
+  });
+  const body = await res.json();
 
-  console.log(res.status)
-  console.log(res.statusText)
-  console.log(body);
-
-  if (body.uid < 0 || body.session_hash == "" || body.user_types.user_types.length === 0) {
+  if (
+    body.uid < 0 ||
+    body.session_hash == "" ||
+    body.user_types.user_types.length === 0
+  ) {
     return undefined;
   }
 
   return body;
 }
-export async function create_user(user: UserCreateInfo, auth_token: string = ""): Promise<UserSessionInfo> {
+export async function create_user(
+  user: UserCreateInfo,
+  auth_token: string = "",
+): Promise<UserSessionInfo> {
   const res = await fetch(`${process.env.API_URL_BASE}/login/create_user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `${auth_token}`
+      Authorization: `${auth_token}`,
     },
     body: JSON.stringify(user),
   });
 
   if (!res.ok) {
-    console.log(res.statusText)
-    console.log(res.body)
+    console.log(res.statusText);
+    console.log(res.body);
     throw new Error(`HTTP ${res.status} creating user`);
   }
 

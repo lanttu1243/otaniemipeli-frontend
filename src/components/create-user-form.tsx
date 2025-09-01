@@ -1,121 +1,168 @@
 "use client";
-import React, {useEffect, useRef, useState} from "react";
-import {UserCreateInfo, UserTypeEnum, UserTypes} from "@/utils/types";
-import {create_user, verifyUserTypes} from "@/utils/fetchers";
-import {useRouter} from "next/navigation";
-import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  SessionInfo,
+  UserCreateInfo,
+  UserTypeEnum,
+  UserTypes,
+} from "@/utils/types";
+import { create_user, verifyUserTypes } from "@/utils/fetchers";
+import { useRouter } from "next/navigation";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
-export default function createUserForm({
+export default function CreateUserForm({
   setLoginAction,
   firstUser = false,
-} : {
-  setLoginAction?: React.Dispatch<React.SetStateAction<boolean>>,
-  firstUser?: boolean
+  className,
+}: {
+  setLoginAction?: React.Dispatch<React.SetStateAction<boolean>>;
+  firstUser?: boolean;
+  className?: string;
 }) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const [session, setSession] = useState<SessionInfo | null>(null);
   const [user, setUser] = useState<UserCreateInfo>({
     username: "",
     email: "",
     password: "",
-    user_type: "admin"
+    user_type: firstUser ? "admin" : "team",
   });
   const [passwordConfirm, setPasswordConfirm] = useState<{
-    pw: string,
-    pw_confirm: string
+    pw: string;
+    pw_confirm: string;
   }>({
     pw: "",
-    pw_confirm: ""
+    pw_confirm: "",
   });
   const [pwsMatch, setPwsMatch] = useState<boolean>(true);
 
   useEffect(() => {
-    if (passwordConfirm.pw !== passwordConfirm.pw_confirm) {
-      setPwsMatch(false);
-    }
-    else {
-      setPwsMatch(true);
-      setUser({...user, password: passwordConfirm.pw});
-    }
-  }, [pwsMatch, passwordConfirm]);
+    if (firstUser) return;
+    const token = localStorage.getItem("auth_token");
+    verifyUserTypes(token ?? "").then((ses) => {
+      if (ses) setSession(ses);
+    });
+  }, [firstUser]);
 
-  const handleSend = () => {
+  useEffect(() => {
+    setPwsMatch(passwordConfirm.pw === passwordConfirm.pw_confirm);
+  }, [passwordConfirm]);
+
+  const handleSend = useCallback(() => {
     if (!firstUser || !setLoginAction) {
-      let token = localStorage.getItem("auth_token");
-      create_user(user, token ?? "").then( (res) => {
-        }
-      )
+      const token = localStorage.getItem("auth_token");
+      create_user(user, token ?? "").then();
     } else {
-      create_user(user).then( (res) => {
-          if (res && setLoginAction) {
-            localStorage.setItem("auth_token", res.session.session_hash);
-            setLoginAction(true)
-          }
+      create_user(user).then((res) => {
+        if (res && setLoginAction) {
+          localStorage.setItem("auth_token", res.session.session_hash);
+          setLoginAction(true);
         }
-      )
+      });
     }
     formRef.current?.reset();
-  }
+    formRef.current?.reset();
+    setPasswordConfirm({ pw: "", pw_confirm: "" });
+    setUser((u) => ({ ...u, username: "", email: "", password: "" }));
+  }, [firstUser, setLoginAction, user]);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSend();
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("auth_token");
     if (token && setLoginAction) {
-      verifyUserTypes(token).then(
-        (session) => {
-          if (session) {
-            setLoginAction(true)
-            router.refresh();
-          } else {
-            setLoginAction(false)
-            router.refresh();
-          }
+      verifyUserTypes(token).then((session) => {
+        if (session) {
+          setLoginAction(true);
+          router.refresh();
+        } else {
+          setLoginAction(false);
+          router.refresh();
         }
-      )
+      });
     }
-  }, [handleSend]);
+  }, [router, setLoginAction]);
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="font-bold text-2xl text-center w-full border-b-1 border-amber-800">Luo {firstUser && 'ensimmäinen'} käyttäjä</h1>
-      <form className="flex flex-col gap-3.5" ref={formRef}>
-        <input type="text" placeholder="Käyttäjänimi" onChange={(e) => {
-          setUser({...user, username: e.target.value});
-        }}/>
-        <input type="text" placeholder="Sähköposti" onChange={(e) => {
-          setUser({...user, email: e.target.value});
-        }}/>
-        <input type="password" placeholder="Salasana" onChange={(e) => {
-          setPasswordConfirm({...passwordConfirm, pw: e.target.value});
-        }}/>
-        <input type="password" placeholder="Vahvista salasana" onChange={(e) => {
-          setPasswordConfirm({...passwordConfirm, pw_confirm: e.target.value});
-        }}/>
+    <div className={`${className} flex flex-col`}>
+      <h1>Luo {firstUser && "ensimmäinen"} käyttäjä</h1>
+      <form className="flex flex-col gap-3.5" ref={formRef} onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="Käyttäjänimi"
+          onChange={(e) => {
+            setUser({ ...user, username: e.target.value });
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Sähköposti"
+          onChange={(e) => {
+            setUser({ ...user, email: e.target.value });
+          }}
+        />
+        <input
+          type="password"
+          placeholder="Salasana"
+          onChange={(e) => {
+            const pw = e.target.value;
+            setPasswordConfirm((p) => ({ ...p, pw }));
+            setUser((u) => ({ ...u, password: pw }));
+          }}
+        />
+        <input
+          type="password"
+          placeholder="Vahvista salasana"
+          onChange={(e) => {
+            setPasswordConfirm({
+              ...passwordConfirm,
+              pw_confirm: e.target.value,
+            });
+          }}
+        />
         {!pwsMatch && <p className="text-red-700">Salasanat eivät täsmää</p>}
-        {!firstUser && <><Menu>
-          <MenuButton
-            className="w-full button center text-base" >Käyttäjätyyppi</MenuButton>
-          <MenuItems anchor="right" className="text-base text-gray-900 font-bold rounded-2xl z-50">
-            {UserTypes
-              .map((option) => (
-                <MenuItem key={option}>
-                  <div className="w-full bg-amber-800 data-focus:bg-amber-700 hover:bg-amber-600 p-3 text-white select-none"
-                       onClick={() =>
-                         setUser({...user, user_type: option})}>
-                    <p>
-                      {UserTypeEnum[option]}
-                    </p>
-                  </div>
-                </MenuItem>
-              ))
-            }
-          </MenuItems>
-        </Menu>
-        </>}
-        <p className="w-full text-center font-bold text-lg">{UserTypeEnum[user.user_type]}</p>
-        <div className="button text-lg"
-        onClick={handleSend}>
+        {!firstUser && (
+          <>
+            <Menu>
+              <MenuButton className="w-full button center text-base">
+                Käyttäjätyyppi
+              </MenuButton>
+              <MenuItems
+                anchor="right"
+                className="text-base text-gray-900 font-bold rounded-2xl z-50"
+              >
+                {(session ? session.user_types.user_types : UserTypes).map(
+                  (option) => (
+                    <MenuItem key={option}>
+                      <div
+                        className="w-full
+                      bg-juvu-sini-800
+                      data-focus:bg-juvu-sini-600
+                      hover:bg-juvu-sini-600 p-3
+                      text-juvu-kulta
+                      hover:text-juvu-sini-800
+                      select-none"
+                        onClick={() => setUser({ ...user, user_type: option })}
+                      >
+                        <p>{UserTypeEnum[option]}</p>
+                      </div>
+                    </MenuItem>
+                  ),
+                )}
+              </MenuItems>
+            </Menu>
+          </>
+        )}
+        <p className="w-full text-center font-bold text-lg">
+          {UserTypeEnum[user.user_type]}
+        </p>
+        <button type="submit" className="button text-lg">
           Luo käyttäjä
-        </div>
+        </button>
       </form>
     </div>
-  )
+  );
 }

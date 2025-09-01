@@ -1,36 +1,14 @@
-"use client";
-import {useEffect, useState} from "react";
 import CreateGameForm from "@/components/game-components/create-game-form";
 import GameList from "@/components/game-components/game-list";
+import CreateUserForm from "@/components/create-user-form";
 
 export default function Home() {
-  const [text, setText] = useState<string>('');
-
-
-  // move previous top-level fetch here
-  useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_URL_BASE;
-    if (!base) {
-      console.error('No NEXT_PUBLIC_API_URL_BASE env var');
-      return;
-    }
-    fetch(base)
-      .then(res => res.text())
-      .then(setText)
-      .catch(err => console.error('Failed to fetch base:', err));
-  }, []);
-
   return (
-    <div className="flex flex-col items-center gap-3.5 max-h-[90dvh] sm:px-10 sm:py-4 font-[family-name:var(--font-geist-sans)]">
-      <h1 className="text-gray-900 text-2xl font-bold">
-        Tervetuloa Otaniemipeli-Adminiin!
-      </h1>
-      <p className="text-gray-700">
-        {text}
-      </p>
+    <div className="flex flex-col items-center gap-3.5 max-h-[90dvh] sm:px-10 sm:py-4 ">
       <div className="flex gap-4 w-full h-full">
-        <CreateGameForm />
-        <GameList />
+        <CreateUserForm className="w-100 box" />
+        <CreateGameForm className="w-100" />
+        <GameList className="w-100" />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {Ingredient} from "@/utils/types";
+import { Ingredient } from "@/utils/types";
 
 export default function AddIngredientForm() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function AddIngredientForm() {
       name: data.get("name") as string,
       abv: Number(data.get("abv")),
       carbonated: data.get("carbonated") === "on",
-    }
+    };
 
     await fetch("/api/ingredients", {
       method: "POST",
@@ -32,7 +32,8 @@ export default function AddIngredientForm() {
   return (
     <>
       <button
-        className="rounded text-lg bg-amber-800 px-2 py-1 text-white items-center justify-center ml-auto"        onClick={() => setOpen(true)}
+        className="rounded text-lg bg-juvu-sini-800 px-2 py-1 text-white items-center justify-center ml-auto"
+        onClick={() => setOpen(true)}
       >
         Lisää ainesosa
       </button>
@@ -80,7 +81,7 @@ export default function AddIngredientForm() {
               </button>
               <button
                 type="submit"
-                className="rounded bg-amber-800 px-3 py-1 text-white"
+                className="rounded bg-juvu-sini-800 px-3 py-1 text-white"
               >
                 Save
               </button>
