@@ -5,7 +5,6 @@ import {
   RedactionItalic,
   W95,
 } from "@/utils/get_fonts";
-import "@tietokilta/ui/global.css";
 import "../../globals.css";
 import FollowHeader from "@/components/headers/follow-header";
 

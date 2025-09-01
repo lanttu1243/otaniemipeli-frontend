@@ -5,7 +5,6 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    path.join(path.dirname(require.resolve("@tietokilta/ui")), "**/*.js"),
   ],
   theme: {
     extend: {
@@ -177,7 +176,6 @@ module.exports = {
     },
   },
   plugins: [
-    require("@tietokilta/ui"),
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
   ],
