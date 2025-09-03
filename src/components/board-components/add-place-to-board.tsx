@@ -8,8 +8,10 @@ import { useRouter } from "next/navigation";
 
 export default function AddPlaceToBoard({
   boardId,
+  className,
 }: {
   boardId: number;
+  className?: string;
 }): JSX.Element {
   const [places, setPlaces] = useState<Places>({ places: [] });
   const [boardPlaces, setBoardPlaces] = useState<BoardPlaces>({
@@ -95,7 +97,7 @@ export default function AddPlaceToBoard({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 p-4 border rounded-lg max-w-md mx-auto"
+      className={`${className} flex flex-col gap-4 box`}
     >
       <h2 className="text-lg font-semibold">Lisää paikka laudalle</h2>
 
@@ -110,11 +112,13 @@ export default function AddPlaceToBoard({
         }}
         className="border rounded p-2"
       >
-        {places.places.sort((a, b) => a.place_name.localeCompare(b.place_name)).map((place) => (
-          <option key={place.place_id} value={place.place_id}>
-            {place.place_name}
-          </option>
-        ))}
+        {places.places
+          .sort((a, b) => a.place_name.localeCompare(b.place_name))
+          .map((place) => (
+            <option key={place.place_id} value={place.place_id}>
+              {place.place_name}
+            </option>
+          ))}
       </select>
 
       <input

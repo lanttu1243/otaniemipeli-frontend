@@ -124,7 +124,7 @@ export const RedactionBold = localFont({
   display: "swap",
 });
 export const W95 = localFont({
-  src: "../public/fonts/w95FA/w95fa.woff2",
+  src: "../public/fonts/W95FA/w95fa.woff2",
   variable: "--font-w95",
   display: "swap",
 });

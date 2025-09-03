@@ -1,13 +1,14 @@
 import { getBoards } from "@/utils/fetchers";
-import { Boards } from "@/utils/types";
 import BoardCard from "@/components/board-components/board-card";
+import {useState} from "react";
+import {Boards} from "@/utils/types";
 
-export default async function BoardList() {
+export default async function BoardList({className}: {className?: string}): Promise<JSX.Element> {
   const boards: Boards = await getBoards();
 
   return (
-    <div className="items-center justify-center w-2/3 max-h-2/5 py-6 overflow-y-scroll box mb-auto">
-      <div className="mb-4 flex items-center justify-center px-4 gap-x-2 w-full">
+    <div className={`${className} center`}>
+      <div className="mb-4 flex center px-4 gap-x-2 w-full">
         <h1 className="text-4xl font-bold pl-2 text-left">Laudat</h1>
       </div>
       <div className="w-full">

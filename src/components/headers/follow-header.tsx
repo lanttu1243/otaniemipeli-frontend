@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import TiKLogo from "@/public/TiKprofiilikuva.png";
 import React from "react";
-import {FlickerText} from "@/components/flicker-text";
+import { FlickerText } from "@/components/flicker-text";
 
 export default function FollowHeader() {
   const router = useRouter();

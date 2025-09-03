@@ -146,7 +146,7 @@ export default function AddDrinkIngredientForm({
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          className="fixed inset-0 z-50 flex center bg-black/50"
           onClick={(e) => {
             if (justOpened.current) return;
             if (e.target !== e.currentTarget) return;

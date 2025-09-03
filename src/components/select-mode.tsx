@@ -72,7 +72,7 @@ export default function SelectMode({
         {session &&
           session.user_types.user_types.map((user_type) => (
             <a
-              className="button w-full items-center justify-center select-none"
+              className="button w-full center select-none"
               key={user_type}
               href={`/${user_type}`}
             >
@@ -83,7 +83,7 @@ export default function SelectMode({
           ))}
         <h1 className="text-gray-900 text-2xl font-bold">...tai...</h1>
         <div
-          className="button w-full items-center justify-center select-none"
+          className="button w-full center select-none"
           onClick={() => handleLogout()}
         >
           <p className="select-none text-center w-full">Kirjaudu ulos</p>

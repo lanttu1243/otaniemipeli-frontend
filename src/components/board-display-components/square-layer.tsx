@@ -19,20 +19,24 @@ export default function SquareLayer({
   const boxRef = useRef<HTMLDivElement>(null);
   const [places, setPlaces] = React.useState<BoardPlaces>(placesIn);
   const keyDownHandler = (e: React.KeyboardEvent, place: BoardPlace) => {
-    const l = 0.05;
-    const m = 100
+    const l = 0.1;
+    const m = 50;
     if (!functional) return;
-    if (e.key === "ArrowUp") moveFocused(0, -m*l);
-    else if (e.key === "ArrowDown") moveFocused(0, m*l);
-    else if (e.key === "ArrowLeft") moveFocused(-m*l, 0);
-    else if (e.key === "ArrowRight") moveFocused(m*l, 0);
+    if (e.key === "ArrowUp") moveFocused(0, -m * l);
+    else if (e.key === "ArrowDown") moveFocused(0, m * l);
+    else if (e.key === "ArrowLeft") moveFocused(-m * l, 0);
+    else if (e.key === "ArrowRight") moveFocused(m * l, 0);
     else if (e.key === "w") moveFocused(0, -l);
     else if (e.key === "s") moveFocused(0, l);
     else if (e.key === "a") moveFocused(-l, 0);
     else if (e.key === "d") moveFocused(l, 0);
     else if (e.key === "Enter") {
       // Handle Enter key if needed
-      updateCoordinates(place.board_id, place, localStorage.getItem("auth_token") ?? "").then();
+      updateCoordinates(
+        place.board_id,
+        place,
+        localStorage.getItem("auth_token") ?? "",
+      ).then();
     }
   };
 
@@ -78,12 +82,12 @@ export default function SquareLayer({
             className={
               photo && !(focusedPlace.place_number == place.place_number)
                 ? `absolute rounded-full
-                hover:border-[5px]
+                hover:border-[4px]
                 hover:border-[var(--color-square)] 
                 z-50
                 ${place.end ? "end-ring" : ""}  `
                 : `
-                absolute rounded-full border-[5px]
+                absolute rounded-full border-[4px]
                 border-[var(--color-square)] 
                 hover:border-[var(--color-square-hover)] 
                 z-50
@@ -98,7 +102,7 @@ export default function SquareLayer({
               transform: "translate(-50%, -50%)",
             }}
           >
-            <div className="w-full h-full items-center justify-center flex">
+            <div className="w-full h-full center flex">
               {place.place_number === focusedPlace.place_number && (
                 <>
                   <div

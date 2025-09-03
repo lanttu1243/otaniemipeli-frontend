@@ -5,11 +5,11 @@ import PlaceCard from "@/components/board-components/place-card";
 import BoardWithSquares from "@/components/board-display-components/board-with-squares";
 import { getBoardPlaces } from "@/utils/fetchers";
 import DrinkList from "@/components/drink-components/drinks-list";
-import {usePathname, useRouter} from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Page({
-                               params,
-                             }: {
+  params,
+}: {
   params: Promise<{ id: string }>;
 }): JSX.Element {
   const { id } = use(params);
@@ -59,7 +59,10 @@ export default function Page({
         </div>
       )}
       <div className="flex flex-col w-1/3 max-h-[74.5dvh]">
-        <DrinkList className="w-full max-h-1/2" drinksList={focusedPlace.drinks.drinks} />
+        <DrinkList
+          className="w-full max-h-1/2"
+          drinksList={focusedPlace.drinks.drinks}
+        />
         <PlaceCard className="w-full max-h-1/2" place={focusedPlace} />
       </div>
     </div>

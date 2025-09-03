@@ -1,6 +1,6 @@
 import Image from "next/image";
 import TikLogo from "@/public/TiKprofiilikuva.png";
-import {FlickerText} from "@/components/flicker-text";
+import { FlickerText } from "@/components/flicker-text";
 
 export default async function Home() {
   if (!process.env.API_URL_BASE) {
@@ -18,8 +18,11 @@ export default async function Home() {
         </h1>
       </FlickerText>
 
-      <Image src={TikLogo} alt="logo" className="w-auto h-[75dvh] rounded-full"/>
+      <Image
+        src={TikLogo}
+        alt="logo"
+        className="w-auto h-[75dvh] rounded-full"
+      />
     </div>
-
   );
 }

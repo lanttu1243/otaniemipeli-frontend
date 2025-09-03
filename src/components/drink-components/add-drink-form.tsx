@@ -29,7 +29,7 @@ export default function AddDrinkForm({ refresh }: { refresh: () => void }) {
   return (
     <>
       <button
-        className="rounded text-lg bg-juvu-sini-800 px-2 py-1 text-white items-center justify-center ml-auto"
+        className="rounded text-lg bg-juvu-sini-800 px-2 py-1 text-white center ml-auto"
         onClick={() => setOpen(true)}
       >
         Lisää juoma
@@ -37,7 +37,7 @@ export default function AddDrinkForm({ refresh }: { refresh: () => void }) {
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          className="fixed inset-0 z-50 flex center bg-black/50"
           onClick={() => setOpen(false)}
         >
           <form

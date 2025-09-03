@@ -4,8 +4,10 @@ import PlaceCard from "@/components/board-components/place-card";
 
 export default async function BoardPlacesList({
   boardId,
+  className,
 }: {
   boardId?: number;
+  className?: string;
 }) {
   const res = await fetch(process.env.API_URL + `/boards/places/${boardId}`, {
     headers: { "Content-Type": "application/json" },
@@ -13,7 +15,7 @@ export default async function BoardPlacesList({
 
   if (!res.ok) {
     return (
-      <div className="items-center justify-center p-4">
+      <div className={`${className} center`}>
         <h1 className="text-2xl font-bold text-red-500">
           Error fetching ingredients!
         </h1>
@@ -24,7 +26,7 @@ export default async function BoardPlacesList({
 
   const boardPlaces: BoardPlaces = await res.json();
   return (
-    <div className="items-center justify-center w-120 h-80 overflow-y-scroll rounded-2xl py-6 border-juvu-sini-800 border-2">
+    <div className={`${className} max-h-screen`}>
       <ul className="grid gap-2 overflow-y-scroll px-4 py-2">
         {boardPlaces ? (
           boardPlaces.places

@@ -52,7 +52,7 @@ export default function BoardWithSquares({
             </div>
           </div>
         )}
-        {places && showLines && photo && <LineLayer places={places} />}
+        {places && showLines && !photo && <LineLayer places={places} />}
         {places && showLines && (
           <SquareLayer
             placesIn={places}

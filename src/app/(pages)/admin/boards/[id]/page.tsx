@@ -14,18 +14,20 @@ export default async function Page({
   const { id } = await params;
   const board: Board = await getBoard(id);
   return (
-    <div className="flex flex-col items-end w-full">
-      <div className="justify-center items-center w-full">
-        <BoardCard board={board} />
+    <div className="flex flex-col h-[85vh] w-full px-2">
+      <div className="flex justify-center items-center shrink-0 pb-2">
+        <BoardCard board={board} active={false} />
       </div>
-      <div className="flex gap-4 sm:px-10 sm:py-4">
-        <div className="flex min-h-full">
-          <AddPlaceToBoard boardId={board.id} />
-          <BoardPlacesList boardId={board.id} />
+      <div className="flex min-h-0 overflow-hidden">
+        <div className="flex-1 min-h-0">
+          <AddPlaceToBoard className="w-full" boardId={board.id} />
         </div>
-        <div className="flex flex-col box h-full w-120">
-          <AddPlaceForm />
-          <PlacesList />
+        <div className="flex-2 min-h-0 overflow-auto">
+          <BoardPlacesList className="w-full" boardId={board.id} />
+        </div>
+        <div className="flex flex-col flex-2 gap-2 min-h-0 overflow-hidden">
+          <AddPlaceForm className="w-full box flex-3" />
+          <PlacesList   className="w-full flex-4 min-h-0 overflow-auto" />
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ export default function PlaceCard({
       }
     >
       <div className="flex flex-col gap-1 border-[var(--place-color)] bg-juvu-sini-400 shadow-lg shadow-juvu-kulta border-4 rounded-lg p-2 w-full h-full">
-        <div className="flex gap-1 items-center justify-center w-full">
+        <div className="flex gap-1 center w-full">
           <p className="font-mono text-left ml-auto">{place.place.place_id}</p>
           <p className="font-redaction-b-70 text-2xl text-center w-full">
             {place.place.place_name}
@@ -35,7 +35,7 @@ export default function PlaceCard({
           {placeNumber && <p className="text-right mr-auto">{placeNumber}</p>}
         </div>
         <div className="flex gap-1 w-full h-full">
-          <div className="w-full items-center justify-center p-2 border-r-1 border-juvu-sini-800 overflow-y-scroll">
+          <div className="w-full center p-2 border-r-1 border-juvu-sini-800 overflow-y-scroll">
             <p className="text-justify text-xl pr-1 font-mono">
               {place.place.rule}
             </p>

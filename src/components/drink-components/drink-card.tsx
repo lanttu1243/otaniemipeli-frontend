@@ -39,7 +39,7 @@ export default function DrinkCard({
 
   return (
     <li
-      className="shadow-md hover:shadow-xl shadow-juvu-kulta box hover:border-juvu-sini-600 items-center justify-center w-full"
+      className="shadow-md hover:shadow-xl shadow-juvu-kulta box hover:border-juvu-sini-600 center w-full"
       onClick={onClickHandle}
     >
       <div className="flex items-center justify-items-start w-full">
@@ -101,19 +101,21 @@ export default function DrinkCard({
       ) : null}
       {state ? (
         <>
-        <p className="w-full text-center text-2xl font-redaction-50">Ainesosat</p>
-        <ul className="flex flex-col gap-2 w-full">
-          {drink_ingredients.map((ingredient) => (
-            <IngredientCard
-              key={ingredient.ingredient.id}
-              ingredient={ingredient.ingredient}
-              quantity={ingredient.quantity}
-              drink_id={drink.drink.id}
-              deleteFromDrink={functional}
-              onDelete={onDeleteClick}
-            />
-          ))}
-        </ul>
+          <p className="w-full text-center text-2xl font-redaction-50">
+            Ainesosat
+          </p>
+          <ul className="flex flex-col gap-2 w-full">
+            {drink_ingredients.map((ingredient) => (
+              <IngredientCard
+                key={ingredient.ingredient.id}
+                ingredient={ingredient.ingredient}
+                quantity={ingredient.quantity}
+                drink_id={drink.drink.id}
+                deleteFromDrink={functional}
+                onDelete={onDeleteClick}
+              />
+            ))}
+          </ul>
         </>
       ) : null}
     </li>
@@ -146,7 +148,9 @@ export function PlaceDrinkCard({ drink }: { drink: PlaceDrink }): JSX.Element {
       </h2>
       <div className="flex items-center justify-items-start w-full">
         <div className="w-7 h-7 my-1">
-          <p className="font-redaction-i-70 text-xl w-full text-center">{drink.n}</p>
+          <p className="font-redaction-i-70 text-xl w-full text-center">
+            {drink.n}
+          </p>
         </div>
         <div className="w-7 h-7 my-1">
           {drink.refill && <RefillSVG className="w-full h-full" />}

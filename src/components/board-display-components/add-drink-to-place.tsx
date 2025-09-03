@@ -50,12 +50,12 @@ export default function AddDrinkToPlace({ place }: { place: BoardPlace }) {
         <div className="flex flex-col gap-1 w-2/5">
           {drinks.drink_ingredients.length > 0 && (
             <Menu>
-              <MenuButton className="flex rounded text-base bg-juvu-sini-800 p-1 text-white h-10 mx-1 items-center justify-center w-full hover:bg-juvu-sini-600">
+              <MenuButton className="flex rounded text-base bg-juvu-sini-800 p-1 text-white h-10 mx-1 center w-full hover:bg-juvu-sini-600">
                 Juomat
               </MenuButton>
               <MenuItems
                 anchor="right"
-                className="text-sm text-gray-900 font-bold rounded-2xl z-50 h-3/4"
+                className="text-sm text-juvu-kulta font-bold rounded-2xl z-50 h-3/4"
               >
                 {drinks.drink_ingredients
                   .sort((a, b) => a.drink.name.localeCompare(b.drink.name))
@@ -64,7 +64,7 @@ export default function AddDrinkToPlace({ place }: { place: BoardPlace }) {
                       key={`${place.board_id}-${place.place_number}-${drink.drink.id}`}
                     >
                       <div
-                        className="w-full bg-juvu-sini-800 data-focus:bg-juvu-sini-600 hover:bg-juvu-sini-600 p-3"
+                        className="w-full bg-juvu-sini-800 data-focus:bg-juvu-sini-600 hover:text-juvu-sini-800 hover:bg-juvu-sini-600 p-3"
                         onClick={() =>
                           addDrink({
                             board_id: place.board_id,
@@ -203,7 +203,7 @@ function DrinkSelectionCard({
         <>
           <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
             <div
-              className={`flex gap-2 w-1/2 box items-center justify-center`}
+              className={`flex gap-2 w-1/2 box center`}
               onClick={() => setRefill(!refill)}
             >
               <p className="text-sm w-2/3">Täytettävä</p>
@@ -212,7 +212,7 @@ function DrinkSelectionCard({
               ></p>
             </div>
             <div
-              className={`flex gap-2 w-1/2 box items-center justify-center`}
+              className={`flex gap-2 w-1/2 box center`}
               onClick={() => setOptional(!optional)}
             >
               <p className="text-sm w-2/3">Valinnainen</p>
@@ -222,8 +222,8 @@ function DrinkSelectionCard({
             </div>
           </div>
           <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
-            <div className={`flex gap-2 w-1/2 box items-center justify-center`}>
-              <div className="w-1/3 items-center justify-center button p-1">
+            <div className={`flex gap-2 w-1/2 box center`}>
+              <div className="w-1/3 center button p-1">
                 <p
                   className="text-center w-full select-none"
                   onClick={() => {
@@ -233,10 +233,10 @@ function DrinkSelectionCard({
                   -
                 </p>
               </div>
-              <div className="w-1/3 items-center justify-center p-1">
+              <div className="w-1/3 center p-1">
                 <p className="text-sm text-center w-full">{n}</p>
               </div>
-              <div className="w-1/3 items-center justify-center button p-1">
+              <div className="w-1/3 center button p-1">
                 <p
                   className="text-center w-full select-none"
                   onClick={() => {
@@ -248,10 +248,10 @@ function DrinkSelectionCard({
               </div>
             </div>
             <div
-              className={`flex flex-col gap-2 w-1/2 box items-center justify-center`}
+              className={`flex flex-col gap-2 w-1/2 box center`}
             >
               <p className="text-sm text-center w-full">Täyttösääntö</p>
-              <div className="items-center justify-center w-full p-1">
+              <div className="center w-full p-1">
                 <input
                   className="box w-full"
                   type="text"

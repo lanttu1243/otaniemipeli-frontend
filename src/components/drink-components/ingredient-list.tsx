@@ -13,7 +13,7 @@ export default async function IngredientList({
 
   if (!res.ok) {
     return (
-      <div className="items-center justify-center p-4">
+      <div className="center p-4">
         <h1 className="text-2xl font-bold text-red-500">
           Error fetching ingredients!
         </h1>
@@ -25,9 +25,9 @@ export default async function IngredientList({
   const ingredients: Ingredients = await res.json();
   return (
     <div
-      className={`items-center justify-center py-6 box mb-auto ${className}`}
+      className={`center py-6 box mb-auto ${className}`}
     >
-      <div className="mb-4 flex items-center justify-center px-4 gap-x-2 w-full">
+      <div className="mb-4 flex center px-4 gap-x-2 w-full">
         <h1 className="text-3xl font-bold pl-2 text">Ainesosalista</h1>
         <AddIngredientDialog />
       </div>

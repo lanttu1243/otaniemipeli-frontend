@@ -188,14 +188,16 @@ export async function getBoardPlaces(boardId: string): Promise<BoardPlaces> {
 export async function updateCoordinates(
   boardId: number,
   place: BoardPlace,
-  token: string
+  token: string,
 ): Promise<number> {
   const res = await fetch(
     `${process.env.API_URL}/boards/places/${boardId}/coordinate`,
     {
       method: "PATCH",
-      headers: { "Content-Type": "application/json",
-      Authorization: `${token}` },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
       body: JSON.stringify(place),
     },
   );
