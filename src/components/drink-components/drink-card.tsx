@@ -39,12 +39,14 @@ export default function DrinkCard({
 
   return (
     <li
-      className="shadow-md hover:shadow-xl shadow-juvu-kulta box hover:border-juvu-sini-600 center w-full"
+      className="shadow-md hover:shadow-lg shadow-juvu-kulta box-hover center w-full"
       onClick={onClickHandle}
     >
       <div className="flex items-center justify-items-start w-full">
-        <p className="text-2xl font-mono text-left px-2 w-1/7">
-          {drink.drink.id}
+        <p
+          className={`text-2xl font-mono text-left px-2 w-1/7 center select-none ${!functional && "text-4xl"} ${!functional && state && " rotate-90"}`}
+        >
+          {functional ? drink.drink.id : " ›"}
         </p>
         <p className="text-2xl font-mono text-left px-2 w-5/7 select-none">
           {drink.drink.name}
@@ -148,7 +150,7 @@ export function PlaceDrinkCard({ drink }: { drink: PlaceDrink }): JSX.Element {
       </h2>
       <div className="flex items-center justify-items-start w-full">
         <div className="w-7 h-7 my-1">
-          <p className="font-redaction-i-70 text-xl w-full text-center">
+          <p className="font-redaction-i-70 text-2xl w-full text-center">
             {drink.n}
           </p>
         </div>

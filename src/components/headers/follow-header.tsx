@@ -8,10 +8,10 @@ import { FlickerText } from "@/components/flicker-text";
 export default function FollowHeader() {
   const router = useRouter();
   const className =
-    "flex items-end justify-center pb-4 border-l-1 font-mono text-4xl border-juvu-kulta text-juvu-sini-600 h-full w-32 hover:bg-juvu-sini-600 hover:text-juvu-sini-800";
+    "flex items-end justify-center pb-4 px-4 border-l-1 text-4xl border-juvu-kulta text-juvu-sini-500 h-full hover:bg-juvu-sini-900";
   return (
-    <div className="flex items-end justify-right w-full h-[10dvh] px-4 mb-4 bg-juvu-sini-800 border-juvu-kulta border-b-1">
-      <div className="flex h-[11dvh] items-center mr-auto">
+    <div className="flex items-end justify-right w-full h-[12dvh] px-4 mb-4 bg-juvu-sini-800 border-juvu-kulta border-b-1">
+      <div className="flex items-center h-full py-1 mr-auto">
         <Image
           src={TiKLogo}
           alt="Header Logo"
@@ -20,7 +20,7 @@ export default function FollowHeader() {
         />
         <FlickerText>
           <h2
-            className=" pl-6 text-juvu-sini-600 select-none ml-auto text-6xl"
+            className=" pl-6 text-juvu-sini-500 select-none ml-auto text-6xl"
             onClick={() => router.push("/")}
           >
             Museobileet?
@@ -28,7 +28,7 @@ export default function FollowHeader() {
         </FlickerText>
         <FlickerText>
           <h2
-            className="pl-7 text-juvu-sini-600 select-none ml-auto text-6xl"
+            className="pl-6 text-juvu-sini-500 select-none ml-auto text-6xl"
             onClick={() => router.push("/")}
           >
             Otaniemipeli!
@@ -51,7 +51,7 @@ export default function FollowHeader() {
               router.push("/follow/board");
             }}
           >
-            <h3>Lauta</h3>
+            <h3>Vaihda lauta</h3>
           </div>
         </nav>
       </div>

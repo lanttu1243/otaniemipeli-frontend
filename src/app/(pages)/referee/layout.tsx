@@ -26,7 +26,7 @@ export default function RootLayout({
   ];
   return (
     <html
-      lang="fi"
+      lang="en"
       className={`${W95.variable} ${RedactionRegular.variable} ${RedactionBold.variable} ${RedactionItalic.variable}`}
     >
       <body>

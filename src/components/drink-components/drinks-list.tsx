@@ -4,6 +4,7 @@ import DrinkCard from "@/components/drink-components/drink-card";
 import AddDrinkForm from "@/components/drink-components/add-drink-form";
 import { useCallback, useEffect, useState } from "react";
 import { getDrinkIngredients, getDrinks } from "@/utils/fetchers";
+import Petrified from "@/components/petrified";
 
 export default function DrinkList({
   className,
@@ -13,56 +14,50 @@ export default function DrinkList({
   drinksList?: PlaceDrink[];
 }): JSX.Element {
   const [drinks, setDrinks] = useState<DrinkIngredients[] | null>([]);
+  const [ethanol, setEthanol] = useState<number>(0);
 
   const fetchDrinks = useCallback(async () => {
     if (!drinksList) {
       const data = await getDrinks();
       setDrinks(data.drink_ingredients);
     }
-  }, [setDrinks]);
+  }, [setDrinks, drinksList]);
 
   useEffect(() => {
     void fetchDrinks();
-  }, [fetchDrinks, drinksList]);
+  }, [fetchDrinks]);
 
   useEffect(() => {
     const fetchPlaceDrinks = async () => {
-      let newDrinks: DrinkIngredients[] = [];
+      const newDrinks: DrinkIngredients[] = [];
+      let eth = 0;
       if (drinksList) {
-        function onlyUnique(value: number, index: number, array: number[]) {
-          return array.indexOf(value) === index;
-        }
-        for (const drink of drinksList
-          .map((a) => a.drink.id)
-          .filter(onlyUnique)) {
+        for (const drink of drinksList) {
           try {
-            const data = await getDrinkIngredients(drink);
+            const data: DrinkIngredients = await getDrinkIngredients(
+              drink.drink.id,
+            );
             newDrinks.push(data);
+            eth += drink.n * (data.abv / 100) * data.quantity;
           } catch (error) {
             console.error("Error fetching drink ingredients:", error);
           }
         }
         setDrinks(newDrinks);
+        setEthanol(eth);
       }
     };
     void fetchPlaceDrinks();
   }, [drinksList]);
 
   return (
-    <div
-      className={`center py-4 box mb-auto max-h-[37.25dvh] ${className}`}
-    >
+    <div className={`center py-4 box mb-auto max-h-[37.25dvh] ${className}`}>
       <div className="shrink-0 flex flex-col center px-4 w-full">
         <h1 className="font-redaction-b-70 pl-2 text-left">Juomat</h1>
         {!drinksList && <AddDrinkForm refresh={fetchDrinks} />}
         {drinks && drinksList && (
           <p className="font-mono text-xl w-full text-center">
-            Ruudussa puhdasta etanolia{" "}
-            {drinks
-              .reduce((prev: number, next) => {
-                return prev + (next.abv / 100) * next.quantity;
-              }, 0)
-              .toFixed(1)}
+            Ruudussa puhdasta etanolia {ethanol.toFixed(1)}
             cl
           </p>
         )}
@@ -81,8 +76,9 @@ export default function DrinkList({
                 />
               ))
           ) : (
-            <p className="w-full text-center font-redaction-i-50 text-2xl">
-              😱 Tässä ruudussa ei ole juomia 😱
+            <p className="flex w-full center font-redaction-i-50 text-2xl">
+              <Petrified className="h-[1.5rem] w-auto" /> Tässä ruudussa ei ole
+              juomia <Petrified className="h-[1.5rem] w-auto" />
             </p>
           )}
         </ul>

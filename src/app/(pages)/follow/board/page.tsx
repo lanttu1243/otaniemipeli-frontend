@@ -6,5 +6,5 @@ export default function BoardOverlay(): JSX.Element {
     <div className="flex center w-full">
       <BoardList className="w-1/4" />
     </div>
-  )
+  );
 }

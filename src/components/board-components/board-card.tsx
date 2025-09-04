@@ -2,7 +2,13 @@
 import { Board } from "@/utils/types";
 import { usePathname, useRouter } from "next/navigation";
 
-export default function BoardCard({ board, active=true }: { board: Board, active?: boolean }): JSX.Element {
+export default function BoardCard({
+  board,
+  active = true,
+}: {
+  board: Board;
+  active?: boolean;
+}): JSX.Element {
   const router = useRouter();
   const path = usePathname();
   return (

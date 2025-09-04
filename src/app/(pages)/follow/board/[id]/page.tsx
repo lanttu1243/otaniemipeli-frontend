@@ -5,7 +5,6 @@ import PlaceCard from "@/components/board-components/place-card";
 import BoardWithSquares from "@/components/board-display-components/board-with-squares";
 import { getBoardPlaces } from "@/utils/fetchers";
 import DrinkList from "@/components/drink-components/drinks-list";
-import { usePathname, useRouter } from "next/navigation";
 
 export default function Page({
   params,
@@ -13,7 +12,6 @@ export default function Page({
   params: Promise<{ id: string }>;
 }): JSX.Element {
   const { id } = use(params);
-  const router = useRouter();
   const [focusedPlace, setFocusedPlace] = useState<BoardPlace>({
     place_number: -1,
     x: 0,
@@ -45,25 +43,26 @@ export default function Page({
       .catch((error) => {
         console.error("Error fetching board places:", error);
       });
-  }, []);
+  }, [id]);
 
   return (
-    <div className="flex gap-1 w-full h-[86vh] h-max-[86vh] justify-center">
+    <div className="flex gap-1 w-full h-full justify-center">
       {places && (
-        <div className="w-2/3">
+        <div className="flex-2">
           <BoardWithSquares
+            className="w-full"
             places={places}
             focusedPlace={focusedPlace}
             setFocusedPlace={setFocusedPlace}
           />
         </div>
       )}
-      <div className="flex flex-col w-1/3 max-h-[74.5dvh]">
+      <div className="flex flex-col flex-1 gap-2 h-full">
         <DrinkList
-          className="w-full max-h-1/2"
+          className="flex-1 w-full h-full"
           drinksList={focusedPlace.drinks.drinks}
         />
-        <PlaceCard className="w-full max-h-1/2" place={focusedPlace} />
+        <PlaceCard className="flex-1 w-full h-full" place={focusedPlace} />
       </div>
     </div>
   );

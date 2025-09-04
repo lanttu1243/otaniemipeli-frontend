@@ -29,13 +29,30 @@
     --color-normal-900: #FEF612;
     --color-normal-600: #FEF612;
 
-    --color-juvu-sini-900: #000F33;
+    --color-juvu-sini-900: #000010;
     --color-juvu-sini-800: #091F43;
-    --color-juvu-sini-600: #C4CFE1;
-    --color-juvu-sini-400: #D4DFF1;
-    --color-juvu-valko: #FCF7F1;
-    --color-juvu-kulta: #D4AE63;
-    --color-juvu-puna: #FF675E
+    --color-juvu-sini-700: #3C5276;
+    --color-juvu-tumma: var(--color-juvu-sini-800);
+
+    --color-juvu-sini-600: #919CAE;
+    --color-juvu-sini-500: #C4CFE1;
+    --color-juvu-sini-400: #F7FFFF;
+    --color-juvu-vaalea: var(--color-juvu-sini-500);
+
+    --color-juvu-valko-600: #C9C4BE;
+    --color-juvu-valko-500: #FCF7F1;
+    --color-juvu-valko-400: #FFFFFF;
+    --color-juvu-valko: var(--color-juvu-valko-500);
+
+    --color-juvu-kulta-900: #A17B30;
+    --color-juvu-kulta-800: #D4AE63;
+    --color-juvu-kulta-700: #FFE196;
+    --color-juvu-kulta: var(--color-juvu-kulta-800);
+
+    --color-juvu-puna-900: #CC342B;
+    --color-juvu-puna-800: #FF675E;
+    --color-juvu-puna-700: #FF9A91;
+    --color-juvu-puna: var(--color-juvu-puna-800);
 }
 
 /* ---- Redaction normal ---- */
@@ -69,25 +86,28 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: var(--color-juvu-valko);
-    --foreground: var(--color-juvu-sini-800);
+    --foreground: var(--color-juvu-tumma);
   }
 }
 @layer components {
     .debug {
         border: 2px solid var(--color-juvu-puna);
     }
+
     .center {
         align-items: center;
         justify-content: center;
         text-align: center;
     }
+
     .box {
-        border: 2px solid var(--color-juvu-sini-800);
+        border: 2px solid var(--color-juvu-tumma);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-2xl);
         --shadow: var(--shadow-md);
     }
+
     .no-border-box {
         border: 2px solid transparent;
         padding-inline: calc(var(--spacing) * 3);
@@ -95,23 +115,25 @@
         border-radius: var(--radius-md);
         --shadow: var(--shadow-md);
     }
+
     .box-hover {
-        border: 2px solid var(--color-juvu-sini-800);
+        border: 2px solid var(--color-juvu-tumma);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-2xl);
         --shadow: var(--shadow-md);
     }
+
     .box-hover:hover {
-        border: 2px solid var(--color-juvu-sini-600);
+        border: 2px solid var(--color-juvu-vaalea);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-2xl);
         --shadow: var(--shadow-md);
     }
     .button {
-        border: 2px solid var(--color-juvu-sini-800);
-        background-color: var(--color-juvu-sini-800);
+        border: 2px solid var(--color-juvu-tumma);
+        background-color: var(--color-juvu-tumma);
         padding-inline: calc(var(--spacing) * 3);
         padding-block: calc(var(--spacing) * 2);
         border-radius: var(--radius-md);
@@ -126,24 +148,22 @@
         cursor: pointer;
     }
     .button:hover {
-        border: 2px solid var(--color-juvu-sini-600);
-        background-color: var(--color-juvu-sini-600);
-        color: var(--color-juvu-sini-800);
-    }
-    .button:active {
         border: 2px solid var(--color-juvu-sini-900);
         background-color: var(--color-juvu-sini-900);
     }
+    .button:active {
+        border: 2px solid var(--color-juvu-sini-700);
+        background-color: var(--color-juvu-sini-700);
+    }
 }
-
 body {
     background: var(--background);
     color: var(--foreground);
-    font: var(--font-mono);
+    font-family: var(--font-mono);
 }
 input {
-    border: 1px solid var(--color-juvu-sini-800);
-    background-color: var(--color-juvu-sini-600);
+    border: 1px solid var(--color-juvu-tumma);
+    background-color: var(--color-juvu-vaalea);
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 2);
     border-radius: var(--radius-2xl);
@@ -151,16 +171,15 @@ input {
     text-align: center;
 }
 input[type="checkbox"]{
-    /* kill native look */
     -webkit-appearance: none;
     appearance: none;
 
     /* box */
     padding-inline: calc(var(--spacing) * 3);
     padding-block: calc(var(--spacing) * 2);
-    border: 1px solid var(--color-juvu-sini-800);
+    border: 1px solid var(--color-juvu-tumma);
     border-radius: var(--radius-2xl);
-    background-color: var(--color-juvu-sini-600);
+    background-color: var(--color-juvu-vaalea);
     --shadow: var(--shadow-md);
     display: inline-grid;
     place-content: center;
@@ -174,14 +193,10 @@ input[type="checkbox"]::before{
     block-size: .70rem;
     transform: scale(0);
     transition: transform .12s ease-in-out;
-
-    /* white tick on colored background */
-    background: #fff;
-    /* simple tick shape */
+    background: var(--color-juvu-valko);
     clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0, 43% 62%);
 }
 
-/* checked state uses your color */
 input[type="checkbox"]:checked{
     background-color: var(--color-juvu-kulta);
     border-color: var(--color-juvu-kulta);
@@ -230,43 +245,18 @@ div:focus {
     outline: none;
     box-shadow: none;
 }
-button {
-    border: 2px solid var(--color-juvu-sini-800);
-    background-color: var(--color-juvu-sini-800);
-    padding-inline: calc(var(--spacing) * 3);
-    padding-block: calc(var(--spacing) * 2);
-    border-radius: var(--radius-md);
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    -webkit-user-select: none;
-    user-select: none;
-    --shadow: var(--shadow-md);
-    color: var(--color-juvu-kulta);
-    font-weight: 600;
-    cursor: pointer;
-}
-button:hover {
-    border: 2px solid var(--color-juvu-sini-600);
-    background-color: var(--color-juvu-sini-600);
-    color: var(--color-juvu-sini-800);
-}
-button:active {
-    border: 2px solid var(--color-juvu-sini-900);
-    background-color: var(--color-juvu-sini-900);
-}
 h1 {
     font-size: 2rem;
     text-align: center;
     line-height: 1;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-juvu-sini-800);
+    border-bottom: 1px solid var(--color-juvu-tumma);
 }
 h3 {
     font-size: 1.75rem;
     text-align: center;
     line-height: 1;
     margin-bottom: 0.2rem;
-    font-family: var(--font-mono);
+    font-family: var(--font-mono), serif;
 }

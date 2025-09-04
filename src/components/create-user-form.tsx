@@ -35,7 +35,7 @@ export default function CreateUserForm({
     pw: "",
     pw_confirm: "",
   });
-  const [pwsMatch, setPwsMatch] = useState<boolean>(true);
+  const [pwsMatch, setPwsMatch] = useState<boolean>(false);
 
   useEffect(() => {
     if (firstUser) return;
@@ -46,10 +46,17 @@ export default function CreateUserForm({
   }, [firstUser]);
 
   useEffect(() => {
-    setPwsMatch(passwordConfirm.pw === passwordConfirm.pw_confirm);
+    setPwsMatch(
+      passwordConfirm.pw === passwordConfirm.pw_confirm &&
+        passwordConfirm.pw.length > 0,
+    );
   }, [passwordConfirm]);
 
   const handleSend = useCallback(() => {
+    if (!pwsMatch) {
+      console.log("Passwords do not match");
+      return;
+    }
     if (!firstUser || !setLoginAction) {
       const token = localStorage.getItem("auth_token");
       create_user(user, token ?? "").then();
@@ -62,10 +69,9 @@ export default function CreateUserForm({
       });
     }
     formRef.current?.reset();
-    formRef.current?.reset();
     setPasswordConfirm({ pw: "", pw_confirm: "" });
     setUser((u) => ({ ...u, username: "", email: "", password: "" }));
-  }, [firstUser, setLoginAction, user]);
+  }, [firstUser, setLoginAction, user, pwsMatch]);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -123,7 +129,9 @@ export default function CreateUserForm({
             });
           }}
         />
-        {!pwsMatch && <p className="text-red-700">Salasanat eivät täsmää</p>}
+        {!pwsMatch && passwordConfirm.pw.length != 0 && (
+          <p className="text-red-700">Salasanat eivät täsmää</p>
+        )}
         {!firstUser && (
           <>
             <Menu>

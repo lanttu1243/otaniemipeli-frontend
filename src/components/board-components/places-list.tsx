@@ -2,7 +2,11 @@ import { Place, Places } from "@/utils/types";
 import React from "react";
 import PlaceCard from "@/components/board-components/place-card";
 
-export default async function PlacesList({className}: {className?: string}): Promise<JSX.Element> {
+export default async function PlacesList({
+  className,
+}: {
+  className?: string;
+}): Promise<JSX.Element> {
   const res = await fetch(`${process.env.API_URL}/boards/places`, {
     headers: { "Content-Type": "application/json" },
   });

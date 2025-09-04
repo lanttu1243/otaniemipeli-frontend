@@ -37,7 +37,7 @@ export default function GeneralHeader({
   const role =
     UserTypeEnum[base_path.replace("/", "") as keyof typeof UserTypeEnum];
   const className =
-    "flex items-end justify-center pb-4 border-l-1 border-juvu-kulta text-juvu-sini-600 h-full w-32 font-bold hover:bg-gray-200";
+    "flex center p-4 border-l-1 border-juvu-kulta text-juvu-sini-600 h-full font-bold hover:bg-gray-200";
   return (
     <div className="flex items-end justify-right w-full h-[10dvh] px-4 mb-4 bg-juvu-sini-800 border-juvu-kulta border-b-1">
       <div className="flex h-[10dvh] items-center mr-auto m-1">
@@ -82,12 +82,12 @@ export default function GeneralHeader({
             </div>
           ))}
           <div
-            className="flex button m-2"
+            className={className}
             onClick={() => {
               handleLogout();
             }}
           >
-            Kirjaudu ulos
+            <h3 className="text-juvu-kulta !text-lg">Kirjaudu ulos</h3>
           </div>
         </nav>
       </div>

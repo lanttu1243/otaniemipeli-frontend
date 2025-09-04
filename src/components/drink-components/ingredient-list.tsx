@@ -24,9 +24,7 @@ export default async function IngredientList({
 
   const ingredients: Ingredients = await res.json();
   return (
-    <div
-      className={`center py-6 box mb-auto ${className}`}
-    >
+    <div className={`center py-6 box mb-auto ${className}`}>
       <div className="mb-4 flex center px-4 gap-x-2 w-full">
         <h1 className="text-3xl font-bold pl-2 text">Ainesosalista</h1>
         <AddIngredientDialog />

@@ -6,7 +6,11 @@ import { Place, PlaceType } from "@/utils/types";
 import { getPlaceColor } from "@/utils/colors";
 import { useRouter } from "next/navigation";
 
-export default function AddPlaceForm({className}: {className?: string}): JSX.Element{
+export default function AddPlaceForm({
+  className,
+}: {
+  className?: string;
+}): JSX.Element {
   const defaultPlace: Place = {
     place_id: -1,
     place_name: "Paikan nimi",
@@ -28,7 +32,10 @@ export default function AddPlaceForm({className}: {className?: string}): JSX.Ele
   };
 
   return (
-    <form className={`${className} flex flex-col center gap-2`} onSubmit={handleSubmit}>
+    <form
+      className={`${className} flex flex-col center gap-2`}
+      onSubmit={handleSubmit}
+    >
       <h2 className="text-xl font-bold">Lisää paikka</h2>
       <input
         type="text"

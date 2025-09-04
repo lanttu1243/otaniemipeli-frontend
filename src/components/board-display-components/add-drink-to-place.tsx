@@ -247,9 +247,7 @@ function DrinkSelectionCard({
                 </p>
               </div>
             </div>
-            <div
-              className={`flex flex-col gap-2 w-1/2 box center`}
-            >
+            <div className={`flex flex-col gap-2 w-1/2 box center`}>
               <p className="text-sm text-center w-full">Täyttösääntö</p>
               <div className="center w-full p-1">
                 <input

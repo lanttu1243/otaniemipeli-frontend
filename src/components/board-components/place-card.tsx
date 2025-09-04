@@ -17,7 +17,7 @@ export default function PlaceCard({
   }
   return (
     <div
-      className={`${className} flex flex-col items-start justify-start`}
+      className={`${className} flex flex-col w-full`}
       style={
         {
           "--place-color": getPlaceColor(place.place.place_type, false),
@@ -25,22 +25,20 @@ export default function PlaceCard({
         } as React.CSSProperties
       }
     >
-      <div className="flex flex-col gap-1 border-[var(--place-color)] bg-juvu-sini-400 shadow-lg shadow-juvu-kulta border-4 rounded-lg p-2 w-full h-full">
+      <div className="flex flex-col gap-1 border-[var(--place-color)] border-4 rounded-lg bg-juvu-sini-400 p-2">
         <div className="flex gap-1 center w-full">
-          <p className="font-mono text-left ml-auto">{place.place.place_id}</p>
+          <p className="text-left ml-auto">{place.place.place_id}</p>
           <p className="font-redaction-b-70 text-2xl text-center w-full">
             {place.place.place_name}
           </p>
-          <p className="font-mono text-right mr-auto">{place.place_number}</p>
+          <p className="text-right mr-auto">{place.place_number}</p>
           {placeNumber && <p className="text-right mr-auto">{placeNumber}</p>}
         </div>
         <div className="flex gap-1 w-full h-full">
-          <div className="w-full center p-2 border-r-1 border-juvu-sini-800 overflow-y-scroll">
-            <p className="text-justify text-xl pr-1 font-mono">
-              {place.place.rule}
-            </p>
+          <div className="w-full flex-3 center p-2 border-r-1 border-juvu-sini-800">
+            <p className="text-justify text-xl pr-1">{place.place.rule}</p>
           </div>
-          <div className="flex flex-col gap-1 items-center p-2 justify  -center min-w-2/5 h-full overflow-y-scroll">
+          <div className="flex flex-col gap-1 p-2 flex-2">
             {place.drinks.drinks.length > 0 &&
               place.drinks.drinks.map((drink) => (
                 <PlaceDrinkCard drink={drink} key={drink.drink.id} />

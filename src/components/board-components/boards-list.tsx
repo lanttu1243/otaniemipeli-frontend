@@ -1,9 +1,12 @@
 import { getBoards } from "@/utils/fetchers";
 import BoardCard from "@/components/board-components/board-card";
-import {useState} from "react";
-import {Boards} from "@/utils/types";
+import { Boards } from "@/utils/types";
 
-export default async function BoardList({className}: {className?: string}): Promise<JSX.Element> {
+export default async function BoardList({
+  className,
+}: {
+  className?: string;
+}): Promise<JSX.Element> {
   const boards: Boards = await getBoards();
 
   return (
@@ -20,7 +23,7 @@ export default async function BoardList({className}: {className?: string}): Prom
               </li>
             ))
           ) : (
-            <p className="text-center text-gray-900">Ei lautoja</p>
+            <p className="text-center text-juvu-tumma">Ei lautoja</p>
           )}
         </ul>
       </div>

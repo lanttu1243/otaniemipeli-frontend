@@ -13,18 +13,22 @@ export default function BoardWithSquares({
   focusedPlace,
   setFocusedPlace,
   toggleGraphics = false,
+  className,
 }: {
   places: BoardPlaces;
   focusedPlace: BoardPlace;
   setFocusedPlace: React.Dispatch<React.SetStateAction<BoardPlace>>;
   toggleGraphics?: boolean;
+  className?: string;
 }): JSX.Element {
   const [photo, setPhoto] = React.useState<boolean>(true);
   const [showLines, setShowLines] = React.useState<boolean>(true);
   const path = usePathname();
   const isAdmin = path.includes("admin");
   return (
-    <div className="flex flex-col relative w-full overflow-hidden mx-auto">
+    <div
+      className={`${className} flex flex-col relative w-full overflow-hidden mx-auto`}
+    >
       <Image
         src={places.board.id == 1 ? (photo ? image_1 : graphic_1) : image_2}
         alt="Game Board"

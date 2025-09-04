@@ -27,7 +27,7 @@ export default async function Page({
         </div>
         <div className="flex flex-col flex-2 gap-2 min-h-0 overflow-hidden">
           <AddPlaceForm className="w-full box flex-3" />
-          <PlacesList   className="w-full flex-4 min-h-0 overflow-auto" />
+          <PlacesList className="w-full flex-4 min-h-0 overflow-auto" />
         </div>
       </div>
     </div>
