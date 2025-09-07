@@ -21,7 +21,8 @@ export default function AddIngredientForm() {
 
     await fetch("/api/ingredients", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("auth_token")}` },
       body: JSON.stringify(ingredient),
     });
 
