@@ -9,7 +9,6 @@ import {
 import { create_user, verifyUserTypes } from "@/utils/fetchers";
 import { useRouter } from "next/navigation";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import {useLogKeydown} from "@/components/log-keydown";
 
 export default function CreateUserForm({
   setLoginAction,
@@ -23,7 +22,7 @@ export default function CreateUserForm({
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [session, setSession] = useState<SessionInfo | null>(null);
-  useLogKeydown()
+
   const [user, setUser] = useState<UserCreateInfo>({
     username: "",
     email: "",
@@ -79,9 +78,6 @@ export default function CreateUserForm({
     e.preventDefault();
     handleSend();
   };
-  async function checkSource(e: KeyboardEvent) {
-    console.log(e.DOM_KEY_LOCATION_NUMPAD)
-  }
 
   useEffect(() => {
     const token = localStorage.getItem("auth_token");

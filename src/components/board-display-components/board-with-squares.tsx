@@ -37,7 +37,7 @@ export default function BoardWithSquares({
       default:
         return image_1;
     }
-  }
+  };
   return (
     <div
       className={`${className} flex flex-col relative w-full overflow-hidden mx-auto`}
