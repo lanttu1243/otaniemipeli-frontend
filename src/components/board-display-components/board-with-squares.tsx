@@ -1,7 +1,8 @@
 import Image from "next/image";
-import graphic_1 from "@/public/niemipelilauta.jpg";
-import image_1 from "@/public/otaniemipeli-photo.png";
-import image_2 from "@/public/1985-kuva.png";
+import graphic_1 from "@/public/1-graphic.png";
+import image_1 from "@/public/1-photo.png";
+import image_2 from "@/public/2-photo.png";
+import image_3 from "@/public/3-photo.png";
 import LineLayer from "@/components/board-display-components/line-layer";
 import SquareLayer from "@/components/board-display-components/square-layer";
 import React from "react";
@@ -25,12 +26,24 @@ export default function BoardWithSquares({
   const [showLines, setShowLines] = React.useState<boolean>(true);
   const path = usePathname();
   const isAdmin = path.includes("admin");
+  const selectBoardImage = () => {
+    switch (places.board.id) {
+      case 1:
+        return photo ? image_1 : graphic_1;
+      case 2:
+        return image_2;
+      case 3:
+        return image_3;
+      default:
+        return image_1;
+    }
+  }
   return (
     <div
       className={`${className} flex flex-col relative w-full overflow-hidden mx-auto`}
     >
       <Image
-        src={places.board.id == 1 ? (photo ? image_1 : graphic_1) : image_2}
+        src={selectBoardImage()}
         alt="Game Board"
         className="w-full h-auto"
         priority
