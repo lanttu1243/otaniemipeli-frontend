@@ -31,7 +31,7 @@ export default function RootLayout({
     >
       <body>
         <GeneralHeader base_path="/admin" items={headerItems} />
-        <div className="p-2">{children}</div>
+        <div className="p-2 h-[90dvh] min-h-0">{children}</div>
       </body>
     </html>
   );

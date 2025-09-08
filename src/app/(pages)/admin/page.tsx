@@ -11,7 +11,7 @@ export default async function Home() {
   const text = await res.text();
 
   return (
-    <div className="flex flex-col items-center gap-3.5 max-h-[90dvh] sm:px-10 sm:py-4">
+    <div className="flex flex-col items-center gap-3.5 h-full sm:px-10 sm:py-4">
       <h1 className="text-gray-900 text-2xl font-bold">
         Tervetuloa Otaniemipeli-Adminiin!
       </h1>

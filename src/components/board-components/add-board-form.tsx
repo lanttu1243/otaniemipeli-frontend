@@ -1,32 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { Drink } from "@/utils/types";
-import { addDrink } from "@/utils/fetchers";
+import { Board, Drink } from "@/utils/types";
+import { addBoard } from "@/utils/fetchers";
 
-export default function AddDrinkForm({ refresh }: { refresh: () => void }) {
+export default function AddBoardForm({ refresh }: { refresh: () => void }) {
   const [open, setOpen] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const drink: Drink = {
+    const board: Board = {
       id: -1,
       name: data.get("name") as string,
     };
 
-    addDrink(drink, localStorage.getItem("auth_token")).then();
+    addBoard(board, localStorage.getItem("auth_token")).then();
     refresh();
     setOpen(false);
   }
 
   return (
     <>
-      <button
-        className="rounded text-lg bg-juvu-sini-800 px-2 py-1 text-white center ml-auto"
-        onClick={() => setOpen(true)}
-      >
-        Lisää juoma
+      <button className="button ml-auto" onClick={() => setOpen(true)}>
+        Lisää Lauta
       </button>
 
       {open && (
@@ -39,7 +36,7 @@ export default function AddDrinkForm({ refresh }: { refresh: () => void }) {
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-sm rounded-lg bg-white p-6 shadow"
           >
-            <h2 className="mb-4 text-xl font-semibold">Uusi juoma</h2>
+            <h2 className="mb-4 text-xl font-semibold">Uusi lauta</h2>
             <input
               name="name"
               required

@@ -1,6 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-
-type WithNameAndId = { id: string | number; name: string };
+import { WithNameAndId } from "@/utils/types";
 
 type PickerProps<T extends WithNameAndId> = {
   buttonText: string;

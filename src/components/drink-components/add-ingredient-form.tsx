@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Ingredient } from "@/utils/types";
+import { addIngredient } from "@/utils/fetchers";
 
 export default function AddIngredientForm() {
   const router = useRouter();
@@ -19,12 +20,7 @@ export default function AddIngredientForm() {
       carbonated: data.get("carbonated") === "on",
     };
 
-    await fetch("/api/ingredients", {
-      method: "POST",
-      headers: { "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("auth_token")}` },
-      body: JSON.stringify(ingredient),
-    });
+    addIngredient(ingredient, localStorage.getItem("auth_token")).then();
 
     setOpen(false);
     router.refresh();

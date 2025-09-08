@@ -8,6 +8,7 @@ export const UserTypes: UserType[] = [
   "secretary",
   "team",
 ];
+export type WithNameAndId = { id: string | number; name: string };
 export const UserTypeEnum = {
   admin: "Admin",
   ie: "IE",

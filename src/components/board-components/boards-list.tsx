@@ -1,32 +1,41 @@
+"use client";
 import { getBoards } from "@/utils/fetchers";
 import BoardCard from "@/components/board-components/board-card";
-import { Boards } from "@/utils/types";
+import { Board } from "@/utils/types";
+import ItemList from "@/components/item-list";
+import { useCallback, useEffect, useState } from "react";
+import AddBoardForm from "@/components/board-components/add-board-form";
 
-export default async function BoardList({
+export default function BoardList({
   className,
 }: {
   className?: string;
-}): Promise<JSX.Element> {
-  const boards: Boards = await getBoards();
+}): JSX.Element {
+  const [boards, setBoards] = useState<Board[]>([]);
+  const fetchBoards = useCallback(async () => {
+    const data = await getBoards();
+    setBoards(data.boards);
+  }, [setBoards]);
+
+  useEffect(() => {
+    void fetchBoards();
+  }, [fetchBoards]);
 
   return (
-    <div className={`${className} center`}>
-      <div className="mb-4 flex center px-4 gap-x-2 w-full">
-        <h1 className="text-4xl font-bold pl-2 text-left">Laudat</h1>
-      </div>
-      <div className="w-full">
-        <ul className="grid gap-2 w-full px-4 py-2">
-          {boards.boards.length > 0 ? (
-            boards.boards.map((board) => (
-              <li key={board.id}>
-                <BoardCard key={board.id} board={board} />
-              </li>
-            ))
-          ) : (
-            <p className="text-center text-juvu-tumma">Ei lautoja</p>
-          )}
-        </ul>
-      </div>
-    </div>
+    <ItemList
+      title="Laudat"
+      addDialog={<AddBoardForm refresh={fetchBoards} />}
+      className={className}
+    >
+      {boards.length > 0 ? (
+        boards.map((board) => (
+          <li key={board.id}>
+            <BoardCard key={board.id} board={board} className="w-full" />
+          </li>
+        ))
+      ) : (
+        <p className="text-center text-juvu-tumma">Ei lautoja</p>
+      )}
+    </ItemList>
   );
 }

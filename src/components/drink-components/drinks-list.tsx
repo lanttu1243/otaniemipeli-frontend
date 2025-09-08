@@ -5,6 +5,7 @@ import AddDrinkForm from "@/components/drink-components/add-drink-form";
 import { useCallback, useEffect, useState } from "react";
 import { getDrinkIngredients, getDrinks } from "@/utils/fetchers";
 import Petrified from "@/components/petrified";
+import ItemList from "@/components/item-list";
 
 export default function DrinkList({
   className,
@@ -51,38 +52,28 @@ export default function DrinkList({
   }, [drinksList]);
 
   return (
-    <div className={`center py-4 box mb-auto max-h-[37.25dvh] ${className}`}>
-      <div className="shrink-0 flex flex-col center px-4 w-full">
-        <h1 className="font-redaction-b-70 pl-2 text-left">Juomat</h1>
-        {!drinksList && <AddDrinkForm refresh={fetchDrinks} />}
-        {drinks && drinksList && (
-          <p className="font-mono text-xl w-full text-center">
-            Ruudussa puhdasta etanolia {ethanol.toFixed(1)}
-            cl
-          </p>
-        )}
-      </div>
-      <div className={`w-full min-h-0 max-h-3/4 flex-1 overflow-y-auto`}>
-        <ul className="flex flex-col gap-2 w-full px-4 py-2">
-          {drinks && drinks.length > 0 ? (
-            drinks
-              .sort((a, b) => a.drink.name.localeCompare(b.drink.name))
-              .map((drink: DrinkIngredients) => (
-                <DrinkCard
-                  key={drink.drink.id}
-                  drink={drink}
-                  functional={!drinksList}
-                  refreshListAction={fetchDrinks}
-                />
-              ))
-          ) : (
-            <p className="flex w-full center font-redaction-i-50 text-2xl">
-              <Petrified className="h-[1.5rem] w-auto" /> Tässä ruudussa ei ole
-              juomia <Petrified className="h-[1.5rem] w-auto" />
-            </p>
-          )}
-        </ul>
-      </div>
-    </div>
+    <ItemList
+      title="Juomat"
+      addDialog={!drinksList && <AddDrinkForm refresh={fetchDrinks} />}
+      className={className}
+    >
+      {drinks && drinks.length > 0 ? (
+        drinks
+          .sort((a, b) => a.drink.name.localeCompare(b.drink.name))
+          .map((drink: DrinkIngredients) => (
+            <DrinkCard
+              key={drink.drink.id}
+              drink={drink}
+              functional={!drinksList}
+              refreshListAction={fetchDrinks}
+            />
+          ))
+      ) : (
+        <p className="flex w-full center font-redaction-i-50 text-2xl">
+          <Petrified className="h-[1.5rem] w-auto" /> Tässä ruudussa ei ole
+          juomia <Petrified className="h-[1.5rem] w-auto" />
+        </p>
+      )}
+    </ItemList>
   );
 }

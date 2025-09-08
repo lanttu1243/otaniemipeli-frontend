@@ -5,6 +5,7 @@ import {
   BoardPlace,
   BoardPlaces,
   Boards,
+  Drink,
   DrinkIngredients,
   DrinksIngredients,
   Games,
@@ -30,10 +31,37 @@ export async function getIngredients(): Promise<Ingredients> {
 
   return await res.json();
 }
+export async function addIngredient(
+  ingredient: Ingredient,
+  token: string | null,
+) {
+  const res: Response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/ingredients`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token ?? ""}`,
+      },
+      body: JSON.stringify(ingredient),
+    },
+  );
+  return await res.json();
+}
+export async function addDrink(drink: Drink, token: string | null) {
+  return await fetch("/api/drinks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${localStorage.getItem("auth_token")}`,
+    },
+    body: JSON.stringify(drink),
+  });
+}
 export async function deleteIngredient(
   drink_id: number,
   ingredient_id: number,
-  token: string | undefined,
+  token: string | null,
 ): Promise<Ingredient | null> {
   const res: Response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/drinks/ingredients/${drink_id}?ingredient_id=${ingredient_id}`,
@@ -93,6 +121,19 @@ export async function getBoards(): Promise<Boards> {
 
   return await res.json();
 }
+export async function addBoard(board: Board, token: string | null) {
+  const res = await fetch(`${process.env.API_URL}/boards`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token ?? ""}`,
+    },
+    body: JSON.stringify(board),
+  });
+  if (!res.ok) console.error(`HTTP ${res.status}`);
+
+  return res.status;
+}
 export async function getGames(): Promise<Games> {
   const res = await fetch(`${process.env.API_URL}/games`, {
     headers: { "Content-Type": "application/json" },
@@ -113,7 +154,7 @@ export async function getBoard(id: string): Promise<Board> {
 }
 export async function postPlace(
   place: Place,
-  token: string | undefined,
+  token: string | null,
 ): Promise<number> {
   const res = await fetch(`${process.env.API_URL}/boards/places`, {
     method: "POST",
@@ -129,7 +170,7 @@ export async function postPlace(
 }
 export async function postBoardPlace(
   boardPlace: BoardPlace,
-  token: string | undefined,
+  token: string | null,
 ): Promise<number> {
   const res = await fetch(
     `${process.env.API_URL}/boards/places/${boardPlace.board_id}`,
@@ -208,7 +249,7 @@ export async function updateCoordinates(
 }
 export async function updatePlace(
   place: Place,
-  token: string | undefined,
+  token: string | null,
 ): Promise<number> {
   const res = await fetch(
     `${process.env.API_URL}/boards/places/update/${place.place_id}`,
@@ -228,7 +269,7 @@ export async function updatePlace(
 }
 export async function addDrinksToPlace(
   drinks: PlaceDrinks,
-  token: string | undefined,
+  token: string | null,
 ): Promise<number> {
   const res = await fetch(`${process.env.API_URL}/boards/places/drinks`, {
     method: "POST",

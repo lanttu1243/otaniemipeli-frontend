@@ -25,7 +25,7 @@ export default function RootLayout({
     >
       <body>
         <FollowHeader />
-        <div className="px-2 h-full">{children}</div>
+        <div className="px-2 h-full w-full">{children}</div>
       </body>
     </html>
   );
