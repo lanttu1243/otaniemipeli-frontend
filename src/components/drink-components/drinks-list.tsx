@@ -1,5 +1,4 @@
 "use client";
-import { DrinkIngredients, PlaceDrink } from "@/utils/types";
 import DrinkCard from "@/components/drink-components/drink-card";
 import AddDrinkForm from "@/components/drink-components/add-drink-form";
 import { useCallback, useEffect, useState } from "react";
@@ -15,7 +14,7 @@ export default function DrinkList({
   drinksList?: PlaceDrink[];
 }): JSX.Element {
   const [drinks, setDrinks] = useState<DrinkIngredients[] | null>([]);
-  const [ethanol, setEthanol] = useState<number>(0);
+  const [, setEthanol] = useState<number>(0);
 
   const fetchDrinks = useCallback(async () => {
     if (!drinksList) {
@@ -54,7 +53,7 @@ export default function DrinkList({
   return (
     <ItemList
       title="Juomat"
-      addDialog={!drinksList && <AddDrinkForm refresh={fetchDrinks} />}
+      addDialog={!drinksList && <AddDrinkForm refreshAction={fetchDrinks} />}
       className={className}
     >
       {drinks && drinks.length > 0 ? (

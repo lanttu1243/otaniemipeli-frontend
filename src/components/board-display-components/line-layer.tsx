@@ -1,4 +1,3 @@
-import { BoardPlaces } from "@/utils/types";
 import React, { useLayoutEffect, useRef, useState } from "react";
 
 const RADIUS_PX = 6.2;

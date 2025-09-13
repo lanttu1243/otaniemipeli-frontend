@@ -1,4 +1,3 @@
-import { BoardPlace } from "@/utils/types";
 import React from "react";
 import { getPlaceColor } from "@/utils/colors";
 import { PlaceDrinkCard } from "@/components/drink-components/drink-card";

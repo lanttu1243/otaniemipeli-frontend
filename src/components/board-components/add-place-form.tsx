@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { postPlace } from "@/utils/fetchers";
-import { Place, PlaceType } from "@/utils/types";
 import { getPlaceColor } from "@/utils/colors";
 import { useRouter } from "next/navigation";
 

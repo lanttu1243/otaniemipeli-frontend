@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "../../globals.css";
-import { HeaderItem } from "@/utils/types";
 import GeneralHeader from "@/components/headers/general-header";
 import {
   RedactionRegular,

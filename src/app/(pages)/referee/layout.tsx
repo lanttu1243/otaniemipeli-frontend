@@ -6,7 +6,6 @@ import {
   W95,
 } from "@/utils/get_fonts";
 import "../../globals.css";
-import { HeaderItem } from "@/utils/types";
 import GeneralHeader from "@/components/headers/general-header";
 
 export const metadata: Metadata = {

@@ -1,5 +1,4 @@
 "use client";
-import { SessionInfo, UserTypeEnum } from "@/utils/types";
 import { useRouter } from "next/navigation";
 import { verifyUserTypes } from "@/utils/fetchers";
 import React, { useEffect } from "react";

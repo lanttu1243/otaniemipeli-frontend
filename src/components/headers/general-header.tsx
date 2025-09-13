@@ -1,6 +1,5 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { HeaderItem, UserTypeEnum } from "@/utils/types";
 import Image from "next/image";
 import TiKLogo from "@/public/TiKprofiilikuva.png";
 import React from "react";

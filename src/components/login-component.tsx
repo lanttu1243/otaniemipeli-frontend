@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { LoginInfo } from "@/utils/types";
 import { postToLogin } from "@/utils/fetchers";
 
 export default function LoginComponent({

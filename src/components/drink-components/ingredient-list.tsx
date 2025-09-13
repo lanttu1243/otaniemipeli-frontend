@@ -1,4 +1,3 @@
-import { Ingredient, Ingredients } from "@/utils/types";
 import IngredientCard from "@/components/drink-components/ingredient-card";
 import AddIngredientDialog from "@/components/drink-components/add-ingredient-form";
 import ItemList from "@/components/item-list";

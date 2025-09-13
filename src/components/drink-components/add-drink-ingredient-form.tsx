@@ -1,12 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  Drink,
-  DrinkIngredientsPost,
-  Ingredient,
-  IngredientQty,
-} from "@/utils/types";
 import { getIngredients } from "@/utils/fetchers";
 import { DrinkCardNoIngredients } from "@/components/drink-components/drink-card";
 import DropdownMenu from "@/components/dropdown-menu";

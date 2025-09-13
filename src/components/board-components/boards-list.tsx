@@ -1,7 +1,6 @@
 "use client";
 import { getBoards } from "@/utils/fetchers";
 import BoardCard from "@/components/board-components/board-card";
-import { Board } from "@/utils/types";
 import ItemList from "@/components/item-list";
 import { useCallback, useEffect, useState } from "react";
 import AddBoardForm from "@/components/board-components/add-board-form";
@@ -24,7 +23,7 @@ export default function BoardList({
   return (
     <ItemList
       title="Laudat"
-      addDialog={<AddBoardForm refresh={fetchBoards} />}
+      addDialog={<AddBoardForm refreshAction={fetchBoards} />}
       className={className}
     >
       {boards.length > 0 ? (

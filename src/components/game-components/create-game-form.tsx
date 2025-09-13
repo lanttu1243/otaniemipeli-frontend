@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "@/app/(pages)/referee/template";
-import { Board, Boards, PostGame } from "@/utils/types";
 import { getBoards } from "@/utils/fetchers";
 import DropdownMenu from "@/components/dropdown-menu";
 

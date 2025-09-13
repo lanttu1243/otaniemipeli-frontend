@@ -1,11 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  BoardPlace,
-  DrinksIngredients,
-  PlaceDrink,
-  PlaceDrinks,
-} from "@/utils/types";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { addDrinksToPlace, getDrinks } from "@/utils/fetchers";
 import { useRouter } from "next/navigation";

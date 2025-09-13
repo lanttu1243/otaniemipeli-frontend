@@ -1,4 +1,3 @@
-import { BoardPlace, BoardPlaces } from "@/utils/types";
 import React from "react";
 import PlaceCard from "@/components/board-components/place-card";
 

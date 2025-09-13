@@ -1,9 +1,9 @@
 "use client";
-import { GameInfo, Games } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/app/(pages)/referee/template";
 import { getGames } from "@/utils/fetchers";
 import GameCard from "@/components/game-components/game-card";
+import ItemList from "@/components/item-list";
 
 export default function GameList({ className }: { className?: string }) {
   const [games, setGames] = useState<Games>({ games: [] });
@@ -45,19 +45,14 @@ export default function GameList({ className }: { className?: string }) {
   }, [socket]);
 
   return (
-    <div className={`${className} box`}>
-      <h1 className="text-center">Pelit</h1>
-      <div className="w-full max-h-4/5 overflow-y-scroll">
-        <ul className="grid gap-2 w-full px-4 py-2">
-          {games ? (
-            games.games
-              .sort((a, b) => b.start_time.localeCompare(a.start_time))
-              .map((game: GameInfo) => <GameCard game={game} key={game.id} />)
-          ) : (
-            <p>Ei pelejä!</p>
-          )}
-        </ul>
-      </div>
-    </div>
+    <ItemList title="Games" addDialog={<></>} className={className}>
+      {games ? (
+        games.games
+          .sort((a, b) => b.start_time.localeCompare(a.start_time))
+          .map((game: Game) => <GameCard game={game} key={game.id} link />)
+      ) : (
+        <p>Ei pelejä!</p>
+      )}
+    </ItemList>
   );
 }

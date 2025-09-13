@@ -1,6 +1,5 @@
 import BoardCard from "@/components/board-components/board-card";
 import { getBoard } from "@/utils/fetchers";
-import { Board } from "@/utils/types";
 import BoardPlacesList from "@/components/board-components/board-places-list";
 import AddPlaceForm from "@/components/board-components/add-place-form";
 import PlacesList from "@/components/board-components/places-list";

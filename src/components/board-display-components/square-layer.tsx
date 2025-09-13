@@ -1,4 +1,3 @@
-import { BoardPlace, BoardPlaces } from "@/utils/types";
 import { getPlaceColor } from "@/utils/colors";
 import React, { useRef } from "react";
 import { updateCoordinates } from "@/utils/fetchers";

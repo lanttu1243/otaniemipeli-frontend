@@ -1,25 +1,5 @@
 "use server";
 
-import {
-  Board,
-  BoardPlace,
-  BoardPlaces,
-  Boards,
-  Drink,
-  DrinkIngredients,
-  DrinksIngredients,
-  Games,
-  Ingredient,
-  Ingredients,
-  LoginInfo,
-  Place,
-  PlaceDrinks,
-  Places,
-  SessionInfo,
-  UserCreateInfo,
-  UserSessionInfo,
-} from "@/utils/types";
-
 export async function getIngredients(): Promise<Ingredients> {
   const res = await fetch(process.env.API_URL + "/ingredients", {
     headers: { "Content-Type": "application/json" },
@@ -49,14 +29,15 @@ export async function addIngredient(
   return await res.json();
 }
 export async function addDrink(drink: Drink, token: string | null) {
-  return await fetch("/api/drinks", {
+  const res = await fetch("/api/drinks", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `${localStorage.getItem("auth_token")}`,
+      Authorization: token ?? "",
     },
     body: JSON.stringify(drink),
   });
+  return await res.json();
 }
 export async function deleteIngredient(
   drink_id: number,

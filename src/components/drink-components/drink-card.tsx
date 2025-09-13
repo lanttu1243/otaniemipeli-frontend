@@ -1,5 +1,4 @@
 "use client";
-import { Drink, DrinkIngredients, PlaceDrink } from "@/utils/types";
 import { useState } from "react";
 import AddDrinkIngredientForm from "@/components/drink-components/add-drink-ingredient-form";
 import IngredientCard from "@/components/drink-components/ingredient-card";

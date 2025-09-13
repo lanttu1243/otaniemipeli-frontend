@@ -1,11 +1,5 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  SessionInfo,
-  UserCreateInfo,
-  UserTypeEnum,
-  UserTypes,
-} from "@/utils/types";
 import { create_user, verifyUserTypes } from "@/utils/fetchers";
 import { useRouter } from "next/navigation";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";

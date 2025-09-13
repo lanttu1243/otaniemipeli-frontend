@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Drink } from "@/utils/types";
 import { addDrink } from "@/utils/fetchers";
 
-export default function AddDrinkForm({ refresh }: { refresh: () => void }) {
+export default function AddDrinkForm({
+  refreshAction,
+}: {
+  refreshAction: () => Promise<void>;
+}) {
   const [open, setOpen] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -16,7 +19,7 @@ export default function AddDrinkForm({ refresh }: { refresh: () => void }) {
     };
 
     addDrink(drink, localStorage.getItem("auth_token")).then();
-    refresh();
+    refreshAction().then();
     setOpen(false);
   }
 

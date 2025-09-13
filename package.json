@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "lint-fix": "eslint . --ext .js,.ts,.tsx --fix",
     "format": "prettier --write \"**/*.{js,ts,ts,tsx,md,json}\"",
-    "clean": "rm -rf .next node_modules && pnpm install"
+    "clean": "rm -rf .next node_modules && pnpm install",
+    "pre-commit": "pnpm clean && pnpm lint && pnpm typecheck && pnpm format && git add . && echo 'Pre-commit checks completed!'"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",

@@ -7,7 +7,6 @@ import {
 } from "@/utils/get_fonts";
 import "../../globals.css";
 import GeneralHeader from "@/components/headers/general-header";
-import { HeaderItem } from "@/utils/types";
 
 export const metadata: Metadata = {
   title: "Create Next App",

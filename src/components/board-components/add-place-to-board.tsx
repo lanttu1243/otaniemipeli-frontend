@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { BoardPlace, BoardPlaces, Place, Places } from "@/utils/types";
 import { getPlacesNotInBoard, postBoardPlace } from "@/utils/fetchers";
 import { useRouter } from "next/navigation";
 

@@ -1,5 +1,4 @@
 "use client";
-import { Board } from "@/utils/types";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function BoardCard({

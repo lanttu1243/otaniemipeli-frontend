@@ -1,5 +1,4 @@
 "use client";
-import { Ingredient } from "@/utils/types";
 import { deleteIngredient } from "@/utils/fetchers";
 import { useRouter } from "next/navigation";
 

@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Board, Drink } from "@/utils/types";
 import { addBoard } from "@/utils/fetchers";
 
-export default function AddBoardForm({ refresh }: { refresh: () => void }) {
+export default function AddBoardForm({
+  refreshAction,
+}: {
+  refreshAction: () => Promise<void>;
+}) {
   const [open, setOpen] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     const data = new FormData(e.currentTarget);
     const board: Board = {
       id: -1,
@@ -16,7 +20,7 @@ export default function AddBoardForm({ refresh }: { refresh: () => void }) {
     };
 
     addBoard(board, localStorage.getItem("auth_token")).then();
-    refresh();
+    refreshAction().then();
     setOpen(false);
   }
 

@@ -6,7 +6,6 @@ import image_3 from "@/public/3-photo.png";
 import LineLayer from "@/components/board-display-components/line-layer";
 import SquareLayer from "@/components/board-display-components/square-layer";
 import React from "react";
-import { BoardPlace, BoardPlaces } from "@/utils/types";
 import { usePathname } from "next/navigation";
 
 export default function BoardWithSquares({

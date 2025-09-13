@@ -3,7 +3,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Ingredient } from "@/utils/types";
 import { addIngredient } from "@/utils/fetchers";
 
 export default function AddIngredientForm() {

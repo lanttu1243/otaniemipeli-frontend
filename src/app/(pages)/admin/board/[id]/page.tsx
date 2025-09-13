@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import AddDrinkToPlace from "@/components/board-display-components/add-drink-to-place";
-import { BoardPlace, BoardPlaces } from "@/utils/types";
 import PlaceCard from "@/components/board-components/place-card";
 import BoardWithSquares from "@/components/board-display-components/board-with-squares";
 import { getBoardPlaces } from "@/utils/fetchers";
