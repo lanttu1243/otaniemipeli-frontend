@@ -29,7 +29,7 @@ export default function CreateGameForm({ className }: { className?: string }) {
         name: name,
         board: selectedBoard.id,
       };
-      socket.emit("start-game", game);
+      socket.emit("create-game", game);
       setActive(false);
       setName("");
       setSelectedBoard(undefined);

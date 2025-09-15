@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { verifyUserTypes } from "@/utils/fetchers";
 import React, { useEffect } from "react";
+import { UserTypeEnum } from "@/utils/helpers";
 
 export default function SelectMode({
   setLoginAction,

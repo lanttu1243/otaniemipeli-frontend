@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { verifyUserTypes } from "@/utils/fetchers";
 import { usePathname, useRouter } from "next/navigation";
+import { UserTypes } from "@/utils/helpers";
 
 function authorisationCheck(session: SessionInfo, pathname: string): boolean {
   for (const type of UserTypes) {

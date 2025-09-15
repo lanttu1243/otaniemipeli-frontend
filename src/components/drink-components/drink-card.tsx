@@ -127,7 +127,7 @@ export function DrinkCardNoIngredients({
   className,
 }: {
   drink: Drink;
-  className: string;
+  className?: string;
 }): JSX.Element {
   return (
     <div className={className}>
@@ -159,6 +159,28 @@ export function PlaceDrinkCard({ drink }: { drink: PlaceDrink }): JSX.Element {
         <div className="w-7 h-7 my-1">
           <p className="text-xl w-full text-center font-bold">
             {drink.optional && "?"}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+export function TurnDrinkCard({
+  drink,
+  index,
+}: {
+  drink: TurnDrink;
+  index: number;
+}): JSX.Element {
+  return (
+    <div className="flex justify-items-start w-full border-b-1 border-juvu-sini-800">
+      <h2 className="font-redaction-i-50 text-2xl text-left px-1 h-full flex-1">
+        {index + 1}. {drink.drink.name}
+      </h2>
+      <div className="flex flex-1 items-center justify-items-start w-full">
+        <div className="w-7 h-7 my-1">
+          <p className="font-redaction-i-70 text-2xl w-full text-center">
+            {drink.n}
           </p>
         </div>
       </div>

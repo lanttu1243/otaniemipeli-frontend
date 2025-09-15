@@ -31,7 +31,6 @@ export default function AddDrinkIngredientForm({
   const openModal = () => {
     setOpen(true);
     justOpened.current = true;
-    // clear guard on next frame (after the opening click fully finishes)
     requestAnimationFrame(() => {
       justOpened.current = false;
     });

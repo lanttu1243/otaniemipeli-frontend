@@ -1,4 +1,3 @@
-
 export default function GameCard({
   game,
   link = false,
@@ -25,7 +24,11 @@ export default function GameCard({
       <p
         className={`font-medium ${game.finished ? "text-green-600" : "text-red-600"}`}
       >
-        {game.finished ? "Peli on loppunut" : "Peli on käynnissä"}
+        {game.started && !game.finished
+          ? "Peli on käynnissä"
+          : game.finished
+            ? "Peli on päättynyt"
+            : "Peli ei ole alkanut"}
       </p>
     </li>
   );

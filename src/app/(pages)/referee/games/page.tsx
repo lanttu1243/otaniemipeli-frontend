@@ -1,3 +1,5 @@
+import GameList from "@/components/game-components/game-list";
+
 export default function Page() {
-  return <div>Referee Games Page</div>;
+  return <GameList />;
 }

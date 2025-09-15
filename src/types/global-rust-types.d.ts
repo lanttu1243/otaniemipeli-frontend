@@ -1,20 +1,19 @@
+// AUTO-GENERATED FROM RUST. Edit Rust models instead.
+
 declare global {
   type PlaceType = "normal" | "food" | "sauna" | "special" | "guild";
+
   type UserType = "admin" | "ie" | "referee" | "secretary" | "team";
 
-  const UserTypes: UserType[] = ["admin", "ie", "referee", "secretary", "team"];
   type WithNameAndId = { id: string | number; name: string };
-  const UserTypeEnum = {
-    admin: "Admin",
-    ie: "IE",
-    referee: "Tuomari",
-    secretary: "Sihteeri",
-    team: "Joukkue",
-  };
 
   interface HeaderItem {
     text: string;
     href: string;
+  }
+
+  interface SocketAuth {
+    token: string;
   }
 
   interface LoginInfo {
@@ -53,7 +52,6 @@ declare global {
 
   interface Team {
     team_id: number;
-    name: string;
     game_id: number;
     team_name: string;
     team_hash: string;
@@ -63,10 +61,22 @@ declare global {
     teams: Team[];
   }
 
+  interface TurnDrink {
+    drink: Drink;
+    turn_id: number;
+    n: number;
+  }
+
+  interface FirstTurnPost {
+    game_id: number;
+    drinks: TurnDrink[];
+  }
+
   interface Game {
     id: number;
     name: string;
     board: string;
+    started: boolean;
     finished: boolean;
     start_time: string;
   }
@@ -176,5 +186,19 @@ declare global {
   interface DrinksIngredients {
     drink_ingredients: DrinkIngredients[];
   }
+
+  interface ResultIntJson {
+    int: number;
+  }
+
+  interface Drinks {
+    drinks: Drink[];
+  }
+
+  interface IngredientIdQuery {
+    ingredient_id: number;
+  }
+
 }
+// This file is auto-generated from Rust types. Do not edit.
 export {};

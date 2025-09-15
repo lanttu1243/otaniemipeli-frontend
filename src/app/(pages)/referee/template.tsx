@@ -58,6 +58,18 @@ export default function RefereeTemplate({
     };
   }, [pathname, router]);
 
+  useEffect(() => {
+    if (!socket) return;
+    const checkSession = async () => {
+      const auth: SocketAuth = {
+        token: localStorage.getItem("auth_token") || "",
+      };
+      socket.emit("verify-login", auth);
+      console.log("Verifying session...");
+    };
+    setTimeout(checkSession, 60000);
+  }, []);
+
   return (
     <>
       <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

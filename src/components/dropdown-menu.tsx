@@ -1,4 +1,7 @@
+"use client";
+
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import React from "react";
 
 type PickerProps<T extends WithNameAndId> = {
   buttonText: string;

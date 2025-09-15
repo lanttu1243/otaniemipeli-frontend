@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import TiKLogo from "@/public/TiKprofiilikuva.png";
 import React from "react";
+import { UserTypeEnum } from "@/utils/helpers";
 
 export default function GeneralHeader({
   base_path,

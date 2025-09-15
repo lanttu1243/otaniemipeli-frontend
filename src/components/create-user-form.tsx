@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { create_user, verifyUserTypes } from "@/utils/fetchers";
 import { useRouter } from "next/navigation";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { UserTypeEnum, UserTypes } from "@/utils/helpers";
 
 export default function CreateUserForm({
   setLoginAction,
