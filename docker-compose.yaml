@@ -4,7 +4,7 @@ services:
       context: .
       target: runner
     env_file:
-      - .env
+      - .env.stash.remote
     environment:
       NODE_ENV: production
       PORT: "3000"

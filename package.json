@@ -11,7 +11,10 @@
     "lint-fix": "eslint . --ext .js,.ts,.tsx --fix",
     "format": "prettier --write \"**/*.{js,ts,ts,tsx,md,json}\"",
     "clean": "rm -rf .next node_modules && pnpm install",
-    "pre-commit": "pnpm clean && pnpm lint && pnpm typecheck && pnpm format && git add . && echo 'Pre-commit checks completed!'"
+    "pre-commit": "pnpm clean && pnpm lint && pnpm typecheck && pnpm format && git add . && echo 'Pre-commit checks completed!'",
+    "remote": "cp .env.stash.remote .env",
+    "local": "cp .env.stash.local .env",
+    "commit": "pnpm pre-commit && git commit"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.8",

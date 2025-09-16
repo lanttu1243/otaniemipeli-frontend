@@ -72,6 +72,29 @@ declare global {
     drinks: TurnDrink[];
   }
 
+  interface GameData {
+    game: Game;
+    teams: GameTeam[];
+  }
+
+  interface GameTeam {
+    team: Team;
+    turns: Turn[];
+    location: BoardPlace | null;
+  }
+
+  interface Turn {
+    turn_id: number;
+    start_time: string;
+    team_id: number;
+    game_id: number;
+    dice1: number;
+    dice2: number;
+    finished: boolean;
+    end_time: string;
+    drinks: Drinks;
+  }
+
   interface Game {
     id: number;
     name: string;

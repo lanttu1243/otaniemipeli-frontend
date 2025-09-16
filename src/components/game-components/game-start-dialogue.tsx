@@ -9,7 +9,7 @@ export default function GameStartDialogue({
   className,
 }: {
   game: Game;
-  setGameAction: React.Dispatch<React.SetStateAction<Game | undefined>>;
+  setGameAction: (updatedGame: Game) => void;
   className?: string;
 }) {
   const socket = useSocket();
