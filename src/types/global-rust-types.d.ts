@@ -75,7 +75,7 @@ declare global {
   interface Game {
     id: number;
     name: string;
-    board: string;
+    board: number;
     started: boolean;
     finished: boolean;
     start_time: string;
@@ -198,7 +198,6 @@ declare global {
   interface IngredientIdQuery {
     ingredient_id: number;
   }
-
 }
-// This file is auto-generated from Rust types. Do not edit.
+
 export {};

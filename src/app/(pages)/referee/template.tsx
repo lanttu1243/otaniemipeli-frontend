@@ -68,7 +68,7 @@ export default function RefereeTemplate({
       console.log("Verifying session...");
     };
     setTimeout(checkSession, 60000);
-  }, []);
+  }, [socket]);
 
   return (
     <>

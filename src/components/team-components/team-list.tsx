@@ -6,26 +6,26 @@ import AddTeamForm from "@/components/team-components/create-team-form";
 import TeamCard from "@/components/team-components/team-card";
 
 export default function TeamList({
-  gameId,
+  game,
   className,
 }: {
-  gameId: number;
+  game: Game;
   className?: string;
 }) {
   const [teams, setTeams] = useState<Teams>({ teams: [] });
   const socket = useSocket();
   useEffect(() => {
     if (socket) {
-      socket.emit("get-teams", gameId);
+      socket.emit("get-teams", game.id);
       socket.on("reply-teams", (data: Teams) => {
         setTeams(data);
       });
     }
-  }, [socket, gameId]);
+  }, [socket, game.id]);
   return (
     <ItemList
       title="Joukkueet"
-      addDialog={<AddTeamForm gameId={gameId} />}
+      addDialog={!game.started && <AddTeamForm gameId={game.id} />}
       className={className}
     >
       {teams.teams.map((team) => (

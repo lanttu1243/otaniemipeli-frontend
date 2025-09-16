@@ -36,8 +36,10 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     <div className="h-[90dvh]">
       <h1>{game.name}</h1>
       <GameCard game={game} className="w-1/2 my-2" />
-      <TeamList gameId={game.id} className="w-1/2 max-h-1/2" />
-      <GameStartDialogue game={game} />
+      <TeamList game={game} className="w-1/2 max-h-1/2" />
+      {!game.started && (
+        <GameStartDialogue game={game} setGameAction={setGame} />
+      )}
     </div>
   );
 }
